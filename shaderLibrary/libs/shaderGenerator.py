@@ -10,9 +10,9 @@
 import os
 import subprocess
 from contextlib import contextmanager
-from mxr.core import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 from mxr.core.studio import ARCANE_LIBRARY_SHADERRIG_PATH
-from mxr.ui.icons.icons import IconLib
+from ..ui.icons import getIcon
 from .dialogs.dlg_renameShader import renameShaderDialog
 from .dialogs.dlg_deleteShader import deleteShaderDialog
 uiButtonCSS = os.path.dirname(os.path.dirname(__file__)) + '/ui/shaderButton.qss'
@@ -85,7 +85,6 @@ class CallMenu:
 
     def __init__(self, name, shaderClass, observer):
         self.name = name
-        self.icons = IconLib
         self.shader = shaderClass
         self.observer = observer
 
@@ -94,37 +93,37 @@ class CallMenu:
         self.menu = QtWidgets.QMenu()
 
         actionStr = "Import '{}'' into scene".format(self.name)
-        smImport = QtWidgets.QAction(self.icons["impMaya"], actionStr, self.menu)
+        smImport = QtWidgets.QAction(getIcon("impMaya"), actionStr, self.menu)
         self.menu.addAction(smImport)
         smImport.triggered.connect(lambda: self.shader.importShader())
         self.menu.addSeparator()
 
         actionStr = "Import '{}'' and assing into selection".format(self.name)
-        smImportSet = QtWidgets.QAction(self.icons["impMaya"], actionStr, self.menu)
+        smImportSet = QtWidgets.QAction(getIcon("impMaya"), actionStr, self.menu)
         self.menu.addAction(smImportSet)
         smImportSet.triggered.connect(lambda: self.shader.importShader(assing=True))
         self.menu.addSeparator()
 
         actionStr = "Rename '{}'".format(self.name)
-        smRename = QtWidgets.QAction(self.icons["rename"], actionStr, self.menu)
+        smRename = QtWidgets.QAction(getIcon("rename"), actionStr, self.menu)
         self.menu.addAction(smRename)
         smRename.triggered.connect(renameShaderDialog(self.shader, self.observer))
         self.menu.addSeparator()
 
         actionStr = "Browse '{}' folder on disk".format(self.name)
-        smBrowse = QtWidgets.QAction(self.icons["browse"], actionStr, self.menu)
+        smBrowse = QtWidgets.QAction(getIcon("browse"), actionStr, self.menu)
         self.menu.addAction(smBrowse)
         smBrowse.triggered.connect(self.shader.browse)
         self.menu.addSeparator()
 
         actionStr = "Generate Thumbnail".format(self.name)
-        smBrowse = QtWidgets.QAction(self.icons["wips"], actionStr, self.menu)
+        smBrowse = QtWidgets.QAction(getIcon("wips"), actionStr, self.menu)
         self.menu.addAction(smBrowse)
         smBrowse.triggered.connect(lambda: self.launchThumbnail(self.shader))
         self.menu.addSeparator()
 
         actionStr = "Delete '{}' from lib".format(self.name)
-        smDelete = QtWidgets.QAction(self.icons["delete"], actionStr, self.menu)
+        smDelete = QtWidgets.QAction(getIcon("delete"), actionStr, self.menu)
         self.menu.addAction(smDelete)
         smDelete.triggered.connect(deleteShaderDialog(self.shader, self.observer))
         self.menu.addSeparator()

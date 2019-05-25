@@ -5,9 +5,9 @@ Controller for selected shader related methods.
 '''
 
 # IMPORTS
-from mxr.core import QtCore
+from PySide2 import QtCore
 from .dialogs.dlg_addShader import addShaderDialog
-from mxr.ui.icons.icons import getIcon
+from ..ui.icons import getIcon
 
 
 class ShaderController():

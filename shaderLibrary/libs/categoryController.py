@@ -6,12 +6,12 @@ Controller for category related methods.
 
 # IMPORTS
 import os
-from mxr.core.studio import ARCANE_LIBRARY_SHADERS_PATH
-from mxr.core import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets
+from .. import ARCANE_LIBRARY_SHADERS_PATH
 from .shaderGenerator import generateShaderButtons
 from .category import Category
 from .dialogs.dlg_addCategory import addCategoryDialog
-from mxr.ui.icons.icons import getIcon
+from ..ui.icons import getIcon
 
 
 class CategoryController():

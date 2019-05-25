@@ -6,7 +6,7 @@
 #
 # --------------------------------------------------------------------------------------------
 
-from mxr.core import QtWidgets
+from PySide2 import QtWidgets
 from ..shader import Shader as Shader
 
 

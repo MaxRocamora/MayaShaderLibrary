@@ -6,8 +6,8 @@
 #
 # --------------------------------------------------------------------------------------------
 
-from mxr.core.studio import ARCANE_LIBRARY_SHADERS_PATH
-from mxr.core import QtWidgets
+from PySide2 import QtWidgets
+from ... import ARCANE_LIBRARY_SHADERS_PATH
 from ..category import Category
 
 

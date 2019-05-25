@@ -7,7 +7,7 @@
 #
 # --------------------------------------------------------------------------------------------
 
-from mxr.core import QtWidgets
+from PySide2 import QtWidgets
 
 
 class renameShaderDialog(QtWidgets.QInputDialog):

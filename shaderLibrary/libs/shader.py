@@ -4,7 +4,7 @@
 # ARCANE Shader Class
 # Shader main object
 # Get Shader from cg app using 'getShader' staticmethod, use information returned from 'getShader'
-# to create this class using 'createShader' classmethod.
+# to create this class use 'createShader' classmethod.
 #
 # --------------------------------------------------------------------------------------------
 
@@ -15,8 +15,8 @@ import platform
 import subprocess
 import shutil
 import datetime
-from mxr.core.studio import ARCANE_LIBRARY_SHADERS_PATH
-from mxr.core import cmds
+from .. import ARCANE_LIBRARY_SHADERS_PATH
+import maya.cmds as cmds
 from mxr.core.utils.jsonHelp import getDictJson
 
 

@@ -8,7 +8,7 @@ Category main object
 # IMPORTS
 import os
 import subprocess
-from mxr.core.studio import ARCANE_LIBRARY_SHADERS_PATH
+from .. import ARCANE_LIBRARY_SHADERS_PATH
 from .shader import Shader as Shader
 
 

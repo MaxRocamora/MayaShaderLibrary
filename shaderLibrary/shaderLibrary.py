@@ -3,7 +3,7 @@
 ARCANE Shader Library
 Main interface class
 Load Python Command:
-# import mxr.scripts.shading.shaderLibrary.mxr_shaderLibrary as sl; sl.load()
+# import shaderLibrary.shaderLibrary as sl; sl.load()
 
 maxirocamora@gmail.com
 www.arcanetools.com
@@ -35,21 +35,23 @@ to do:
 # IMPORTS
 import os
 from version import *
-from mxr.core import QtCore, cmds
-from mxr.core.studio import ARCANE_PATH, ARCANE_LIBRARY_SHADERRIG_PATH
+from PySide2 import QtCore
+import maya.cmds as cmds
+from . import ARCANE_LIBRARY_SHADERRIG_PATH
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC
-from mxr.ui.icons.icons import getIcon
-import mxr.ui.pyqt.loaduifile as uiFile
+from .libs.qt.loadMayaUi import loadUi, getMayaWindow
+from .libs.qt.qtStyle import cssMainWindow
+from .ui.icons import getIcon
+
 import mxr.core.studio.extensions.userSettings as userSettings
 import mxr.ui.uiHelpers.uiStatus as uiStatus
-from mxr.ui.style.qtStyle import cssMainWindow
 
-appPath = os.path.join(ARCANE_PATH, os.path.dirname(__file__))
+
+appPath = os.path.dirname(__file__)
 ui_main = os.path.join(appPath, 'ui', 'main_ui.ui')
-ui_icon = os.path.join(appPath, 'resources', 'appIcon.png')
-form, base = uiFile.loadUi(ui_main)
+form, base = loadUi(ui_main)
 
 # --------------------------------------------------------------------------------------------
 # Class: Main UI
@@ -62,7 +64,7 @@ class ProgramUI_shaderLibrary(base, form):
         'unsaveScene': 'YOU HAVE UNSAVED CHANGES ON YOUR CURRENT SCENE.'
     }
 
-    def __init__(self, parent=uiFile.getMayaWindow()):
+    def __init__(self, parent=getMayaWindow()):
         super(ProgramUI_shaderLibrary, self).__init__(parent)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
         self.setupUi(self)
