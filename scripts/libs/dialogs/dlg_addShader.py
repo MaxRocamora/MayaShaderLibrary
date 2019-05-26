@@ -40,7 +40,7 @@ class addShaderDialog():
                 if not self.overwriteShaderDialog(s.name):
                     return
 
-        virtualShader = Shader.createShader(shaderData)
+        virtualShader = Shader.createShader(shaderData, self.category)
         if virtualShader.save():
             self.ui.categoryCC.refreshCategoryTab()
         else:

@@ -7,7 +7,6 @@ Controller for category related methods.
 # IMPORTS
 import os
 from PySide2 import QtCore, QtWidgets
-from .. import SHADERS_PATH
 from .shaderGenerator import generateShaderButtons
 from .category import Category
 from .dialogs.dlg_addCategory import addCategoryDialog
@@ -17,7 +16,7 @@ from ..ui.icons import getIcon
 class CategoryController():
     msgStr = {
         'CategoryNotFound': 'No categorys found, create one using the Create Category button',
-        'LibraryFolderNotFound': 'Library Folder not found! : ' + SHADERS_PATH
+        'LibraryFolderNotFound': 'Library Folder not found!'
     }
 
     def __init__(self, parent):
@@ -63,7 +62,7 @@ class CategoryController():
 
     def loadCategorys(self):
         ''' Load Categorys from disk and set up main storing list '''
-        self.ui.observer.categoryList = Category.collectCategorys()
+        self.ui.observer.categoryList = Category.collectCategorys(self.ui.observer.shaderLibFolder, self.ui)
         if len(self.ui.observer.categoryList) == 0:
             self.ui.uiBar.warning(self.msgStr['CategoryNotFound'])
         else:
@@ -101,7 +100,6 @@ class CategoryController():
             return
 
         name = self.ui.tab_materials.tabText(index)
-        print 'tab changed to', index, name
         categoryList = self.ui.observer.categoryList
         for category in categoryList:
             if category.name == name:
@@ -114,7 +112,6 @@ class CategoryController():
 
     def focusTabName(self, name):
         ''' forces a focus on category tab by name '''
-        print 'focusing tab by name', name
         for index in range(0, self.ui.tab_materials.count()):
             if name == self.ui.tab_materials.tabText(index):
                 self.ui.tab_materials.setCurrentIndex(index)
@@ -131,7 +128,8 @@ class CategoryController():
         else:
             category = self.ui.observer.categoryList[self.ui.cbox_categorys.currentIndex()]
 
-        if not os.path.exists(os.path.abspath(SHADERS_PATH + '/' + category.name)):
+        searchPath = os.path.join(self.ui.observer.shaderLibFolder, category.name)
+        if not os.path.exists(searchPath):
             print 'Input Tab name not found on disk', category.name
             return False
 
@@ -211,4 +209,4 @@ class CategoryController():
         grid = QtWidgets.QGridLayout()
         grid.addWidget(scroll, 3, 0)
         tab.setLayout(grid)
-        print 'category {} refreshed'.format(categoryPlaceHolder.name)
+        print 'Category {} refreshed'.format(categoryPlaceHolder.name)

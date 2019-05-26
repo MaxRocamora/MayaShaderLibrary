@@ -13,9 +13,9 @@ except KeyError:
         'ARCANE_SHADERLIB_PATH Env Var not found.')
 
 
-SHADERS_PATH = ARCANE_SHADERLIB_PATH + "/maya/shaders/"
+DEFAULT_SHADERS_PATH = ARCANE_SHADERLIB_PATH + "/maya/shaders/"
 
 appPath = os.path.dirname(__file__)
 arcaneIcon = os.path.join(appPath, 'ui', 'icons', 'appIcon.png')
 sshFile = os.path.join(appPath, 'ui', 'arcane.qss')
-thumbnail_default_scene = os.path.join(ARCANE_SHADERLIB_PATH, 'maya', 'scene')
+thumbnail_default_scene = os.path.join(ARCANE_SHADERLIB_PATH, 'maya', 'scene', 'thumbnail_scene.ma')

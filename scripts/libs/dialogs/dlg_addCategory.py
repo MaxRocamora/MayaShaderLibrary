@@ -25,11 +25,12 @@ class addCategoryDialog():
         '''
         self.ui = observer.ui
         self.category = observer.selectedCategory
+        self.path = observer.shaderLibFolder
         self.name = 'defaultCategory'
 
         userInput = self.newCategoryDialog()
         if userInput:
-            Category.create(userInput)
+            Category.create(userInput, self.path)
             self.ui.categoryCC.loadCategorys()
 
 # --------------------------------------------------------------------------------------------

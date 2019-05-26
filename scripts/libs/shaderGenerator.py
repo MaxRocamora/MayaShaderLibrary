@@ -136,7 +136,7 @@ class CallMenu:
         shader maya file, and the target png file for the thumbnail
         '''
         # from StringIO import StringIO
-        shaderRig = os.path.abspath(thumbnail_default_scene + '/thumbnailScene.ma')
+        shaderRig = os.path.abspath(thumbnail_default_scene)
         if os.path.exists(MAYAPY):
             cmd = MAYAPY + ' ' + renderScript + ' ' + shaderRig + ' ' + shader.cgFile + \
                 ' ' + shader.thumbnail

@@ -8,14 +8,15 @@ Category main object
 # IMPORTS
 import os
 import subprocess
-from .. import SHADERS_PATH
+from .dialogs.dlg_inform import informationDialog
 from .shader import Shader as Shader
 
 
 class Category(object):
-    def __init__(self, category):
+    def __init__(self, category, path):
         ''' When a category is created, stores all its shaders '''
         self._name = category
+        self.baseFolder = path
         self._shaders = self.collectShaders()
 
     def __str__(self):
@@ -32,7 +33,7 @@ class Category(object):
     @property
     def folder(self):
         ''' physical path of ths shader '''
-        return os.path.abspath(SHADERS_PATH + '/' + self.name)
+        return os.path.abspath(self.baseFolder + '/' + self.name)
 
     def shaders(self, reload=False):
         '''
@@ -61,8 +62,8 @@ class Category(object):
         shaderFolders = [x.upper() for x in os.listdir(self.folder)]
         shaders = []
 
-        for idName in shaderFolders:
-            shaders.append(Shader.loadShader(idName, self.name))
+        for f in shaderFolders:
+            shaders.append(Shader.loadShader(name=f, category=self))
         return shaders
 
 # --------------------------------------------------------------------------------------------
@@ -70,20 +71,23 @@ class Category(object):
 # --------------------------------------------------------------------------------------------
 
     @staticmethod
-    def create(name):
-        ''' Load Categorys from disk and set up main storing list '''
-        if os.path.exists(SHADERS_PATH):
-            os.mkdir(os.path.abspath(SHADERS_PATH + '/' + name))
+    def create(name, path):
+        ''' create category folder '''
+        if os.path.exists(path):
+            os.mkdir(os.path.abspath(os.path.join(path, name)))
 
     @staticmethod
-    def collectCategorys():
-        ''' Load Categorys from disk and set up main storing list '''
+    def collectCategorys(path, ui):
+        ''' Load Categorys from disk and set up main storing list
+        Args:
+            path (path) folder to search for categorys
+        '''
         categorys = []
-        if os.path.exists(SHADERS_PATH):
-            categoryFolders = [x.upper() for x in os.listdir(SHADERS_PATH)]
+        if os.path.exists(path):
+            categoryFolders = [x.upper() for x in os.listdir(path)]
             if len(categoryFolders) > 0:
                 for index, name in enumerate(categoryFolders):
-                    categorys.append(Category(name))
+                    categorys.append(Category(name, path))
         else:
-            print 'Warning: Categorys Folder not found.'
+            informationDialog("Warning: Categorys Folder not found.", ui)
         return categorys
