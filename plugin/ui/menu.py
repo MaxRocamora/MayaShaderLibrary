@@ -65,4 +65,3 @@ class menuCreator():
         ''' unload menu from maya '''
         import maya.cmds as cmds
         cmds.deleteUI(ArcaneTools_MainMenu, menu=True)
-        print "Arcane Menu Unloaded"

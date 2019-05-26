@@ -7,7 +7,6 @@
 import os
 from PySide2 import QtGui
 iconPath = os.path.join(os.path.dirname(__file__), 'icons')
-print iconPath
 IconLib = {}
 
 for icon in os.listdir(iconPath):
