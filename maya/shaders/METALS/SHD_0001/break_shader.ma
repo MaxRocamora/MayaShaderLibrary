@@ -1,0 +1,84 @@
+//Maya ASCII 2018ff09 scene
+//Name: lambert2_shader.ma
+//Last modified: Fri, Jan 25, 2019 12:33:54 AM
+//Codeset: 1252
+requires maya "2018ff09";
+requires "stereoCamera" "10.0";
+requires "mtoa" "3.0.1.1";
+requires "stereoCamera" "10.0";
+currentUnit -l centimeter -a degree -t film;
+fileInfo "application" "maya";
+fileInfo "product" "Maya 2018";
+fileInfo "version" "2018";
+fileInfo "cutIdentifier" "201807191615-2c29512b8a";
+fileInfo "osv" "Microsoft Windows 7 Ultimate Edition, 64-bit Windows 7 Service Pack 1 (Build 7601)\n";
+createNode transform -n "shdBall";
+	rename -uid "AE6E9288-4C74-F078-F797-9B9D701C75F5";
+createNode mesh -n "shdBallShape" -p "shdBall";
+	rename -uid "216AB826-478E-808D-2947-6AA3E7168FCE";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode polySphere -n "polySphere2";
+	rename -uid "5A449EF9-493F-0C46-C60F-35AB6291E773";
+createNode materialInfo -n "materialInfo2";
+	rename -uid "7AE1C90E-40F0-68BC-4B11-8D99E890DF4A";
+createNode shadingEngine -n "lambert2SG";
+	rename -uid "D0A15F87-4F27-628E-FE0A-94A5A8AFAC16";
+	setAttr ".ihi" 0;
+	setAttr -s 2 ".dsm";
+	setAttr ".ro" yes;
+createNode lambert -n "lambert2";
+	rename -uid "E24CBDEE-4500-DC4C-88D9-C1ADB8782C1C";
+createNode lightLinker -s -n "lightLinker1";
+	rename -uid "230B402F-4F9D-0303-BA7D-BBB64454890D";
+	setAttr -s 3 ".lnk";
+	setAttr -s 3 ".slnk";
+select -ne :time1;
+	setAttr ".o" 1;
+	setAttr ".unw" 1;
+select -ne :hardwareRenderingGlobals;
+	setAttr ".otfna" -type "stringArray" 22 "NURBS Curves" "NURBS Surfaces" "Polygons" "Subdiv Surface" "Particles" "Particle Instance" "Fluids" "Strokes" "Image Planes" "UI" "Lights" "Cameras" "Locators" "Joints" "IK Handles" "Deformers" "Motion Trails" "Components" "Hair Systems" "Follicles" "Misc. UI" "Ornaments"  ;
+	setAttr ".otfva" -type "Int32Array" 22 0 1 1 1 1 1
+		 1 1 1 0 0 0 0 0 0 0 0 0
+		 0 0 0 0 ;
+	setAttr ".fprt" yes;
+select -ne :renderPartition;
+	setAttr -s 3 ".st";
+select -ne :renderGlobalsList1;
+select -ne :defaultShaderList1;
+	setAttr -s 5 ".s";
+select -ne :postProcessList1;
+	setAttr -s 2 ".p";
+select -ne :defaultRenderingList1;
+select -ne :initialShadingGroup;
+	setAttr ".ro" yes;
+select -ne :initialParticleSE;
+	setAttr ".ro" yes;
+select -ne :defaultRenderGlobals;
+	setAttr ".ren" -type "string" "arnold";
+select -ne :defaultResolution;
+	setAttr ".pa" 1;
+select -ne :hardwareRenderGlobals;
+	setAttr ".ctrs" 256;
+	setAttr ".btrs" 512;
+connectAttr "polySphere2.out" "shdBallShape.i";
+connectAttr "lambert2SG.msg" "materialInfo2.sg";
+connectAttr "lambert2.msg" "materialInfo2.m";
+connectAttr "lambert2.oc" "lambert2SG.ss";
+connectAttr "shdBallShape.iog" "lambert2SG.dsm" -na;
+relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "lambert2SG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "lambert2SG.message" ":defaultLightSet.message";
+connectAttr "lambert2SG.pa" ":renderPartition.st" -na;
+connectAttr "lambert2.msg" ":defaultShaderList1.s" -na;
+// End of lambert2_shader.ma

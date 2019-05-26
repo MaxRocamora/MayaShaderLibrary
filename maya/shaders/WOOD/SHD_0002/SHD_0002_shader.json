@@ -1,0 +1,16 @@
+{
+    "Edited On": "2019-03-25 12:02:43.214000", 
+    "PC": "ws11", 
+    "User": "maximilianorocamora", 
+    "category": "WOOD", 
+    "idName": "SHD_0002", 
+    "maps": [
+        "maps1", 
+        "maps2"
+    ], 
+    "name": "ORANGE", 
+    "node": "ORANGE", 
+    "notes": "Enter notes here...", 
+    "shaderType": "blinn", 
+    "sourceFile": ""
+}

@@ -1,0 +1,16 @@
+{
+    "Edited On": "2019-02-20 23:48:53.797000", 
+    "PC": "Workstation_1", 
+    "User": "Max", 
+    "category": "WOOD", 
+    "idName": "SHD_0000", 
+    "maps": [
+        "maps1", 
+        "maps2"
+    ], 
+    "name": "blackMask", 
+    "node": "blackMask", 
+    "notes": "Enter notes here...", 
+    "shaderType": "surfaceShader", 
+    "sourceFile": ""
+}
