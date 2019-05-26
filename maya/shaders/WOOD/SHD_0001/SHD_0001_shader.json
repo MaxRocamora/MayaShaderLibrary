@@ -1,6 +1,6 @@
 {
-    "Edited On": "2019-02-24 17:12:18.568000", 
-    "PC": "Workstation_1", 
+    "Edited On": "2019-05-26 17:29:28.436000", 
+    "PC": "Max-PC", 
     "User": "Max", 
     "category": "WOOD", 
     "idName": "SHD_0001", 
@@ -8,9 +8,9 @@
         "maps1", 
         "maps2"
     ], 
-    "name": "white", 
-    "node": "blackMask", 
+    "name": "whiteBlinn", 
+    "node": "blinn1", 
     "notes": "Enter notes here...", 
-    "shaderType": "surfaceShader", 
+    "shaderType": "blinn", 
     "sourceFile": ""
 }
