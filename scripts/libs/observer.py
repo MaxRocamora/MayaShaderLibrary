@@ -17,7 +17,17 @@ class ObserverUI(object):
         self.ui = parent
         self.shader = False
         self.category = False
+        self._shaderLibFolder = False
         self._categoryList = []
+
+    @property
+    def shaderLibFolder(self):
+        ''' location of shader libraries '''
+        return self._shaderLibFolder
+
+    @shaderLibFolder.setter
+    def shaderLibFolder(self, v):
+        self._shaderLibFolder = v
 
     @property
     def categoryList(self):
@@ -50,7 +60,7 @@ class ObserverUI(object):
 
     def updateUI(self):
         ''' update ui when user selects a shader '''
-        self.ui.lbl_shaderName.setText(self.shader.name + ' / ' + self.shader.category)
+        self.ui.lbl_shaderName.setText(self.shader.name + ' / ' + self.shader.category.name)
         self.ui.lbl_shaderType.setText(self.shader.shaderType)
         self.ui.lbl_shaderUserPC.setText(self.shader.user + ' / ' + self.shader.pc)
         self.ui.lbl_shaderCode.setText(self.shader.idName)

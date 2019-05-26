@@ -440,6 +440,7 @@
     </property>
     <addaction name="separator"/>
     <addaction name="mnu_defaultLigthRigOpen"/>
+    <addaction name="mnu_setFolder"/>
    </widget>
    <addaction name="menuMenu"/>
    <addaction name="menuCategory"/>
@@ -480,12 +481,17 @@
   </action>
   <action name="mnu_defaultLigthRigOpen">
    <property name="text">
-    <string>Open Preview LightRig File</string>
+    <string>Open Thumbnail LightRig File</string>
    </property>
   </action>
   <action name="mnu_reloadCategorys">
    <property name="text">
     <string>Reload Categorys</string>
+   </property>
+  </action>
+  <action name="mnu_setFolder">
+   <property name="text">
+    <string>Set Shaders Storage Folder</string>
    </property>
   </action>
  </widget>

@@ -8,6 +8,9 @@ Load Python Command:
 maxirocamora@gmail.com
 www.arcanetools.com
 
+# Default thumbnail lighting scene
+%APP%/Maya/scene/thumbnail_scene.ma
+
 to do:
 
     logg render output from subprocess to file
@@ -38,6 +41,7 @@ from version import *
 from PySide2 import QtCore
 import maya.cmds as cmds
 from . import thumbnail_default_scene
+from . import DEFAULT_SHADERS_PATH
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC
@@ -45,8 +49,7 @@ from .libs.qt.loadMayaUi import loadUi, getMayaWindow
 from .libs.qt.qtStyle import cssMainWindow
 from .ui.icons import getIcon
 from .ui.userSettings import UserSettings
-
-import mxr.ui.uiHelpers.uiStatus as uiStatus
+import ui.uiStatus as uiStatus
 
 
 appPath = os.path.dirname(__file__)
@@ -74,7 +77,6 @@ class ProgramUI_shaderLibrary(base, form):
         self.observer = ObserverUI(self)
         self.categoryCC = categoryCC.CategoryController(self)
         self.shaderCC = shaderCC.ShaderController(self)
-        self.categoryCC.loadCategorys()
         self.setConnections()
         self.loadUserPreferences()
 
@@ -91,6 +93,7 @@ class ProgramUI_shaderLibrary(base, form):
         self.btn_refresh.setStyleSheet("background:transparent;")
         self.btn_refresh.installEventFilter(self)
         self.mnu_defaultLigthRigOpen.triggered.connect(self.openDefaultLightRig)
+        self.mnu_setFolder.triggered.connect(self.setShaderFolder)
 
     def eventFilter(self, obj, event):
         '''Connect signals on mouse over'''
@@ -120,7 +123,8 @@ class ProgramUI_shaderLibrary(base, form):
         ]
 
         self.userPref = {"lastCategory": lastCategory,
-                         'favouriteCategorys': favouriteCategorys
+                         'favouriteCategorys': favouriteCategorys,
+                         'shaderLibFolder': self.observer.shaderLibFolder
                          }
         self.userSettings.saveUS(self.userPref)
         self.close()
@@ -133,6 +137,13 @@ class ProgramUI_shaderLibrary(base, form):
 
         lastTab = self.userPref.get("lastCategory", 0)
         favTabs = self.userPref.get("favouriteCategorys", [])
+        shaderLibFolder = self.userPref.get("shaderLibFolder", None)
+        if shaderLibFolder:
+            self.observer.shaderLibFolder = shaderLibFolder
+        else:
+            self.observer.shaderLibFolder = DEFAULT_SHADERS_PATH
+
+        self.categoryCC.loadCategorys()
         for category in self.observer.categoryList:
             if category.name in favTabs:
                 self.categoryCC.pinTab(category)
@@ -144,8 +155,13 @@ class ProgramUI_shaderLibrary(base, form):
 
     def openDefaultLightRig(self,):
         ''' Open default maya file used for render thumbnails '''
+        self.uiBar.inform(thumbnail_default_scene)
         if os.path.exists(thumbnail_default_scene):
             cmds.file(thumbnail_default_scene, force=True, open=True)
+
+    def setShaderFolder(self):
+        ''' ask user for shader storage folder '''
+        pass
 
 # --------------------------------------------------------------------------------------------
 # MAIN
