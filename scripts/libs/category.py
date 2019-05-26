@@ -8,7 +8,7 @@ Category main object
 # IMPORTS
 import os
 import subprocess
-from .. import ARCANE_LIBRARY_SHADERS_PATH
+from .. import SHADERS_PATH
 from .shader import Shader as Shader
 
 
@@ -32,7 +32,7 @@ class Category(object):
     @property
     def folder(self):
         ''' physical path of ths shader '''
-        return os.path.abspath(ARCANE_LIBRARY_SHADERS_PATH + '/' + self.name)
+        return os.path.abspath(SHADERS_PATH + '/' + self.name)
 
     def shaders(self, reload=False):
         '''
@@ -72,15 +72,15 @@ class Category(object):
     @staticmethod
     def create(name):
         ''' Load Categorys from disk and set up main storing list '''
-        if os.path.exists(ARCANE_LIBRARY_SHADERS_PATH):
-            os.mkdir(os.path.abspath(ARCANE_LIBRARY_SHADERS_PATH + '/' + name))
+        if os.path.exists(SHADERS_PATH):
+            os.mkdir(os.path.abspath(SHADERS_PATH + '/' + name))
 
     @staticmethod
     def collectCategorys():
         ''' Load Categorys from disk and set up main storing list '''
         categorys = []
-        if os.path.exists(ARCANE_LIBRARY_SHADERS_PATH):
-            categoryFolders = [x.upper() for x in os.listdir(ARCANE_LIBRARY_SHADERS_PATH)]
+        if os.path.exists(SHADERS_PATH):
+            categoryFolders = [x.upper() for x in os.listdir(SHADERS_PATH)]
             if len(categoryFolders) > 0:
                 for index, name in enumerate(categoryFolders):
                     categorys.append(Category(name))

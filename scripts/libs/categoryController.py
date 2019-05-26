@@ -7,7 +7,7 @@ Controller for category related methods.
 # IMPORTS
 import os
 from PySide2 import QtCore, QtWidgets
-from .. import ARCANE_LIBRARY_SHADERS_PATH
+from .. import SHADERS_PATH
 from .shaderGenerator import generateShaderButtons
 from .category import Category
 from .dialogs.dlg_addCategory import addCategoryDialog
@@ -15,10 +15,9 @@ from ..ui.icons import getIcon
 
 
 class CategoryController():
-    libPath = ARCANE_LIBRARY_SHADERS_PATH
     msgStr = {
         'CategoryNotFound': 'No categorys found, create one using the Create Category button',
-        'LibraryFolderNotFound': 'Library Folder not found! : ' + libPath
+        'LibraryFolderNotFound': 'Library Folder not found! : ' + SHADERS_PATH
     }
 
     def __init__(self, parent):
@@ -132,7 +131,7 @@ class CategoryController():
         else:
             category = self.ui.observer.categoryList[self.ui.cbox_categorys.currentIndex()]
 
-        if not os.path.exists(os.path.abspath(self.libPath + '/' + category.name)):
+        if not os.path.exists(os.path.abspath(SHADERS_PATH + '/' + category.name)):
             print 'Input Tab name not found on disk', category.name
             return False
 

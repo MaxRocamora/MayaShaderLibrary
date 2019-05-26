@@ -15,7 +15,7 @@ import platform
 import subprocess
 import shutil
 import datetime
-from .. import ARCANE_LIBRARY_SHADERS_PATH
+from .. import SHADERS_PATH
 import maya.cmds as cmds
 from mxr.core.utils.jsonHelp import getDictJson
 
@@ -78,7 +78,7 @@ class Shader(object):
     @property
     def folder(self):
         ''' physical path of ths shader '''
-        return os.path.abspath(os.path.join(ARCANE_LIBRARY_SHADERS_PATH, self.category, self.idName))
+        return os.path.abspath(os.path.join(SHADERS_PATH, self.category, self.idName))
 
     @property
     def cgFile(self):
@@ -304,7 +304,7 @@ class Shader(object):
         Args:
             shaderData (dic): Contains all values from getShader() staticmethod
         '''
-        categoryPath = ARCANE_LIBRARY_SHADERS_PATH + '/' + shaderData['category']
+        categoryPath = SHADERS_PATH + '/' + shaderData['category']
         nextId = 0
         while 'SHD_' + str(nextId).zfill(4) in os.listdir(categoryPath):
             nextId += 1

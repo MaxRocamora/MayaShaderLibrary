@@ -7,12 +7,10 @@
 # --------------------------------------------------------------------------------------------
 
 from PySide2 import QtWidgets
-from ... import ARCANE_LIBRARY_SHADERS_PATH
 from ..category import Category
 
 
 class addCategoryDialog():
-    libPath = ARCANE_LIBRARY_SHADERS_PATH
     msgStr = {
         'NewCatUnicodeError': 'UnicodeEncodeError!.',
         'NewCatNameLenghtError': 'New Category name needs at least 4 characters length.',

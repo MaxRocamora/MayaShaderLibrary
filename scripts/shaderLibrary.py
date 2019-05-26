@@ -37,15 +37,15 @@ import os
 from version import *
 from PySide2 import QtCore
 import maya.cmds as cmds
-from . import ARCANE_LIBRARY_SHADERRIG_PATH
+from . import thumbnail_default_scene
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC
 from .libs.qt.loadMayaUi import loadUi, getMayaWindow
 from .libs.qt.qtStyle import cssMainWindow
 from .ui.icons import getIcon
+from .ui.userSettings import UserSettings
 
-import mxr.core.studio.extensions.userSettings as userSettings
 import mxr.ui.uiHelpers.uiStatus as uiStatus
 
 
@@ -69,7 +69,7 @@ class ProgramUI_shaderLibrary(base, form):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
         self.setupUi(self)
         cssMainWindow(appPath, self, qtWinName, __app__ + ' ' + __version__)
-        self.userSettings = userSettings.userSettings("shaderLibrary")
+        self.userSettings = UserSettings("shaderLibrary")
         self.uiBar = uiStatus.uiStatusbar(self.statusBar)
         self.observer = ObserverUI(self)
         self.categoryCC = categoryCC.CategoryController(self)
@@ -144,9 +144,8 @@ class ProgramUI_shaderLibrary(base, form):
 
     def openDefaultLightRig(self,):
         ''' Open default maya file used for render thumbnails '''
-        shaderRig = os.path.abspath(ARCANE_LIBRARY_SHADERRIG_PATH + '/basic/basic.ma')
-        if os.path.exists(shaderRig):
-            cmds.file(shaderRig, force=True, open=True)
+        if os.path.exists(thumbnail_default_scene):
+            cmds.file(thumbnail_default_scene, force=True, open=True)
 
 # --------------------------------------------------------------------------------------------
 # MAIN

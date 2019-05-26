@@ -11,8 +11,8 @@ import os
 import subprocess
 from contextlib import contextmanager
 from PySide2 import QtCore, QtGui, QtWidgets
-from mxr.core.studio import ARCANE_LIBRARY_SHADERRIG_PATH
-from ..ui.icons import getIcon
+from scripts import thumbnail_default_scene
+from scripts.ui.icons import getIcon
 from .dialogs.dlg_renameShader import renameShaderDialog
 from .dialogs.dlg_deleteShader import deleteShaderDialog
 uiButtonCSS = os.path.dirname(os.path.dirname(__file__)) + '/ui/shaderButton.qss'
@@ -136,7 +136,7 @@ class CallMenu:
         shader maya file, and the target png file for the thumbnail
         '''
         # from StringIO import StringIO
-        shaderRig = os.path.abspath(ARCANE_LIBRARY_SHADERRIG_PATH + '/basic/basic.ma')
+        shaderRig = os.path.abspath(thumbnail_default_scene + '/thumbnailScene.ma')
         if os.path.exists(MAYAPY):
             cmd = MAYAPY + ' ' + renderScript + ' ' + shaderRig + ' ' + shader.cgFile + \
                 ' ' + shader.thumbnail
