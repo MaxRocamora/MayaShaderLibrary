@@ -16,3 +16,4 @@ MAYA_PLUG_IN_PATH = installDirectory\MayaShaderLibrary\shaderLibrary\plugin\maya
 ARCANE_LIBRARY_PATH_2019 = installDirectory\MayaShaderLibrary;
 
 ----------------------------------
+![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/scripts/ui/screenshot/uiMenu.png)
