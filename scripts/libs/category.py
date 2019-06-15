@@ -33,7 +33,7 @@ class Category(object):
     @property
     def folder(self):
         ''' physical path of ths shader '''
-        return os.path.abspath(self.baseFolder + '/' + self.name)
+        return os.path.abspath(os.path.join(self.baseFolder, self.name))
 
     def shaders(self, reload=False):
         '''

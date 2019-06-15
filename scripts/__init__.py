@@ -2,20 +2,20 @@
 # Shader Library Init
 
 import os
-from .libs.utils.error import EnvironmentVariableNotFound
 
+# Root Path to tool
+rootPath = os.path.join(os.path.dirname(os.path.split(__file__)[0]))
 
-# Main PATHS
-try:
-    ARCANE_SHADERLIB_PATH = os.environ['ARCANE_SHADERLIB_PATH']
-except KeyError:
-    raise EnvironmentVariableNotFound(
-        'ARCANE_SHADERLIB_PATH Env Var not found.')
+# UI / Stylesheet / icons
+arcaneIcon = os.path.join(rootPath, 'scripts', 'ui', 'icons', 'appIcon.png')
+sshFile = os.path.join(rootPath, 'scripts', 'ui', 'stylesheet', 'arcane.qss')
+sshButton = os.path.join(rootPath, 'scripts', 'ui', 'stylesheet', 'shaderButton.qss')
 
+# Maya Files and default shader repositoy
+DEFAULT_SHADERS_PATH = os.path.join(rootPath, 'maya', 'shaders')
+thumbnail_default_scene = os.path.join(rootPath, 'maya', 'scene', 'thumbnail_scene.ma')
 
-DEFAULT_SHADERS_PATH = ARCANE_SHADERLIB_PATH + "/maya/shaders/"
-
-appPath = os.path.dirname(__file__)
-arcaneIcon = os.path.join(appPath, 'ui', 'icons', 'appIcon.png')
-sshFile = os.path.join(appPath, 'ui', 'arcane.qss')
-thumbnail_default_scene = os.path.join(ARCANE_SHADERLIB_PATH, 'maya', 'scene', 'thumbnail_scene.ma')
+# Check files
+for filepath in [thumbnail_default_scene, DEFAULT_SHADERS_PATH, sshFile, arcaneIcon]:
+    if not os.path.exists(filepath):
+        print 'Arcane Shader Library: Warning: Missing Path', filepath
