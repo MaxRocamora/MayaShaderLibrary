@@ -66,9 +66,8 @@ class CategoryController():
         if len(self.ui.observer.categoryList) == 0:
             self.ui.uiBar.warning(self.msgStr['CategoryNotFound'])
         else:
-            categorysByName = [category.name for category in self.ui.observer.categoryList]
             self.ui.cbox_categorys.clear()
-            self.ui.cbox_categorys.addItems(categorysByName)
+            self.ui.cbox_categorys.addItems([category.name for category in self.ui.observer.categoryList])
             self.ui.cbox_categorys.activated.emit(1)
 
     def addCategoryCall(self):
