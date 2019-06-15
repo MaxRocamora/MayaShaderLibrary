@@ -7,7 +7,7 @@
 # --------------------------------------------------------------------------------------------
 
 
-class uiStatusbar():
+class Statusbar():
     def __init__(self, _qwidget):
         '''
          _qwidget ::: widget of the status bar ui
