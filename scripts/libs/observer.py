@@ -11,7 +11,6 @@
 
 
 class ObserverUI(object):
-
     def __init__(self, parent):
         # ui (user interface) is also used to send the ui to qtwindows and qtDialogs.
         self.ui = parent
@@ -47,7 +46,7 @@ class ObserverUI(object):
         if not v:
             self.shader = False
             return
-        print 'category selected: {} shaders {}'.format(v, len(v.shaders()))
+        print 'Category selected: {} Shaders {}'.format(v.name, len(v.shaders()))
 
     @property
     def selectedShader(self):
