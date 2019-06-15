@@ -40,20 +40,18 @@ import os
 from version import *
 from PySide2 import QtCore
 import maya.cmds as cmds
-from . import thumbnail_default_scene
-from . import DEFAULT_SHADERS_PATH
+from . import thumbnail_default_scene, DEFAULT_SHADERS_PATH
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC
 from .libs.qt.loadMayaUi import loadUi, getMayaWindow
 from .libs.qt.qtStyle import cssMainWindow
+from .libs.utils.userSettings import UserSettings
+from .libs.utils.uiStatus import Statusbar
 from .ui.icons import getIcon
-from .ui.userSettings import UserSettings
-import ui.uiStatus as uiStatus
-
 
 appPath = os.path.dirname(__file__)
-ui_main = os.path.join(appPath, 'ui', 'main_ui.ui')
+ui_main = os.path.join(appPath, 'ui', 'ui', 'main.ui')
 form, base = loadUi(ui_main)
 
 # --------------------------------------------------------------------------------------------
@@ -73,7 +71,7 @@ class ProgramUI_shaderLibrary(base, form):
         self.setupUi(self)
         cssMainWindow(appPath, self, qtWinName, __app__ + ' ' + __version__)
         self.userSettings = UserSettings("shaderLibrary")
-        self.uiBar = uiStatus.uiStatusbar(self.statusBar)
+        self.uiBar = Statusbar(self.statusBar)
         self.observer = ObserverUI(self)
         self.categoryCC = categoryCC.CategoryController(self)
         self.shaderCC = shaderCC.ShaderController(self)

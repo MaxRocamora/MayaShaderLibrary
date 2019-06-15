@@ -11,13 +11,13 @@ import os
 import subprocess
 from contextlib import contextmanager
 from PySide2 import QtCore, QtGui, QtWidgets
-from scripts import thumbnail_default_scene
+from scripts import thumbnail_default_scene, sshButton
 from scripts.ui.icons import getIcon
 from .dialogs.dlg_renameShader import renameShaderDialog
 from .dialogs.dlg_deleteShader import deleteShaderDialog
-uiButtonCSS = os.path.dirname(os.path.dirname(__file__)) + '/ui/shaderButton.qss'
-renderScript = os.path.dirname(__file__) + '/utils/generateThumbnail.py'
-MAYAPY = os.getenv('MAYA_LOCATION') + '/bin/mayapy.exe'
+
+renderScript = os.path.join(os.path.dirname(__file__), 'utils', 'generateThumbnail.py')
+MAYAPY = os.path.join(os.getenv('MAYA_LOCATION'), 'bin', 'mayapy.exe')
 
 
 def generateShaderButtons(shaderList, observer, layout, wide):
@@ -40,7 +40,7 @@ def generateShaderButtons(shaderList, observer, layout, wide):
         b.setFixedSize(110, 110)
         b.iconSize()
         b.setIconSize(QtCore.QSize(80, 80))
-        with open(uiButtonCSS, "r") as fh:
+        with open(sshButton, "r") as fh:
             b.setStyleSheet(fh.read())
         b.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         b.customContextMenuRequested.connect(CallMenu(shader.name, shader, observer))
