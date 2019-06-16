@@ -1,0 +1,22 @@
+MayaShaderLibrary.plugin.ui package
+===================================
+
+Submodules
+----------
+
+MayaShaderLibrary.plugin.ui.menu module
+---------------------------------------
+
+.. automodule:: MayaShaderLibrary.plugin.ui.menu
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: MayaShaderLibrary.plugin.ui
+    :members:
+    :undoc-members:
+    :show-inheritance:

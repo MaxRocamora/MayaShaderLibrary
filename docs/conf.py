@@ -38,7 +38,16 @@ release = u''
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+
+# autodoc: for automake documentation from docstring
+# napoleon: convert google doctring format
+
 extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.extlinks',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.viewcode'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -68,6 +77,8 @@ exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
+# A list of prefixes to ignore for module listings
+modindex_common_prefix = ['MayaShaderLibrary.scripts.libs.']
 
 # -- Options for HTML output -------------------------------------------------
 

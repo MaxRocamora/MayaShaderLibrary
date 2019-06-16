@@ -13,6 +13,7 @@ Documentation
 
    install
    guides
+   ui
 
 
 ******************

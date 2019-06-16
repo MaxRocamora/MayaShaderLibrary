@@ -1,0 +1,46 @@
+MayaShaderLibrary.scripts.libs.utils package
+============================================
+
+Submodules
+----------
+
+MayaShaderLibrary.scripts.libs.utils.generateThumbnail module
+-------------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.utils.generateThumbnail
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.utils.jsonHelp module
+----------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.utils.jsonHelp
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.utils.uiStatus module
+----------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.utils.uiStatus
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.utils.userSettings module
+--------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.utils.userSettings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:

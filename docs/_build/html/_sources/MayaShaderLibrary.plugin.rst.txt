@@ -1,0 +1,17 @@
+MayaShaderLibrary.plugin package
+================================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    MayaShaderLibrary.plugin.ui
+
+Module contents
+---------------
+
+.. automodule:: MayaShaderLibrary.plugin
+    :members:
+    :undoc-members:
+    :show-inheritance:

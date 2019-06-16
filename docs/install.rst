@@ -6,20 +6,24 @@ Installation
 Download
 --------
 
-- Download/clone `MayaShaderLibrary <https://github.com/MaxRocamora/MayaShaderLibrary>`_ repository.
-- If you are not familiar with gitHub, download this `zip file container <https://github.com/MaxRocamora/MayaShaderLibrary/zipball/master>`_
+- Download/clone MayaShaderLibrary_ repository from gitHub.
+- If you are not familiar with gitHub, download this `zip file`_
 
 - Copy/Paste or Unzip the contents into your preferred scripts location.
+
+.. _MayaShaderLibrary: https://github.com/MaxRocamora/MayaShaderLibrary
+.. _zip file: https://github.com/MaxRocamora/MayaShaderLibrary/zipball/master
 
 Maya Install
 ------------
 
-- Add the following environment variable to your Maya.env file. ::
+- MayaShaderLibrary works on Maya 2017, 2018, and 2019
+- Add the following environment variable to your Maya.env file, replacing 'installDirectory' with the location where you download/unzip the repository. ::
 
 	MAYA_PLUG_IN_PATH = installDirectory\\MayaShaderLibrary\\shaderLibrary\\plugin\\maya;
 
-*(Maya.env is usually located under User/My Documents/Maya/2018)*
+.. note:: Maya.env is usually located under User/My Documents/Maya/2018)
 
 - Make sure to load the plugin '"ARCANE Tools ShaderLibrary 1.0"' from plugin manager once maya is restarted.
 
-Maya plugin manager is located under 'Windows' > 'Settings/Preferences' > 'Plug-in Manager' menu
+Maya plugin manager is located in maya menu under 'Windows' > 'Settings/Preferences' > 'Plug-in Manager'

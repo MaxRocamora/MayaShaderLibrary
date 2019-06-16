@@ -1,0 +1,7 @@
+MayaShaderLibrary
+=================
+
+.. toctree::
+   :maxdepth: 4
+
+   MayaShaderLibrary

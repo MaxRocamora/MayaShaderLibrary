@@ -87,6 +87,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guides.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">MayaShaderLibrary</a></li>
 </ul>
 
             
@@ -156,25 +157,30 @@
 <div class="section" id="download">
 <h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Download/clone <a class="reference external" href="https://github.com/MaxRocamora/MayaShaderLibrary">MayaShaderLibrary</a> repository.</li>
-<li>If you are not familiar with gitHub, download this <a class="reference external" href="https://github.com/MaxRocamora/MayaShaderLibrary/zipball/master">zip file container</a></li>
+<li>Download/clone <a class="reference external" href="https://github.com/MaxRocamora/MayaShaderLibrary">MayaShaderLibrary</a> repository from gitHub.</li>
+<li>If you are not familiar with gitHub, download this <a class="reference external" href="https://github.com/MaxRocamora/MayaShaderLibrary/zipball/master">zip file</a></li>
 <li>Copy/Paste or Unzip the contents into your preferred scripts location.</li>
 </ul>
 </div>
 <div class="section" id="maya-install">
 <h2>Maya Install<a class="headerlink" href="#maya-install" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first">Add the following environment variable to your Maya.env file.</p>
+<li><p class="first">MayaShaderLibrary works on Maya 2017, 2018, and 2019</p>
+</li>
+<li><p class="first">Add the following environment variable to your Maya.env file, replacing ‘installDirectory’ with the location where you download/unzip the repository.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAYA_PLUG_IN_PATH</span> <span class="o">=</span> <span class="n">installDirectory</span>\\<span class="n">MayaShaderLibrary</span>\\<span class="n">shaderLibrary</span>\\<span class="n">plugin</span>\\<span class="n">maya</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 </ul>
-<p><em>(Maya.env is usually located under User/My Documents/Maya/2018)</em></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Maya.env is usually located under User/My Documents/Maya/2018)</p>
+</div>
 <ul class="simple">
 <li>Make sure to load the plugin ‘“ARCANE Tools ShaderLibrary 1.0”’ from plugin manager once maya is restarted.</li>
 </ul>
-<p>Maya plugin manager is located under ‘Windows’ &gt; ‘Settings/Preferences’ &gt; ‘Plug-in Manager’ menu</p>
+<p>Maya plugin manager is located in maya menu under ‘Windows’ &gt; ‘Settings/Preferences’ &gt; ‘Plug-in Manager’</p>
 </div>
 </div>
 

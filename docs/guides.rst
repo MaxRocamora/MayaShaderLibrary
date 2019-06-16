@@ -17,22 +17,4 @@ How to use
 ----------
 
 The MayaShaderLibrary works by creating Categories, inside each category you will save/load your shaders.
-Categorys will be created but not displayed until you 'pin' them to the interface, so you can have lots of categories
-but only the the ones your are currently in use.
-
-Shader Category's
------------------
-
-To create a category
-
-To pin a category
-
-To unpin category
-
-Also:
-
-Browse category folder
-
-Refresh
-
-
+Categorys will be created and listed, but not displayed until you 'pin' them to the interface, so you can have lots of categories but only the the ones your are currently in use.

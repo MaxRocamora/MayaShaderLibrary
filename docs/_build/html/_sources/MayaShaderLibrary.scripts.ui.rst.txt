@@ -1,0 +1,22 @@
+MayaShaderLibrary.scripts.ui package
+====================================
+
+Submodules
+----------
+
+MayaShaderLibrary.scripts.ui.icons module
+-----------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.ui.icons
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: MayaShaderLibrary.scripts.ui
+    :members:
+    :undoc-members:
+    :show-inheritance:

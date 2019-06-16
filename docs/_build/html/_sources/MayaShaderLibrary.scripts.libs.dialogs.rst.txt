@@ -1,0 +1,62 @@
+MayaShaderLibrary.scripts.libs.dialogs package
+==============================================
+
+Submodules
+----------
+
+MayaShaderLibrary.scripts.libs.dialogs.dlg\_addCategory module
+--------------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.dialogs.dlg_addCategory
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.dialogs.dlg\_addShader module
+------------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.dialogs.dlg_addShader
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.dialogs.dlg\_deleteShader module
+---------------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.dialogs.dlg_deleteShader
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.dialogs.dlg\_inform module
+---------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.dialogs.dlg_inform
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.dialogs.dlg\_input module
+--------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.dialogs.dlg_input
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+MayaShaderLibrary.scripts.libs.dialogs.dlg\_renameShader module
+---------------------------------------------------------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.dialogs.dlg_renameShader
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: MayaShaderLibrary.scripts.libs.dialogs
+    :members:
+    :undoc-members:
+    :show-inheritance:
