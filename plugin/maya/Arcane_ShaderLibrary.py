@@ -7,8 +7,14 @@
 #
 ###########################################################################
 
+import sys
+import os
 import maya.OpenMayaMPx as OpenMayaMPx
 
+# Add ASL package root
+arcanePath = os.environ['ARCANE_SHADER_LIBRARY']
+if arcanePath not in sys.path:
+    sys.path.append(arcanePath)
 
 kPluginCmdName = "ARCANE Tools ShaderLibrary 1.0"
 
@@ -16,12 +22,12 @@ kPluginCmdName = "ARCANE Tools ShaderLibrary 1.0"
 def initializePlugin(mobject):
     ''' Initialize the script plug-in '''
     mplugin = OpenMayaMPx.MFnPlugin(mobject)
-    from plugin.ui.menu import menuCreator
+    from msl.ui.menu.menu import menuCreator
     menuCreator()
 
 
 def uninitializePlugin(mobject):
     ''' Uninitialize the script plug-in '''
     mplugin = OpenMayaMPx.MFnPlugin(mobject)
-    from plugin.ui.menu import menuCreator
+    from msl.ui.menu.menu import menuCreator
     menuCreator().unloadMenu()
