@@ -14,6 +14,7 @@ Documentation
    install
    guides
    ui
+   changelog
 
 
 ******************

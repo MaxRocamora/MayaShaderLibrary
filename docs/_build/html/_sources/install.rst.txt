@@ -18,9 +18,10 @@ Maya Install
 ------------
 
 - MayaShaderLibrary works on Maya 2017, 2018, and 2019
-- Add the following environment variable to your Maya.env file, replacing 'installDirectory' with the location where you download/unzip the repository. ::
+- Add the following two environment variables to your Maya.env file, replacing 'installDirectory' with the location where you download/unzip the repository. ::
 
 	MAYA_PLUG_IN_PATH = installDirectory\\MayaShaderLibrary\\shaderLibrary\\plugin\\maya;
+	ARCANE_SHADER_LIBRARY = installDirectory;
 
 .. note:: Maya.env is usually located under User/My Documents/Maya/2018)
 

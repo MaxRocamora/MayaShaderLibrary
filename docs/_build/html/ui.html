@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
     <link rel="prev" title="Guides" href="guides.html" /> 
 </head>
 
@@ -83,13 +84,15 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides.html">Guides</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#user-interface-areas">User Interface Areas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#user-interface-description">User Interface Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#shader-category-s">Shader Category’s</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#shaders">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#shader-menu">Shader Menu</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#menubar">Menubar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#misc">Misc</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -157,27 +160,39 @@
   <div class="section" id="user-interface">
 <span id="ui"></span><h1>User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h1>
 <p>On this section you will find a detailed explanation of each action on the user interface.</p>
-<div class="section" id="user-interface-areas">
-<h2>User Interface Areas<a class="headerlink" href="#user-interface-areas" title="Permalink to this headline">¶</a></h2>
-<p>Shader Info Area</p>
-<p>Notes Areas</p>
+<p>..note:: Hover over any button to see what it does on the bottom status bar</p>
+<div class="section" id="user-interface-description">
+<h2>User Interface Description<a class="headerlink" href="#user-interface-description" title="Permalink to this headline">¶</a></h2>
+<img alt="https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/scripts/ui/screenshot/uiAreasDetail.png?raw=true" src="https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/scripts/ui/screenshot/uiAreasDetail.png?raw=true" />
+<p>1. Shader Info Area
+Here is displayed the name of the shader, the maya node type, and user, pc name of who generate this shader. This is useful when you have MayaShaderLibrary installed over a network with a single shader repository.</p>
+<p>2. Notes Areas
+You can add/edit comments here, remember to press the save button to save (3) the changes on the comments.</p>
 </div>
 <div class="section" id="shader-category-s">
 <h2>Shader Category’s<a class="headerlink" href="#shader-category-s" title="Permalink to this headline">¶</a></h2>
-<p>To create a category</p>
-<p>To pin a category</p>
-<p>To unpin category</p>
-<p>Also:</p>
-<p>Browse category folder</p>
-<p>Refresh</p>
+<p>4. To create a category
+Go to menu Categorgy &gt; Add New Category or use the ui button to create a new category.</p>
+<p>5. To pin a category
+Use the pin button to pin the category to the tabs.</p>
+<p>6. To unpin category
+Use the unpin button to remove a category from the tabs, this button dont delete the category from disk, just removes it from the tabs panel.</p>
+<p>7. Browse category folder
+Opens an explorer to the actual folder of the category</p>
+<p>8. Refresh
+Refresh the interface, this is usefull when the MayaShaderLibrary is used over a network with multiple users and you need to check for changes made by another user.</p>
 </div>
 <div class="section" id="shaders">
 <h2>Shaders<a class="headerlink" href="#shaders" title="Permalink to this headline">¶</a></h2>
 <p>Shaders are represented as thumbnail icons on the selected category, to add a shaders, simply select any maya geometry with a shader on it, and press the green plus button. The shader will appear on the category tab.</p>
+<p>9. Add Shader
+Select a geometry to save his shader into current category selected.</p>
 </div>
 <div class="section" id="shader-menu">
 <h2>Shader Menu<a class="headerlink" href="#shader-menu" title="Permalink to this headline">¶</a></h2>
-<p>To access shader menu, right click on the thumbnail image of any shader on your category tab.</p>
+<ol class="arabic simple" start="10">
+<li>To access shader menu, right click on the thumbnail image of any shader on your category tab.</li>
+</ol>
 <p>Each menu option explained below:</p>
 <ul class="simple">
 <li>Import into Scene</li>
@@ -192,6 +207,13 @@
 <h2>Menubar<a class="headerlink" href="#menubar" title="Permalink to this headline">¶</a></h2>
 <p>Options</p>
 </div>
+<div class="section" id="misc">
+<h2>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
+<p>The maya file used for the thumnails is located under:
+<em>installDirectoryMayaShaderLibrarymayascenethumbnail_scene.ma</em></p>
+<p>The shaders are stored under this location:
+<em>installDirectoryMayaShaderLibrarymayashaders</em></p>
+</div>
 </div>
 
 
@@ -201,6 +223,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="guides.html" class="btn btn-neutral float-left" title="Guides" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
