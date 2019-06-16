@@ -2,7 +2,7 @@
 A shading library tool to store, share and organize shaders in Autodesk Maya.
 You can Create Custom Categories to organize, save and load maya shaders.
 
-----------------------------------
+[Official Documentation](https://mayashaderlibrary.readthedocs.io/en/latest/#)
 
 Installation:
 
