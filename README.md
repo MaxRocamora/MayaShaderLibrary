@@ -17,4 +17,4 @@ Installation:
 
 
 ----------------------------------
-![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/scripts/ui/screenshot/uiMenu.png)
+![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiMenu.png)

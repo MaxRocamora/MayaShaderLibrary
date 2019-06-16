@@ -10,7 +10,7 @@ On this section you will find a detailed explanation of each action on the user 
 User Interface Description
 --------------------------
 
-.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/scripts/ui/screenshot/uiAreasDetail.png?raw=true
+.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiAreasDetail.png?raw=true
 
 1. Shader Info Area
 Here is displayed the name of the shader, the maya node type, and user, pc name of who generate this shader. This is useful when you have MayaShaderLibrary installed over a network with a single shader repository.
