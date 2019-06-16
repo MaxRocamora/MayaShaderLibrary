@@ -3,13 +3,13 @@
 
 import os
 
-# Root Path to tool
+# Root Path to tool (msl package)
 rootPath = os.path.join(os.path.dirname(os.path.split(__file__)[0]))
 
 # UI / Stylesheet / icons
-arcaneIcon = os.path.join(rootPath, 'scripts', 'ui', 'icons', 'appIcon.png')
-sshFile = os.path.join(rootPath, 'scripts', 'ui', 'stylesheet', 'arcane.qss')
-sshButton = os.path.join(rootPath, 'scripts', 'ui', 'stylesheet', 'shaderButton.qss')
+arcaneIcon = os.path.join(rootPath, 'msl', 'ui', 'icons', 'appIcon.png')
+sshFile = os.path.join(rootPath, 'msl', 'ui', 'stylesheet', 'arcane.qss')
+sshButton = os.path.join(rootPath, 'msl', 'ui', 'stylesheet', 'shaderButton.qss')
 
 # Maya Files and default shader repositoy
 DEFAULT_SHADERS_PATH = os.path.join(rootPath, 'maya', 'shaders')

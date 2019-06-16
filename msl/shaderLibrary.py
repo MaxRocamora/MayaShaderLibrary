@@ -40,7 +40,7 @@ import os
 from version import *
 from PySide2 import QtCore
 import maya.cmds as cmds
-from . import thumbnail_default_scene, DEFAULT_SHADERS_PATH
+from msl import thumbnail_default_scene, DEFAULT_SHADERS_PATH
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC

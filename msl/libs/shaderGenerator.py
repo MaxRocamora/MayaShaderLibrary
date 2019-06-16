@@ -11,8 +11,8 @@ import os
 import subprocess
 from contextlib import contextmanager
 from PySide2 import QtCore, QtGui, QtWidgets
-from scripts import thumbnail_default_scene, sshButton
-from scripts.ui.icons import getIcon
+from msl import thumbnail_default_scene, sshButton
+from msl.ui.icons import getIcon
 from .dialogs.dlg_renameShader import renameShaderDialog
 from .dialogs.dlg_deleteShader import deleteShaderDialog
 
