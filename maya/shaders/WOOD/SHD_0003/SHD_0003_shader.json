@@ -1,5 +1,5 @@
 {
-    "Edited On": "2019-05-26 20:29:49.045000", 
+    "Edited On": "2019-06-16 17:39:42.613000", 
     "PC": "Max-PC", 
     "User": "Max", 
     "category": "WOOD", 
@@ -10,7 +10,7 @@
     ], 
     "name": "ORANGE", 
     "node": "ORANGE", 
-    "notes": "Enter notes here...", 
+    "notes": "orange ceramic shader", 
     "shaderType": "blinn", 
     "sourceFile": ""
 }
