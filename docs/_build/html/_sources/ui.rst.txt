@@ -5,7 +5,7 @@ User Interface
 
 On this section you will find a detailed explanation of each action on the user interface.
 
-..note:: Hover over any button to see what it does on the bottom status bar
+.. note:: Hover over any button to see what it does on the bottom status bar
 
 User Interface Description
 --------------------------
@@ -13,27 +13,34 @@ User Interface Description
 .. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiAreasDetail.png?raw=true
 
 1. Shader Info Area
+
 Here is displayed the name of the shader, the maya node type, and user, pc name of who generate this shader. This is useful when you have MayaShaderLibrary installed over a network with a single shader repository.
 
 2. Notes Areas
+
 You can add/edit comments here, remember to press the save button to save (3) the changes on the comments.
 
 Shader Category's
 -----------------
 
-4. To create a category
+4. Create a category
+
 Go to menu Categorgy > Add New Category or use the ui button to create a new category.
 
-5. To pin a category
+5. Pin a category
+
 Use the pin button to pin the category to the tabs.
 
-6. To unpin category
+6. Unpin category
+
 Use the unpin button to remove a category from the tabs, this button dont delete the category from disk, just removes it from the tabs panel.
 
 7. Browse category folder
+
 Opens an explorer to the actual folder of the category
 
 8. Refresh
+
 Refresh the interface, this is usefull when the MayaShaderLibrary is used over a network with multiple users and you need to check for changes made by another user.
 
 
@@ -43,6 +50,7 @@ Shaders
 Shaders are represented as thumbnail icons on the selected category, to add a shaders, simply select any maya geometry with a shader on it, and press the green plus button. The shader will appear on the category tab.
 
 9. Add Shader
+
 Select a geometry to save his shader into current category selected.
 
 Shader Menu
@@ -53,22 +61,36 @@ Shader Menu
 Each menu option explained below:
 
 * Import into Scene
+	Adds selected shader to the maya hypershade
+
 * Import and assing into selection
+	Adds selected shader to the maya hypershade and assing it to selected object
+
 * Rename
+	Renames the shader
+
 * Browse
+	Open explorer into shader folder
+
 * Generate Thumnail
+	Generates thumbnail image for this shader, using the default lightrig maya file
+
 * Delete from lib
+	Deletes this shader from disk
 
 Menubar
------------------
+-------
 
-Options
+*More info about the menubar soon.*
 
 Misc
 ----
 
-The maya file used for the thumnails is located under:
-*installDirectory\MayaShaderLibrary\maya\scene\thumbnail_scene.ma*
+The maya file used for render the thumnail image is located on this location: 
 
-The shaders are stored under this location:
-*installDirectory\MayaShaderLibrary\maya\shaders*
+*installDirectory\\MayaShaderLibrary\\maya\\scene\\thumbnail_scene.ma*
+
+
+The shaders are stored on this location: 
+
+*installDirectory\\MayaShaderLibrary\\maya\\shaders*

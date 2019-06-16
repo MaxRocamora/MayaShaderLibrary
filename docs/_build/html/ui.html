@@ -160,33 +160,52 @@
   <div class="section" id="user-interface">
 <span id="ui"></span><h1>User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h1>
 <p>On this section you will find a detailed explanation of each action on the user interface.</p>
-<p>..note:: Hover over any button to see what it does on the bottom status bar</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Hover over any button to see what it does on the bottom status bar</p>
+</div>
 <div class="section" id="user-interface-description">
 <h2>User Interface Description<a class="headerlink" href="#user-interface-description" title="Permalink to this headline">¶</a></h2>
 <img alt="https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiAreasDetail.png?raw=true" src="https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiAreasDetail.png?raw=true" />
-<p>1. Shader Info Area
-Here is displayed the name of the shader, the maya node type, and user, pc name of who generate this shader. This is useful when you have MayaShaderLibrary installed over a network with a single shader repository.</p>
-<p>2. Notes Areas
-You can add/edit comments here, remember to press the save button to save (3) the changes on the comments.</p>
+<ol class="arabic simple">
+<li>Shader Info Area</li>
+</ol>
+<p>Here is displayed the name of the shader, the maya node type, and user, pc name of who generate this shader. This is useful when you have MayaShaderLibrary installed over a network with a single shader repository.</p>
+<ol class="arabic simple" start="2">
+<li>Notes Areas</li>
+</ol>
+<p>You can add/edit comments here, remember to press the save button to save (3) the changes on the comments.</p>
 </div>
 <div class="section" id="shader-category-s">
 <h2>Shader Category’s<a class="headerlink" href="#shader-category-s" title="Permalink to this headline">¶</a></h2>
-<p>4. To create a category
-Go to menu Categorgy &gt; Add New Category or use the ui button to create a new category.</p>
-<p>5. To pin a category
-Use the pin button to pin the category to the tabs.</p>
-<p>6. To unpin category
-Use the unpin button to remove a category from the tabs, this button dont delete the category from disk, just removes it from the tabs panel.</p>
-<p>7. Browse category folder
-Opens an explorer to the actual folder of the category</p>
-<p>8. Refresh
-Refresh the interface, this is usefull when the MayaShaderLibrary is used over a network with multiple users and you need to check for changes made by another user.</p>
+<ol class="arabic simple" start="4">
+<li>Create a category</li>
+</ol>
+<p>Go to menu Categorgy &gt; Add New Category or use the ui button to create a new category.</p>
+<ol class="arabic simple" start="5">
+<li>Pin a category</li>
+</ol>
+<p>Use the pin button to pin the category to the tabs.</p>
+<ol class="arabic simple" start="6">
+<li>Unpin category</li>
+</ol>
+<p>Use the unpin button to remove a category from the tabs, this button dont delete the category from disk, just removes it from the tabs panel.</p>
+<ol class="arabic simple" start="7">
+<li>Browse category folder</li>
+</ol>
+<p>Opens an explorer to the actual folder of the category</p>
+<ol class="arabic simple" start="8">
+<li>Refresh</li>
+</ol>
+<p>Refresh the interface, this is usefull when the MayaShaderLibrary is used over a network with multiple users and you need to check for changes made by another user.</p>
 </div>
 <div class="section" id="shaders">
 <h2>Shaders<a class="headerlink" href="#shaders" title="Permalink to this headline">¶</a></h2>
 <p>Shaders are represented as thumbnail icons on the selected category, to add a shaders, simply select any maya geometry with a shader on it, and press the green plus button. The shader will appear on the category tab.</p>
-<p>9. Add Shader
-Select a geometry to save his shader into current category selected.</p>
+<ol class="arabic simple" start="9">
+<li>Add Shader</li>
+</ol>
+<p>Select a geometry to save his shader into current category selected.</p>
 </div>
 <div class="section" id="shader-menu">
 <h2>Shader Menu<a class="headerlink" href="#shader-menu" title="Permalink to this headline">¶</a></h2>
@@ -195,24 +214,48 @@ Select a geometry to save his shader into current category selected.</p>
 </ol>
 <p>Each menu option explained below:</p>
 <ul class="simple">
-<li>Import into Scene</li>
-<li>Import and assing into selection</li>
-<li>Rename</li>
-<li>Browse</li>
-<li>Generate Thumnail</li>
-<li>Delete from lib</li>
+<li><dl class="first docutils">
+<dt>Import into Scene</dt>
+<dd>Adds selected shader to the maya hypershade</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Import and assing into selection</dt>
+<dd>Adds selected shader to the maya hypershade and assing it to selected object</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Rename</dt>
+<dd>Renames the shader</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Browse</dt>
+<dd>Open explorer into shader folder</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Generate Thumnail</dt>
+<dd>Generates thumbnail image for this shader, using the default lightrig maya file</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Delete from lib</dt>
+<dd>Deletes this shader from disk</dd>
+</dl>
+</li>
 </ul>
 </div>
 <div class="section" id="menubar">
 <h2>Menubar<a class="headerlink" href="#menubar" title="Permalink to this headline">¶</a></h2>
-<p>Options</p>
+<p><em>More info about the menubar soon.</em></p>
 </div>
 <div class="section" id="misc">
 <h2>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
-<p>The maya file used for the thumnails is located under:
-<em>installDirectoryMayaShaderLibrarymayascenethumbnail_scene.ma</em></p>
-<p>The shaders are stored under this location:
-<em>installDirectoryMayaShaderLibrarymayashaders</em></p>
+<p>The maya file used for render the thumnail image is located on this location:</p>
+<p><em>installDirectory\MayaShaderLibrary\maya\scene\thumbnail_scene.ma</em></p>
+<p>The shaders are stored on this location:</p>
+<p><em>installDirectory\MayaShaderLibrary\maya\shaders</em></p>
 </div>
 </div>
 
