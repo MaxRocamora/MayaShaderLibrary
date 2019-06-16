@@ -12,7 +12,11 @@ import os
 import maya.OpenMayaMPx as OpenMayaMPx
 
 # Add ASL package root
-arcanePath = os.environ['ARCANE_SHADER_LIBRARY']
+try:
+    arcanePath = os.environ['ARCANE_SHADER_LIBRARY']
+except KeyError:
+    print 'Missing Maya.env entry: ARCANE_SHADER_LIBRARY'
+
 if arcanePath not in sys.path:
     sys.path.append(arcanePath)
 
