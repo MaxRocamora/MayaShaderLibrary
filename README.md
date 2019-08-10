@@ -8,7 +8,7 @@ Installation:
 -------------
 
 1. Download/clone this repository.
-2. Copy/Paste the contents to your preferred scripts location.
+2. If downloaded, unzip the contents to your preferred scripts location.
 3. Add the following two environment variables to your Maya.env file.
 Maya.env is usually located under User/My Documents/Maya/2018
 
