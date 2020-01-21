@@ -20,11 +20,21 @@ Maya Install
 - MayaShaderLibrary works on Maya 2017, 2018, and 2019
 - Add the following two environment variables to your Maya.env file, replacing 'installDirectory' with the location where you download/unzip the repository. ::
 
-	MAYA_PLUG_IN_PATH = installDirectory\\MayaShaderLibrary\\shaderLibrary\\plugin\\maya
-	ARCANE_SHADER_LIBRARY = installDirectory
+	MAYA_MODULE_PATH = installDirectory\\MayaShaderLibrary\\maya_plugin
+	MAYA_SHADER_LIBRARY = installDirectory
 
 .. note:: Maya.env is usually located under User/My Documents/Maya/2018)
 
 - Make sure to load the plugin '"ARCANE Tools ShaderLibrary 1.0"' from plugin manager once maya is restarted.
 
 Maya plugin manager is located in maya menu under 'Windows' > 'Settings/Preferences' > 'Plug-in Manager'
+
+Running the script
+------------------
+
+Create a shelf button with the following python code:
+
+.. code-block:: python
+
+	import msl.shader_library as mxr_shader_library
+	mxr_shader_library.load()

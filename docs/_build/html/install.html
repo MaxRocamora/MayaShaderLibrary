@@ -84,6 +84,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#download">Download</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#maya-install">Maya Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-script">Running the script</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guides.html">Guides</a></li>
@@ -169,8 +170,8 @@
 <li><p class="first">MayaShaderLibrary works on Maya 2017, 2018, and 2019</p>
 </li>
 <li><p class="first">Add the following two environment variables to your Maya.env file, replacing ‘installDirectory’ with the location where you download/unzip the repository.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAYA_PLUG_IN_PATH</span> <span class="o">=</span> <span class="n">installDirectory</span>\\<span class="n">MayaShaderLibrary</span>\\<span class="n">shaderLibrary</span>\\<span class="n">plugin</span>\\<span class="n">maya</span>
-<span class="n">ARCANE_SHADER_LIBRARY</span> <span class="o">=</span> <span class="n">installDirectory</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAYA_MODULE_PATH</span> <span class="o">=</span> <span class="n">installDirectory</span>\\<span class="n">MayaShaderLibrary</span>\\<span class="n">maya_plugin</span>
+<span class="n">MAYA_SHADER_LIBRARY</span> <span class="o">=</span> <span class="n">installDirectory</span>
 </pre></div>
 </div>
 </li>
@@ -183,6 +184,14 @@
 <li>Make sure to load the plugin ‘“ARCANE Tools ShaderLibrary 1.0”’ from plugin manager once maya is restarted.</li>
 </ul>
 <p>Maya plugin manager is located in maya menu under ‘Windows’ &gt; ‘Settings/Preferences’ &gt; ‘Plug-in Manager’</p>
+</div>
+<div class="section" id="running-the-script">
+<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<p>Create a shelf button with the following python code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">msl.shader_library</span> <span class="kn">as</span> <span class="nn">mxr_shader_library</span>
+<span class="n">mxr_shader_library</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 </div>
 
