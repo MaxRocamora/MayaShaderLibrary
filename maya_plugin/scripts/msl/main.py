@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 '''
-ARCANE Shader Library
+Arcane Tools
+Maya Shader Library
 Main interface class
+
 Load Python Command:
 # import shaderLibrary.shaderLibrary as sl; sl.load()
 
 maxirocamora@gmail.com
-www.arcanetools.com
 
 # Default thumbnail lighting scene
-%APP%/Maya/scene/thumbnail_scene.ma
+%LIBRARY%/scene/thumbnail_scene.ma
 
 to do:
 
     logg render output from subprocess to file
 
-    instead of use a mayafile, make a json file for shaders, so we can rename or repath files, and import in
+    instead of use a mayafile, make a json file for shaders,
+    so we can rename or repath files, and import in
     other apps.
 
     update shader:
@@ -40,7 +42,7 @@ import os
 from version import *
 from PySide2 import QtCore
 import maya.cmds as cmds
-from msl import thumbnail_default_scene, DEFAULT_SHADERS_PATH
+from msl import thumbnail_default_scene
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC
@@ -121,8 +123,7 @@ class ProgramUI_shaderLibrary(base, form):
         ]
 
         self.userPref = {"lastCategory": lastCategory,
-                         'favouriteCategorys': favouriteCategorys,
-                         'shaderLibFolder': self.observer.shaderLibFolder
+                         'favouriteCategorys': favouriteCategorys
                          }
         self.userSettings.saveUS(self.userPref)
         self.close()
@@ -135,11 +136,6 @@ class ProgramUI_shaderLibrary(base, form):
 
         lastTab = self.userPref.get("lastCategory", 0)
         favTabs = self.userPref.get("favouriteCategorys", [])
-        shaderLibFolder = self.userPref.get("shaderLibFolder", None)
-        if shaderLibFolder:
-            self.observer.shaderLibFolder = shaderLibFolder
-        else:
-            self.observer.shaderLibFolder = DEFAULT_SHADERS_PATH
 
         self.categoryCC.loadCategorys()
         for category in self.observer.categoryList:
