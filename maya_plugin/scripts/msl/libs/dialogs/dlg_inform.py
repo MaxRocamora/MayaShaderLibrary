@@ -7,6 +7,5 @@ def informationDialog(msg, ui):
     msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
     msgBox.setIcon(QtWidgets.QMessageBox.Warning)
     msgBox.setText(msg)
-    msgBox.setWindowTitle()
     msgBox.setStandardButtons(QtWidgets.QMessageBox.Close)
     msgBox.exec_()
