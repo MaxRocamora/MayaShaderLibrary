@@ -18,7 +18,13 @@ Maya.env is usually located under User/My Documents/Maya/2018
 
 4. Make sure to load the plugin '"ARCANE Tools ShaderLibrary 1.0"' from plugin manager once maya is restarted.
 
+5. Create a shelf button with the following python code:
+
+.. code-block:: python
+
+	import msl.shader_library as mxr_shader_library
+	mxr_shader_library.load()
 
 
 ----------------------------------
-![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiMenu.png)
+![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/maya_plugin/scripts/msl/ui/screenshot/uiMenu.png)
