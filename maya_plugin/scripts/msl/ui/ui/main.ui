@@ -440,7 +440,6 @@
     </property>
     <addaction name="separator"/>
     <addaction name="mnu_defaultLigthRigOpen"/>
-    <addaction name="mnu_setFolder"/>
    </widget>
    <addaction name="menuMenu"/>
    <addaction name="menuCategory"/>
