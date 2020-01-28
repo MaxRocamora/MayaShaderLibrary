@@ -11,7 +11,7 @@ Under menus 'Arcane Tools' > 'Lighting & Shading' > 'Arcane Shader Library' you 
 
 Once you load the tool you should see the interface.
 
-.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiMenu.png?raw=true
+.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/maya_plugin/scripts/msl/ui/screenshot/uiMenu.png?raw=true
 
 How to use
 ----------

@@ -1,29 +1,12 @@
-# MayaShaderLibrary
-A shading library tool to store, share and organize shaders in Autodesk Maya.
-You can Create Custom Categories to organize, save and load maya shaders.
+# Maya Shader Library
 
-For full install & use guides see the [Official Documentation](https://mayashaderlibrary.readthedocs.io/en/latest/#)
+A shading library tool to store and organize shaders in Autodesk Maya.
+Create and Manage Categories to organize, save and load maya shaders.
 
-Installation:
--------------
+Installation & Usage guide
+--------------------------
 
-1. Download/clone this repository.
-2. If downloaded, unzip the contents to your preferred scripts location.
-3. Add the following two environment variables to your Maya.env file.
-Maya.env is usually located under User/My Documents/Maya/2018
-
-*MAYA_PLUG_IN_PATH = installDirectory\MayaShaderLibrary\shaderLibrary\plugin\maya*
-
-*ARCANE_SHADER_LIBRARY = installDirectory*
-
-4. Make sure to load the plugin '"ARCANE Tools ShaderLibrary 1.0"' from plugin manager once maya is restarted.
-
-5. Create a shelf button with the following python code:
-
-.. code-block:: python
-
-	import msl.shader_library as mxr_shader_library
-	mxr_shader_library.load()
+See the [Official Documentation](https://mayashaderlibrary.readthedocs.io/en/latest/#)
 
 
 ----------------------------------

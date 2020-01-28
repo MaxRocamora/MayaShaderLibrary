@@ -10,7 +10,7 @@ On this section you will find a detailed explanation of each action on the user 
 User Interface Description
 --------------------------
 
-.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiAreasDetail.png?raw=true
+.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/maya_plugin/scripts/msl/ui/screenshot/uiAreasDetail.png?raw=true
 
 1. Shader Info Area
 
@@ -88,9 +88,9 @@ Misc
 
 The maya file used for render the thumnail image is located on this location: 
 
-*installDirectory\\MayaShaderLibrary\\maya\\scene\\thumbnail_scene.ma*
+*installDirectory\\MayaShaderLibrary\\library\\scene\\thumbnail_scene.ma*
 
 
 The shaders are stored on this location: 
 
-*installDirectory\\MayaShaderLibrary\\maya\\shaders*
+*installDirectory\\MayaShaderLibrary\\library\\shaders*

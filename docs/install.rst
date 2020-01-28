@@ -36,5 +36,5 @@ Create a shelf button with the following python code:
 
 .. code-block:: python
 
-	import msl.shader_library as mxr_shader_library
-	mxr_shader_library.load()
+	import msl.shader_library as maya_shader_library
+	maya_shader_library.load()
