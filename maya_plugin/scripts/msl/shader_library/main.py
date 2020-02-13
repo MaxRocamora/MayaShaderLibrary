@@ -42,7 +42,7 @@ import os
 from version import *
 from PySide2 import QtCore
 import maya.cmds as cmds
-from msl import thumbnail_default_scene
+from . import thumbnail_default_scene
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC

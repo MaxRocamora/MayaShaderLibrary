@@ -7,7 +7,7 @@ Controller for category related methods.
 # IMPORTS
 import os
 from PySide2 import QtCore, QtWidgets
-from msl import LIBRARY_SHADERS_PATH
+from msl.shader_library import LIBRARY_SHADERS_PATH
 from .shaderGenerator import generateShaderButtons
 from .category import Category
 from .dialogs.dlg_addCategory import addCategoryDialog

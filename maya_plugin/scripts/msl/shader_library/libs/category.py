@@ -8,7 +8,7 @@ Category main object
 # IMPORTS
 import os
 import subprocess
-from msl import LIBRARY_SHADERS_PATH
+from msl.shader_library import LIBRARY_SHADERS_PATH
 from .dialogs.dlg_inform import informationDialog
 from .shader import Shader as Shader
 
