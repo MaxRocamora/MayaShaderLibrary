@@ -18,10 +18,10 @@ Maya Install
 ------------
 
 - MayaShaderLibrary works on Maya 2017, 2018, and 2019
-- Add the following two environment variables to your Maya.env file, replacing 'installDirectory' with the location where you download/unzip the repository. ::
+- Add the following two environment variables to your Maya.env file, replacing 'your_install_directory' with the location where you download/unzip the repository. ::
 
-	MAYA_MODULE_PATH = installDirectory\\MayaShaderLibrary\\maya_plugin
-	MAYA_SHADER_LIBRARY = installDirectory
+	PYTHONPATH = %PYTHONPATH;your_install_directory\\MayaShaderLibrary\\maya_plugin
+	MAYA_SHADER_LIBRARY = your_install_directory\library
 
 .. note:: Maya.env is usually located under User/My Documents/Maya/2018)
 
@@ -36,5 +36,5 @@ Create a shelf button with the following python code:
 
 .. code-block:: python
 
-	import msl.shader_library.main as maya_shader_library
+	import msl.shader_library as maya_shader_library
 	maya_shader_library.load()
