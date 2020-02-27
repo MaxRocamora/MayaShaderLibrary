@@ -10,7 +10,7 @@ VALID_ENV = True
 
 # Root Path to tool (msl package)
 package = pkgutil.get_loader("msl")
-ROOT_PATH = os_path.join(os_path.dirname(package.filename), 'msl', 'shader_library')
+ROOT_PATH = os_path.join(os_path.dirname(package.filename), 'msl')
 
 print('MSL Root Path', ROOT_PATH)
 # UI / Stylesheet / icons

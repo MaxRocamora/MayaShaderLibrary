@@ -16,7 +16,7 @@ import subprocess
 import shutil
 import datetime
 import maya.cmds as cmds
-from msl.shader_library.libs.utils.jsonHelp import getDictJson
+from msl.libs.utils.jsonHelp import getDictJson
 
 
 class Shader(object):
