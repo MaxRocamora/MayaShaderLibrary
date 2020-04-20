@@ -10,4 +10,4 @@ See the [Official Documentation](https://mayashaderlibrary.readthedocs.io/en/lat
 
 
 ----------------------------------
-![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/maya_plugin/scripts/msl/ui/screenshot/uiMenu.png)
+![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiMenu.png)
