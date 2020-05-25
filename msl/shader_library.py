@@ -14,7 +14,7 @@ maxirocamora@gmail.com
 
 to do:
 
-    logg render output from subprocess to file
+    log render output from subprocess to file
 
     instead of use a mayafile, make a json file for shaders,
     so we can rename or repath files, and import in
