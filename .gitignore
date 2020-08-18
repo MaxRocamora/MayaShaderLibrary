@@ -1,3 +1,4 @@
 *.pyc
 *.sublime-workspace
 *.sublime-project
+library/shaders/
