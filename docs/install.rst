@@ -9,7 +9,7 @@ Download
 - Download/clone MayaShaderLibrary_ repository from gitHub.
 - If you are not familiar with gitHub, download this `zip file`_
 
-- Copy/Paste or Unzip the contents into your preferred scripts location.
+- Copy/Paste or Unzip the contents into your preferred scripts location, or your maya scripts folder.
 
 .. _MayaShaderLibrary: https://github.com/MaxRocamora/MayaShaderLibrary
 .. _zip file: https://github.com/MaxRocamora/MayaShaderLibrary/zipball/master
@@ -18,9 +18,10 @@ Maya Install
 ------------
 
 - MayaShaderLibrary works on Maya 2017, 2018, and 2019
-- Add the following two environment variables to your Maya.env file, replacing 'your_install_directory' with the location where you download/unzip the repository. ::
+- Copy 'sanityChecker' folder into users/maya scripts folder
 
-	PYTHONPATH = %PYTHONPATH;your_install_directory\\MayaShaderLibrary\\maya_plugin
+- Add the following environment variable to your Maya.env, this folder is where your shaders are stored. ::
+
 	MAYA_SHADER_LIBRARY = your_install_directory\library
 
 .. note:: Maya.env is usually located under User/My Documents/Maya/2018)
