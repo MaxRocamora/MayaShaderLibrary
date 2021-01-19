@@ -16,9 +16,7 @@ to do:
 
     log render output from subprocess to file
 
-    instead of use a mayafile, make a json file for shaders,
-    so we can rename or repath files, and import in
-    other apps.
+    instead of use a mayafile, make a json file for shaders.
 
     update shader:
     when export a shader into category, if exist, make update options instead of overwrite
