@@ -3,6 +3,8 @@
 Installation
 ============
 
+MayaShaderLibrary tested on Maya 2017, 2018, and 2019
+
 Download
 --------
 
@@ -17,18 +19,12 @@ Download
 Maya Install
 ------------
 
-- MayaShaderLibrary works on Maya 2017, 2018, and 2019
-- Copy 'sanityChecker' folder into users/maya scripts folder
+- Add the following environment variable to your Maya.env (this folder is where your shaders and preview files are stored).
 
-- Add the following environment variable to your Maya.env, this folder is where your shaders are stored. ::
-
+::
 	MAYA_SHADER_LIBRARY = your_install_directory\library
 
 .. note:: Maya.env is usually located under User/My Documents/Maya/2018)
-
-- Make sure to load the plugin '"ARCANE Tools ShaderLibrary 1.0"' from plugin manager once maya is restarted.
-
-Maya plugin manager is located in maya menu under 'Windows' > 'Settings/Preferences' > 'Plug-in Manager'
 
 Running the script
 ------------------
