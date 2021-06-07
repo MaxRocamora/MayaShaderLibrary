@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
-'''
-Arcane Tools
-Maya Shader Library
-Main interface class
+''' Arcane Tools / Maya Shader Library
+Author: maxirocamora@gmail.com
 
 Load Python Command:
 # import shaderLibrary.shaderLibrary as sl; sl.load()
-
-maxirocamora@gmail.com
 
 # Default thumbnail lighting scene
 %LIBRARY%/scene/thumbnail_scene.ma
@@ -35,12 +31,11 @@ to do:
 '''
 # --------------------------------------------------------------------------------------------
 
-# IMPORTS
 import os
-from version import *
+
 from PySide2 import QtCore
 import maya.cmds as cmds
-from . import thumbnail_default_scene
+
 from .libs.observer import ObserverUI
 from .libs import categoryController as categoryCC
 from .libs import shaderController as shaderCC
@@ -49,6 +44,8 @@ from .libs.qt.qtStyle import cssMainWindow
 from .libs.utils.userSettings import UserSettings
 from .libs.utils.uiStatus import Statusbar
 from .ui.icons import getIcon
+from .version import __app__, __version__, qtWinName
+from . import thumbnail_default_scene
 
 appPath = os.path.dirname(__file__)
 ui_main = os.path.join(appPath, 'ui', 'ui', 'main.ui')
@@ -117,7 +114,7 @@ class ProgramUI_shaderLibrary(base, form):
 
         lastCategory = self.categoryCC.currentCategoryTab()
         favouriteCategorys = [
-            self.tab_materials.tabText(i) for i in xrange(self.tab_materials.count())
+            self.tab_materials.tabText(i) for i in range(0, self.tab_materials.count())
         ]
 
         self.userPref = {"lastCategory": lastCategory,
