@@ -7,56 +7,48 @@
 # v2 - 03/2018 - Fix invalid json files
 # v3 - 10/2018 - Moved from class to direct import methods
 # --------------------------------------------------------------------------------------------
-
+from __future__ import print_function
 import json
 import os
 
 
 def getSimpleJson(jsonFile, queryValue):
-    '''
-    #Reads a variable from json file
+    ''' Reads a variable from json file
     jsonFile :: system file to read data.
     queryValue :: value from dictionary to query value
     '''
-    if os.path.exists(jsonFile):
-        fIn = open(jsonFile, 'r')
+    if not os.path.exists(jsonFile):
+        print("getSimpleJson: Config File not found: {} for Value {}.".format(
+            jsonFile, queryValue))
+        return False
+
+    with open(jsonFile, 'r') as fIn:
         try:
             jsonContainer = json.load(fIn)
-        except ValueError, e:
-            print ("JSON object issue: %s") % e
-            fIn.close()
+        except ValueError as e:
+            print("JSON object issue: {}".format(str(e)))
             return False
-        fIn.close()
-        value = jsonContainer.get(queryValue)
-        return value
-    else:
-        print "getSimpleJson: Config File not found: {} for Value {}.".format(jsonFile, queryValue)
-        return False
+    return jsonContainer.get(queryValue)
 
 
 def getDictJson(jsonFile):
-    '''
-    Reads a dict from json file
+    ''' Reads a dict from json file
     jsonFile :: system file to read data.
     '''
-    if os.path.exists(jsonFile):
-        fIn = open(jsonFile, 'r')
-        try:
-            value = json.load(fIn)
-        except ValueError, e:
-            print ("JSON object issue: %s") % e
-            fIn.close()
-            return False
-        fIn.close()
-        return value
-    else:
-        print "getDictJson: Config File not found: {}.".format(jsonFile)
+    if not os.path.exists(jsonFile):
+        print("getDictJson: Config File not found: {}.".format(jsonFile))
         return False
+
+    with open(jsonFile, 'r') as fIn:
+        try:
+            return json.load(fIn)
+        except ValueError as e:
+            print("JSON object issue: {}".format(str(e)))
+            return False
 
 
 def saveDictJson(dataDict, jsonFile):
-    '''
-    Saves a dictionary into a json file
+    ''' Saves a dictionary into a json file
     Args:
         dataDict (dictionary) : info dictionary to save
         jsonFile (file) : target file to save into
@@ -71,12 +63,11 @@ def saveDictJson(dataDict, jsonFile):
         with open(jsonFile, 'w') as loadedJsn:
             json.dump(dataDict, loadedJsn, sort_keys=True, indent=4)
     except IOError:
-        print 'IOError: No such file of directory:', jsonFile
+        print('IOError: No such file of directory:', jsonFile)
 
 
 def updateDictJson(values, jsonFile):
-    '''
-    Opens a json file, load its params,
+    ''' Opens a json file, load its params,
     add new keys and save it
     '''
     if not os.path.exists(jsonFile):

@@ -3,8 +3,6 @@
 ARCANE Shader Library Controller
 Controller for selected shader related methods.
 '''
-
-# IMPORTS
 from PySide2 import QtCore
 from .dialogs.dlg_addShader import addShaderDialog
 from ..ui.icons import getIcon

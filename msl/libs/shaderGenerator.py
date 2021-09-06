@@ -5,8 +5,7 @@
 # Fills layouts with buttons widgets of shaders from the corresponding category
 # Holds callback classes for button actions and menus
 # --------------------------------------------------------------------------------------------
-
-# IMPORTS
+from __future__ import print_function
 import os
 import subprocess
 from contextlib import contextmanager
@@ -31,11 +30,8 @@ def generateShaderButtons(shaderList, observer, layout, wide):
     for shader in shaderList:
         b = QtWidgets.QToolButton()
         b.setText(shader.name)
-        if shader.hasThumbail:
-            iconFile = shader.thumbnail
-        else:
-            iconFile = shader.thumbnailDefault
-        b.setIcon(QtGui.QIcon(iconFile))
+        icon = shader.thumbnail if shader.hasThumbail else shader.thumbnailDefault
+        b.setIcon(QtGui.QIcon(icon))
         b.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
         b.setFixedSize(110, 110)
         b.iconSize()
@@ -60,7 +56,7 @@ def fillShaderLayout(layout, wide, buttonList):
     b = 0
     row = 0
     while b < len(buttonList):
-        for col in range(0, wide):
+        for col in range(wide):
             if b >= len(buttonList):
                 break
             layout.addWidget(buttonList[b], row, col)
@@ -116,7 +112,7 @@ class CallMenu:
         smBrowse.triggered.connect(self.shader.browse)
         self.menu.addSeparator()
 
-        actionStr = "Generate Thumbnail".format(self.name)
+        actionStr = "Generate {} Thumbnail".format(self.name)
         smBrowse = QtWidgets.QAction(getIcon("wips"), actionStr, self.menu)
         self.menu.addAction(smBrowse)
         smBrowse.triggered.connect(lambda: self.launchThumbnail(self.shader))
@@ -144,8 +140,8 @@ class CallMenu:
                 process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 output, error = process.communicate()
                 # log_subprocess_output(StringIO(output))
-                print output
-                print error
+                print(output)
+                print(error)
 
     @contextmanager
     def waitCursor(self):

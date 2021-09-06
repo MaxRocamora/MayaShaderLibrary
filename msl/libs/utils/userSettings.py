@@ -2,11 +2,13 @@
 # --------------------------------------------------------------------------------------------
 #
 # User Settings Class / Instanced as userUI
-# Pass tool name on creation, this class handle load/save tool properties on a local user json file
+# Pass tool name on creation, this class handle load/save tool properties
+# on a local user json file
 # --------------------------------------------------------------------------------------------
-
+from __future__ import print_function
 import os
 from sys import platform
+
 from jsonHelp import getDictJson, saveDictJson
 
 # --------------------------------------------------------------------------------------------
@@ -28,7 +30,7 @@ class UserSettings(object):
         ''' Check for root .ini files directory or make it '''
         dirPath = os.path.split(self.userPath)[0]
         if not os.path.exists(dirPath):
-            print 'Config .ini directory not found, making one:', dirPath
+            print('Config .ini directory not found, making one:', dirPath)
             os.mkdir(dirPath)
 
     def saveUS(self, data):
@@ -51,7 +53,8 @@ class UserSettings(object):
     def userPath(self):
         ''' Returns user folder of this tool '''
         if platform == 'win32':
-            settingsFile = str(os.getenv('USERPROFILE')) + '/ArcaneTools/' + self.toolName + ".ini"
+            return str(os.getenv('USERPROFILE')) + \
+                '/ArcaneTools/' + self.toolName + ".ini"
         else:
-            settingsFile = str(os.path.expanduser('~')) + '/ArcaneTools/' + self.toolName + ".ini"
-        return settingsFile
+            return str(os.path.expanduser('~')) + \
+                '/ArcaneTools/' + self.toolName + ".ini"

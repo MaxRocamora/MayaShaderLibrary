@@ -1,16 +1,16 @@
 '''
 Opens a maya standalone instance and do a thumbnail render for given shader.
 '''
-
+from __future__ import print_function
 import sys
 import os
 
-print 'Loading Maya StandAlone...'
+print('Loading Maya StandAlone...')
 
 import maya.standalone as std
 std.initialize(name='python')
 
-print 'Generating Thumbnail...'
+print('Generating Thumbnail...')
 
 import maya.cmds as cmds
 
@@ -47,4 +47,4 @@ setupRenderFile()
 setShaderBall()
 renderThumbnail()
 
-print 'Done'
+print('Done')
