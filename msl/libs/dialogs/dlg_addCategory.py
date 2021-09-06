@@ -13,7 +13,7 @@ from ..category import Category
 class addCategoryDialog():
     msgStr = {
         'NewCatUnicodeError': 'UnicodeEncodeError!.',
-        'NewCatNameLenghtError': 'New Category name needs at least 4 characters length.',
+        'NewCatNameLengthError': 'New Category name needs at least 4 characters length.',
         'NewCatNameExist': 'Category name already in use.'
     }
 
@@ -46,7 +46,7 @@ class addCategoryDialog():
         msgBox.setDetailedText(name)
         msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         choice = msgBox.exec_()
-        return True if choice == QtWidgets.QMessageBox.Ok else False
+        return choice == QtWidgets.QMessageBox.Ok
 
 # --------------------------------------------------------------------------------------------
 # Create Category Support Dialogs
@@ -58,28 +58,23 @@ class addCategoryDialog():
         question = 'Enter Category Name'
         lineEdit = QtWidgets.QLineEdit.Normal
         QInputDialog = QtWidgets.QInputDialog
-        categoryName, result = QInputDialog.getText(self.ui, title, question, lineEdit, "default")
+        categoryName, result = QInputDialog.getText(self.ui, title,
+                                                    question, lineEdit, "default")
         if result is True:
             try:
                 categoryName = str(categoryName)
                 categoryName.decode('utf-8')
-            except UnicodeEncodeError:
-                self.informationDialog(self.msgStr['NewCatUnicodeError'])
-                return False
-            except UnicodeDecodeError:
+            except (UnicodeEncodeError, UnicodeDecodeError):
                 self.informationDialog(self.msgStr['NewCatUnicodeError'])
                 return False
             for category in self.ui.observer.categoryList:
                 if category.name.upper() == categoryName.upper():
                     self.informationDialog(self.msgStr['NewCatNameExist'])
                     return False
-            if len(categoryName) <= 3:
-                self.informationDialog(self.msgStr['NewCatNameLenghtError'])
-                return False
-            else:
+            if len(categoryName) > 3:
                 return categoryName
-        else:
-            return False
+            self.informationDialog(self.msgStr['NewCatNameLengthError'])
+        return False
 
     def informationDialog(self, msg):
         ''' open qt dialog box when no shader is selected or found'''
