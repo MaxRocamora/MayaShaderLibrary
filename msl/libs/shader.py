@@ -1,6 +1,8 @@
-# -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
-# ARCANE Shader Class
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+#
+# Shader Class
 # Get Shader from cg app using 'getShader' staticmethod
 # use information returned from 'getShader'
 # to create this class use 'createShader' classmethod.
@@ -15,7 +17,7 @@ import datetime
 
 import maya.cmds as cmds
 
-from msl.libs.utils.jsonHelp import getDictJson
+from msl.libs.utils.json_util import load_json
 
 
 class Shader(object):
@@ -60,24 +62,6 @@ class Shader(object):
     @property
     def pc(self):
         return self.properties.get('PC', 'N/A')
-
-    @property
-    def thumbnailDefault(self):
-        ''' Path to thumbnail file or default '''
-        return os.path.join(os.path.dirname(__file__),
-                            'resources',
-                            'default_thumb.jpg'
-                            )
-
-    @property
-    def thumbnail(self):
-        ''' Path to thumbnail file or default '''
-        return os.path.join(self.folder, self.name + '_thumb.png')
-
-    @property
-    def hasThumbail(self):
-        ''' return if shader has a custom thumbnail file '''
-        return os.path.exists(self.thumbnail)
 
     @property
     def folder(self):
@@ -145,12 +129,36 @@ class Shader(object):
         self.properties['notes'] = v
 
 # --------------------------------------------------------------------------------------------
+# Thumbnail
+# --------------------------------------------------------------------------------------------
+
+    @property
+    def thumbnail_default(self):
+        ''' Path to thumbnail file or default '''
+        return os.path.join(os.path.dirname(__file__),
+                            'resources',
+                            'default_thumb.jpg'
+                            )
+
+    @property
+    def thumbnail(self):
+        ''' Path to thumbnail file or default '''
+        return os.path.join(self.folder, self.name + '_thumb.png')
+
+    def get_thumbnail(self):
+        ''' return thumbnail file '''
+        if os.path.exists(self.thumbnail):
+            return self.thumbnail
+
+        return self.thumbnail_default
+
+# --------------------------------------------------------------------------------------------
 # Load Methods
 # --------------------------------------------------------------------------------------------
 
     def loadShaderProperties(self):
         ''' Load shaders properties from json file on disk '''
-        self.properties = dict(getDictJson(self.configFile))
+        self.properties = dict(load_json(self.configFile))
 
 # --------------------------------------------------------------------------------------------
 # Export Methods (MAYA)
