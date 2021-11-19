@@ -268,10 +268,10 @@
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
+     <cursorShape>ArrowCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Save Changes</string>
+     <string/>
     </property>
     <property name="statusTip">
      <string>Save Shader Notes</string>
