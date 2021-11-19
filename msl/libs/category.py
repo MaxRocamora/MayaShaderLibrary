@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
-'''
-ARCANE Category Class
-Category main object
-
-'''
-
-# IMPORTS
+# ------------------------------------------------------------------------
+# Category Class
+# ------------------------------------------------------------------------
 import os
 import subprocess
+
 from msl import LIBRARY_SHADERS_PATH
-from .dialogs.dlg_inform import informationDialog
-from .shader import Shader as Shader
+from msl.libs.dialogs.dlg_inform import informationDialog
+from msl.libs.shader import Shader as Shader
 
 
 class Category(object):
@@ -59,13 +56,9 @@ class Category(object):
 # --------------------------------------------------------------------------------------------
 
     def collectShaders(self):
-        ''' Returs a list of shader objects from chosen category '''
-        shaderFolders = [x.upper() for x in os.listdir(self.folder)]
-        shaders = []
-
-        for f in shaderFolders:
-            shaders.append(Shader.loadShader(name=f, category=self))
-        return shaders
+        ''' Returns a list of shader objects from chosen category '''
+        folders = [x.upper() for x in os.listdir(self.folder)]
+        return [Shader.loadShader(name=f, category=self) for f in folders]
 
 # --------------------------------------------------------------------------------------------
 # Static Methods
@@ -80,13 +73,13 @@ class Category(object):
     @staticmethod
     def collectCategorys(ui):
         ''' Load Categorys from disk and set up main storing list '''
-        categorys = []
-        if os.path.exists(LIBRARY_SHADERS_PATH):
-            categoryFolders = [x.upper() for x in os.listdir(LIBRARY_SHADERS_PATH)]
-            if len(categoryFolders) > 0:
-                for index, name in enumerate(categoryFolders):
-                    categorys.append(Category(name, LIBRARY_SHADERS_PATH))
-        else:
+        if not os.path.exists(LIBRARY_SHADERS_PATH):
             informationDialog("Warning: Categorys Folder not found.", ui)
-            print 'Path Searched:', LIBRARY_SHADERS_PATH
-        return categorys
+            print('Path:', LIBRARY_SHADERS_PATH)
+            return []
+
+        folders = [x.upper() for x in os.listdir(LIBRARY_SHADERS_PATH)]
+        if not folders:
+            return []
+
+        return [Category(name, LIBRARY_SHADERS_PATH) for name in folders]
