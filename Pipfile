@@ -8,6 +8,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 
 [packages]
+sphinx-rtd-theme = "*"
 
 [requires]
 python_version = "3.7"
