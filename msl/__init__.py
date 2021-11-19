@@ -12,29 +12,25 @@ VALID_ENV = True
 package = pkgutil.get_loader("msl")
 ROOT_PATH = os_path.join(os_path.dirname(package.filename), 'msl')
 
-print('MSL Root Path', ROOT_PATH)
 # UI / Stylesheet / icons
 ICON_FILE = os_path.join(ROOT_PATH, 'ui', 'icons', 'appIcon.png')
 QSS_FILE = os_path.join(ROOT_PATH, 'ui', 'stylesheet', 'arcane.qss')
 QSS_BUTTON = os_path.join(ROOT_PATH, 'ui', 'stylesheet', 'shaderButton.qss')
 
-# Maya Files and default shader repositoy
+# Maya Files and default shader repository
 try:
     library_path = os_env['MAYA_SHADER_LIBRARY']
 except KeyError:
     library_path = ''
-    print 'Missing Maya.env entry: MAYA_SHADER_LIBRARY'
+    print('Missing Maya.env entry: MAYA_SHADER_LIBRARY')
     VALID_ENV = False
 
 LIBRARY_SHADERS_PATH = os_path.join(library_path, 'shaders')
-thumbnail_default_scene = os_path.join(library_path, 'scene', 'thumbnail_scene.ma')
+thumbnail_default_scene = os_path.join(
+    library_path, 'scene', 'thumbnail_scene.ma')
 
-# Check files existance
+# Check core files existence
 for filepath in [thumbnail_default_scene, LIBRARY_SHADERS_PATH, QSS_FILE, ICON_FILE]:
     if not os_path.exists(filepath):
         VALID_ENV = False
-        print 'Maya Shader Library: Warning: Missing Path or File', filepath
-
-
-if __name__ == '__main__':
-    pass
+        print('Maya Shader Library: Warning: Missing Path or File', filepath)
