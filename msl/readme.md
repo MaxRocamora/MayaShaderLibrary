@@ -27,3 +27,4 @@ Python Package root
 - generate library from selection:
 - takes all shaders from selection and creates a new category
 - import all category
+- replace prints for log
