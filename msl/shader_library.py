@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-''' Maya Shader Library
-Author: maxirocamora@gmail.com
-
+# --------------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+#
 # Load Python Command:
-import shaderLibrary.shaderLibrary as sl; sl.load()
-
-'''
+# import shaderLibrary.shaderLibrary as sl; sl.load()
 # --------------------------------------------------------------------------------------------
 import os
+import webbrowser
 
 from PySide2 import QtCore
 from PySide2 import QtUiTools
@@ -16,27 +15,18 @@ from PySide2.QtWidgets import QMainWindow
 import maya.cmds as cmds
 
 from msl.libs.observer import ObserverUI
-from msl.libs import categoryController as categoryCC
-from msl.libs import shaderController as shaderCC
-from msl.libs.qt.loadMayaUi import get_maya_main_window
-from msl.libs.qt.qtStyle import cssMainWindow
+from msl.libs.categoryController import CategoryController
+from msl.libs.shaderController import ShaderController
+from msl.libs.utils.get_maya_window import get_maya_main_window
 from msl.libs.utils.userSettings import UserSettings
-from msl.libs.utils.uiStatus import Statusbar
+from msl.libs.utils.statusbar import Statusbar
 from msl.libs.dialogs.dirty_dialog import dirty_file_dialog
 from msl.ui.icons import get_icon
 from msl.version import app_name, version, qtWinName
-from msl import thumbnail_default_scene
+from msl import thumbnail_default_scene, QSS_FILE, APP_QICON
 
 root_path = os.path.dirname(__file__)
 ui_file = os.path.join(root_path, 'ui', 'ui', 'main.ui')
-
-msgStr = {
-    'unsavedScene': 'YOU HAVE UNSAVED CHANGES ON YOUR CURRENT SCENE.'
-}
-
-# --------------------------------------------------------------------------------------------
-# Class: Main UI
-# --------------------------------------------------------------------------------------------
 
 
 class ProgramUI_shaderLibrary(QMainWindow):
@@ -44,16 +34,20 @@ class ProgramUI_shaderLibrary(QMainWindow):
     def __init__(self, parent=get_maya_main_window()):
         super(ProgramUI_shaderLibrary, self).__init__(parent)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+        self.setObjectName(qtWinName)
         self.ui = QtUiTools.QUiLoader().load(ui_file)
         self.setCentralWidget(self.ui)
         self.move(parent.geometry().center() - self.ui.geometry().center())
+        self.setWindowIcon(APP_QICON)
+        self.setWindowTitle(app_name + ' ' + version)
+        with open(QSS_FILE, "r") as fh:
+            self.setStyleSheet(fh.read())
 
-        cssMainWindow(root_path, self, qtWinName, app_name + ' ' + version)
         self.userSettings = UserSettings("shaderLibrary")
-        self.uiBar = Statusbar(self.statusBar)
-        self.observer = ObserverUI(self)
-        self.categoryCC = categoryCC.CategoryController(self)
-        self.shaderCC = shaderCC.ShaderController(self)
+        self.uiBar = Statusbar(self.ui.statusBar())
+        self.observer = ObserverUI(self, self.ui)
+        self.categoryCC = CategoryController(self.ui, self.observer)
+        self.shaderCC = ShaderController(self.ui, self.observer)
         self.setConnections()
         self.loadUserPreferences()
         self.show()
@@ -74,6 +68,7 @@ class ProgramUI_shaderLibrary(QMainWindow):
         self.ui.mnu_defaultLightRigOpen.triggered.connect(
             self.openDefaultLightRig)
         self.ui.mnu_setFolder.triggered.connect(self.setShaderFolder)
+        self.ui.mnu_help_web.triggered.connect(self.open_web_help)
 
     def eventFilter(self, obj, event):
         '''Connect signals on mouse over'''
@@ -98,8 +93,9 @@ class ProgramUI_shaderLibrary(QMainWindow):
             return
 
         lastCategory = self.categoryCC.currentCategoryTab()
-        total_tabs = self.tab_materials.count()
-        fCategorys = [self.tab_materials.tabText(i) for i in range(total_tabs)]
+        total_tabs = self.ui.tab_materials.count()
+        fCategorys = [self.ui.tab_materials.tabText(
+            i) for i in range(total_tabs)]
 
         self.userPref = {"lastCategory": lastCategory,
                          'favouriteCategorys': fCategorys
@@ -136,6 +132,11 @@ class ProgramUI_shaderLibrary(QMainWindow):
     def setShaderFolder(self):
         ''' ask user for shader storage folder '''
         pass
+
+    def open_web_help(self):
+        ''' opens a browser to the help docs'''
+        url = 'https://mayashaderlibrary.readthedocs.io/en/latest/#'
+        webbrowser.open(url)
 
 # --------------------------------------------------------------------------------------------
 # MAIN
