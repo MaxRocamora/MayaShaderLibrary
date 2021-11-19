@@ -76,10 +76,10 @@ class ProgramUI_shaderLibrary(QMainWindow):
         if QtCore is None:
             return
         if event.type() == QtCore.QEvent.Enter:
-            self.oldMessage = self.statusBar.currentMessage()
-            self.statusBar.showMessage(obj.statusTip(), 0)
+            self.old_message = self.uiBar.statusbar.currentMessage()
+            self.uiBar.inform(obj.statusTip())
         elif event.type() == QtCore.QEvent.Leave:
-            self.statusBar.showMessage(self.oldMessage, 0)
+            self.uiBar.inform(self.old_message)
         event.accept()
         return False
 
