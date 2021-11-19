@@ -17,10 +17,15 @@ VALID_ENV = True
 PY_VERSION = sys.version_info.major
 
 package = pkgutil.get_loader("msl")
-if PY_VERSION >= 3:
-    ROOT_PATH = os.path.join(os.path.dirname(package.get_filename()), 'msl')
+if not package:
+    base_msl_path = __file__
 else:
-    ROOT_PATH = os.path.join(os.path.dirname(package.filename), 'msl')
+    if PY_VERSION >= 3:
+        base_msl_path = package.get_filename()
+    else:
+        base_msl_path = package.filename
+
+ROOT_PATH = os.path.join(os.path.dirname(base_msl_path), 'msl')
 
 # UI / Stylesheet / icons
 APP_QICON = QIcon(os.path.join(ROOT_PATH, 'ui', 'icons', 'appIcon.png'))
@@ -29,7 +34,7 @@ QSS_BUTTON = os.path.join(ROOT_PATH, 'ui', 'stylesheet', 'shaderButton.qss')
 
 # Maya Files and default shader repository
 try:
-    library_path = os.getenv['MAYA_SHADER_LIBRARY']
+    library_path = os.environ['MAYA_SHADER_LIBRARY']
 except KeyError:
     library_path = ''
     print('Missing Maya.env entry: MAYA_SHADER_LIBRARY')
