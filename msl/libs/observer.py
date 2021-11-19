@@ -1,17 +1,18 @@
-# -*- coding: utf-8 -*-
-# ------------------------------------------------------------------
-'''
-Observer its loaded by the main app
-Holds selected shader from UI, and the main UI
-When a shader is selected, the shader clicked signal
-sends itself to this class using 'selectedShader' property and updates ui texts
-'''
-
+# --------------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+#
+# Observer its loaded by the main app
+# Holds selected shader from UI and the main UI
+# When a shader is selected, the shader clicked signal
+# sends itself to this class using 'selectedShader'
+# property and updates ui texts
+# --------------------------------------------------------------------------------------------
 
 class ObserverUI(object):
-    def __init__(self, parent):
-        ''' self.ui is also used to send the ui to qtWindow and qtDialogs.'''
-        self.ui = parent
+    def __init__(self, main, ui):
+        self.main = main
+        self.ui = ui
         self.shader = False
         self.category = False
         self._categoryList = []
