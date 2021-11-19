@@ -1,29 +1,23 @@
 # -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
-#
 # User Settings Class / Instanced as userUI
 # Pass tool name on creation, this class handle load/save tool properties
 # on a local user json file
 # --------------------------------------------------------------------------------------------
-from __future__ import print_function
 import os
 from sys import platform
 
 from jsonHelp import getDictJson, saveDictJson
 
-# --------------------------------------------------------------------------------------------
-# Class: Main UI
-# --------------------------------------------------------------------------------------------
-
 
 class UserSettings(object):
-    def __init__(self, _toolName):
+    def __init__(self, tool_name):
         '''
         Manages saving UI settings for tools and saving on local drive
         Args:
-            _toolName (string) : tool name, used for filename.ini
+            tool_name (string) : tool name, used for filename.ini
         '''
-        self.toolName = _toolName
+        self.tool_name = tool_name
         self.verifyPath()
 
     def verifyPath(self):
@@ -54,7 +48,7 @@ class UserSettings(object):
         ''' Returns user folder of this tool '''
         if platform == 'win32':
             return str(os.getenv('USERPROFILE')) + \
-                '/ArcaneTools/' + self.toolName + ".ini"
+                '/ArcaneTools/' + self.tool_name + ".ini"
         else:
             return str(os.path.expanduser('~')) + \
-                '/ArcaneTools/' + self.toolName + ".ini"
+                '/ArcaneTools/' + self.tool_name + ".ini"
