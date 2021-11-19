@@ -1,58 +1,51 @@
-# -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
-# Shader Library addCategory dialog
-# This class ask handles adding a new category
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+#
+# Shader Library: addCategory dialog
+# This class handles adding a new category
 # --------------------------------------------------------------------------------------------
 
 from PySide2 import QtWidgets
+
 from msl.libs.category import Category
 from msl.libs.dialogs.dlg_inform import informationDialog
 
-msgStr = {
-    'newUnicodeError': 'UnicodeEncodeError!.',
-    'newNameLengthError': 'New Category name needs at least 4 characters.',
-    'newNameExist': 'Category name already in use.'
-}
+msg_unicode_error = 'UnicodeEncodeError!.'
+msg_name_error = 'New Category name needs at least 4 characters.'
+msg_name_exists = 'Category name already in use.'
 
 
 class addCategoryDialog():
 
     def __init__(self, observer):
-        ''' Add Category Class
+        ''' Add Category Dialog Class
         Args:
             observer (class) observer holding ui/category
         '''
+        self.observer = observer
         self.ui = observer.ui
         self.category = observer.selectedCategory
         self.name = 'defaultCategory'
 
-        userInput = self.newCategoryDialog()
-        if userInput:
-            Category.create(userInput)
-            self.ui.categoryCC.loadCategorys()
+        name = self._new_category_dialog()
+        if name:
+            self.create_and_pin_category(name)
 
-# --------------------------------------------------------------------------------------------
-# addShader Support Dialogs
-# --------------------------------------------------------------------------------------------
+    def create_and_pin_category(self, name):
+        '''creates and pin new category
 
-    def existingCategoryDialog(self, name):
-        ''' open qt dialog box when shader already exists '''
-        msgBox = QtWidgets.QMessageBox(self.ui)
-        msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
-        msgBox.setIcon(QtWidgets.QMessageBox.Question)
-        msgBox.setText(self.msgStr['overwriteShaderDialog'])
-        msgBox.setWindowTitle(name)
-        msgBox.setDetailedText(name)
-        msgBox.setStandardButtons(
-            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
-        choice = msgBox.exec_()
-        return choice == QtWidgets.QMessageBox.Ok
+        Args:
+            name (str): category name
+        '''
+        name = name.upper()
+        Category.create(name)
+        self.observer.main.categoryCC.loadCategorys()
+        for category in self.observer.categoryList:
+            if category.name == name:
+                self.observer.main.categoryCC.pinTab(category)
 
-# --------------------------------------------------------------------------------------------
-# Create Category Support Dialogs
-# --------------------------------------------------------------------------------------------
-
-    def newCategoryDialog(self):
+    def _new_category_dialog(self):
         ''' open qt dialog box for new category'''
         title = "Add Category"
         question = 'Enter Category Name'
@@ -71,15 +64,15 @@ class addCategoryDialog():
             name = str(name)
             name.decode('utf-8')
         except (UnicodeEncodeError, UnicodeDecodeError):
-            informationDialog(msgStr['newUnicodeError'], self.ui)
+            informationDialog(msg_unicode_error, self.ui)
             return False
 
-        for category in self.ui.observer.categoryList:
+        for category in self.observer.categoryList:
             if category.name.upper() == name.upper():
-                informationDialog(msgStr['newNameExist'], self.ui)
+                informationDialog(msg_name_exists, self.ui)
                 return False
 
         if len(name) < 3:
-            informationDialog(msgStr['newNameLengthError'], self.ui)
+            informationDialog(msg_name_error, self.ui)
 
         return name
