@@ -1,27 +1,29 @@
 # -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
-#
 # ARCANE Shader Generator
 # Fills layouts with buttons widgets of shaders from the corresponding category
 # Holds callback classes for button actions and menus
 # --------------------------------------------------------------------------------------------
-from __future__ import print_function
+
 import os
 import subprocess
 from contextlib import contextmanager
+
 from PySide2 import QtCore, QtGui, QtWidgets
+
 from msl import thumbnail_default_scene, QSS_BUTTON
 from msl.ui.icons import getIcon
-from .dialogs.dlg_renameShader import renameShaderDialog
-from .dialogs.dlg_deleteShader import deleteShaderDialog
+from msl.libs.dialogs.dlg_renameShader import renameShaderDialog
+from msl.libs.dialogs.dlg_deleteShader import deleteShaderDialog
 
-renderScript = os.path.join(os.path.dirname(__file__), 'utils', 'generateThumbnail.py')
+renderScript = os.path.join(
+    os.path.dirname(__file__), 'utils', 'generateThumbnail.py')
+
 MAYAPY = os.path.join(os.getenv('MAYA_LOCATION'), 'bin', 'mayapy.exe')
 
 
 def generateShaderButtons(shaderList, observer, layout, wide):
-    '''
-    Generate a list of button widgets from each shader object
+    '''Generate a list of button widgets from each shader object
     Args:
         shaderList (list) List of shader objects
         observer (class) Observer class to set selected shader
@@ -39,7 +41,8 @@ def generateShaderButtons(shaderList, observer, layout, wide):
         with open(QSS_BUTTON, "r") as fh:
             b.setStyleSheet(fh.read())
         b.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        b.customContextMenuRequested.connect(CallMenu(shader.name, shader, observer))
+        b.customContextMenuRequested.connect(
+            CallMenu(shader.name, shader, observer))
         b.clicked.connect(CallUser(shader, observer, b))
         shaderButtons.append(b)
     fillShaderLayout(layout, wide, shaderButtons)
@@ -95,15 +98,18 @@ class CallMenu:
         self.menu.addSeparator()
 
         actionStr = "Import '{}'' and assing into selection".format(self.name)
-        smImportSet = QtWidgets.QAction(getIcon("impMaya"), actionStr, self.menu)
+        smImportSet = QtWidgets.QAction(
+            getIcon("impMaya"), actionStr, self.menu)
         self.menu.addAction(smImportSet)
-        smImportSet.triggered.connect(lambda: self.shader.importShader(assing=True))
+        smImportSet.triggered.connect(
+            lambda: self.shader.importShader(assing=True))
         self.menu.addSeparator()
 
         actionStr = "Rename '{}'".format(self.name)
         smRename = QtWidgets.QAction(getIcon("rename"), actionStr, self.menu)
         self.menu.addAction(smRename)
-        smRename.triggered.connect(renameShaderDialog(self.shader, self.observer))
+        smRename.triggered.connect(
+            renameShaderDialog(self.shader, self.observer))
         self.menu.addSeparator()
 
         actionStr = "Browse '{}' folder on disk".format(self.name)
@@ -121,32 +127,40 @@ class CallMenu:
         actionStr = "Delete '{}' from lib".format(self.name)
         smDelete = QtWidgets.QAction(getIcon("delete"), actionStr, self.menu)
         self.menu.addAction(smDelete)
-        smDelete.triggered.connect(deleteShaderDialog(self.shader, self.observer))
+        smDelete.triggered.connect(
+            deleteShaderDialog(self.shader, self.observer))
         self.menu.addSeparator()
         self.menu.popup(QtGui.QCursor.pos())
 
     def launchThumbnail(self, shader):
-        '''
-        Launch python script for thumbnail generation
-        Render Command sends the script, the lightrig scene used for rendering, the
-        shader maya file, and the target png file for the thumbnail
+        ''' Launch python script for thumbnail generation
+        Render Command sends the script, the lightrig scene
+        used for rendering, the shader maya file,
+        and the target png file for the thumbnail.
         '''
         # from StringIO import StringIO
         shaderRig = os.path.abspath(thumbnail_default_scene)
-        if os.path.exists(MAYAPY):
-            cmd = MAYAPY + ' ' + renderScript + ' ' + shaderRig + ' ' + shader.cgFile + \
-                ' ' + shader.thumbnail
-            with self.waitCursor():
-                process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                output, error = process.communicate()
-                # log_subprocess_output(StringIO(output))
-                print(output)
-                print(error)
+        if not os.path.exists(MAYAPY):
+            print('mayapy.exe not found.', MAYAPY)
+            return
+
+        cmd = ' '.join([MAYAPY, renderScript, shaderRig,
+                       shader.cgFile, shader.thumbnail]
+                       )
+
+        with self.waitCursor():
+            process = subprocess.Popen(
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            output, error = process.communicate()
+            # log_subprocess_output(StringIO(output))
+            print(output)
+            print(error)
 
     @contextmanager
     def waitCursor(self):
         try:
-            QtWidgets.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+            QtWidgets.QApplication.setOverrideCursor(
+                QtGui.QCursor(QtCore.Qt.WaitCursor))
             yield
         finally:
             QtWidgets.QApplication.restoreOverrideCursor()
