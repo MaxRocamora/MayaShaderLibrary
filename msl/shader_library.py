@@ -27,6 +27,7 @@ from msl import thumbnail_default_scene, QSS_FILE, APP_QICON
 
 root_path = os.path.dirname(__file__)
 ui_file = os.path.join(root_path, 'ui', 'ui', 'main.ui')
+url = 'https://mayashaderlibrary.readthedocs.io'
 
 
 class ProgramUI_shaderLibrary(QMainWindow):
@@ -135,7 +136,6 @@ class ProgramUI_shaderLibrary(QMainWindow):
 
     def open_web_help(self):
         ''' opens a browser to the help docs'''
-        url = 'https://mayashaderlibrary.readthedocs.io/en/latest/#'
         webbrowser.open(url)
 
 # --------------------------------------------------------------------------------------------
