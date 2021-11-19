@@ -3,22 +3,23 @@
 ARCANE Shader Category Controller
 Controller for category related methods.
 '''
-
-# IMPORTS
 import os
 from PySide2 import QtCore, QtWidgets
+
 from msl import LIBRARY_SHADERS_PATH
-from .shaderGenerator import generateShaderButtons
-from .category import Category
-from .dialogs.dlg_addCategory import addCategoryDialog
-from ..ui.icons import getIcon
+from msl.libs.shaderGenerator import generateShaderButtons
+from msl.libs.category import Category
+from msl.libs.dialogs.dlg_addCategory import addCategoryDialog
+from msl.ui.icons import get_icon
+
+msgStr = {
+    'CategoryNotFound': 'No categorys found, \
+    create one using the Create Category button',
+    'LibraryFolderNotFound': 'Library Folder not found!'
+}
 
 
 class CategoryController():
-    msgStr = {
-        'CategoryNotFound': 'No categorys found, create one using the Create Category button',
-        'LibraryFolderNotFound': 'Library Folder not found!'
-    }
 
     def __init__(self, parent):
         self.ui = parent
@@ -26,35 +27,41 @@ class CategoryController():
 
     def setConnections(self):
         ''' Definition for ui widgets qt signals & attributes '''
-        self.ui.mnu_browseCategoryFolder.triggered.connect(lambda: self.selectedCategory.browse())
+        self.ui.mnu_browseCategoryFolder.triggered.connect(
+            lambda: self.selectedCategory.browse())
         self.ui.mnu_reloadCategorys.triggered.connect(self.loadCategorys)
         self.ui.cbox_categorys.activated.connect(
             lambda: self.focusTabName(self.ui.cbox_categorys.currentText()))
 
         self.ui.btn_favoriteCat.clicked.connect(self.pinTab)
-        self.ui.btn_favoriteCat.setIcon(getIcon("pin"))
+        self.ui.btn_favoriteCat.setIcon(get_icon("pin"))
         self.ui.btn_favoriteCat.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.ui.btn_favoriteCat.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.btn_favoriteCat.setAttribute(
+            QtCore.Qt.WA_TranslucentBackground)
         self.ui.btn_favoriteCat.setStyleSheet("background:transparent;")
         self.ui.btn_favoriteCat.installEventFilter(self.ui)
         self.ui.btn_unPinTab.clicked.connect(self.unPinTab)
-        self.ui.btn_unPinTab.setIcon(getIcon("delete"))
+        self.ui.btn_unPinTab.setIcon(get_icon("delete"))
         self.ui.btn_unPinTab.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.ui.btn_unPinTab.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.ui.btn_unPinTab.setStyleSheet("background:transparent;")
         self.ui.btn_unPinTab.installEventFilter(self.ui)
 
-        self.ui.btn_browseCategory.clicked.connect(lambda: self.selectedCategory.browse())
-        self.ui.btn_browseCategory.setIcon(getIcon("browse"))
-        self.ui.btn_browseCategory.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.ui.btn_browseCategory.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.btn_browseCategory.clicked.connect(
+            lambda: self.selectedCategory.browse())
+        self.ui.btn_browseCategory.setIcon(get_icon("browse"))
+        self.ui.btn_browseCategory.setWindowFlags(
+            QtCore.Qt.FramelessWindowHint)
+        self.ui.btn_browseCategory.setAttribute(
+            QtCore.Qt.WA_TranslucentBackground)
         self.ui.btn_browseCategory.setStyleSheet("background:transparent;")
         self.ui.btn_browseCategory.installEventFilter(self.ui)
 
         self.ui.mnu_addNewCategory.triggered.connect(self.addCategoryCall)
-        self.ui.btn_addCategory.setIcon(getIcon("add"))
+        self.ui.btn_addCategory.setIcon(get_icon("add"))
         self.ui.btn_addCategory.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.ui.btn_addCategory.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.btn_addCategory.setAttribute(
+            QtCore.Qt.WA_TranslucentBackground)
         self.ui.btn_addCategory.setStyleSheet("background:transparent;")
         self.ui.btn_addCategory.installEventFilter(self.ui)
         self.ui.btn_addCategory.clicked.connect(self.addCategoryCall)
@@ -65,7 +72,7 @@ class CategoryController():
         ''' Load Categorys from disk and set up main storing list '''
         self.ui.observer.categoryList = Category.collectCategorys(self.ui)
         if len(self.ui.observer.categoryList) == 0:
-            self.ui.uiBar.warning(self.msgStr['CategoryNotFound'])
+            self.ui.uiBar.warning(msgStr['CategoryNotFound'])
         else:
             self.ui.cbox_categorys.clear()
             for category in self.ui.observer.categoryList:
@@ -87,7 +94,8 @@ class CategoryController():
 
     def currentCategoryTab(self):
         ''' returns name of current category tab selected '''
-        return self.ui.tab_materials.tabText(self.ui.tab_materials.currentIndex())
+        index = self.ui.tab_materials.currentIndex()
+        return self.ui.tab_materials.tabText(index)
 
 # --------------------------------------------------------------------------------------------
 # UI METHODS
@@ -113,29 +121,28 @@ class CategoryController():
 
     def focusTabName(self, name):
         ''' forces a focus on category tab by name '''
-        for index in range(0, self.ui.tab_materials.count()):
+        for index in range(self.ui.tab_materials.count()):
             if name == self.ui.tab_materials.tabText(index):
                 self.ui.tab_materials.setCurrentIndex(index)
 
-    def pinTab(self, _category=False):
-        '''
-        Add selected category to main tab panel (pin tab)
+    def pinTab(self, use_category=False):
+        ''' Add selected category to main tab panel (pin tab)
         Args:
-            category (class) if true uses given category data, if false uses current cbox category
+            use_category (class)
+                if true uses given category data
+                if false uses current cbox category
         '''
         newTab = QtWidgets.QWidget(self.ui.tab_materials)
-        if _category:
-            category = _category
-        else:
-            category = self.ui.observer.categoryList[self.ui.cbox_categorys.currentIndex()]
+        index = self.ui.cbox_categorys.currentIndex()
+        category = use_category or self.ui.observer.categoryList[index]
 
-        searchPath = os.path.join(LIBRARY_SHADERS_PATH, category.name)
-        if not os.path.exists(searchPath):
-            print 'Input Tab name not found on disk', category.name
+        path = os.path.join(LIBRARY_SHADERS_PATH, category.name)
+        if not os.path.exists(path):
+            print('Input Tab name not found on disk', category.name)
             return False
 
         # Skipping and focusing tab if already exists
-        for index in range(0, self.ui.tab_materials.count()):
+        for index in range(self.ui.tab_materials.count()):
             if category.name == self.ui.tab_materials.tabText(index):
                 self.focusCategory(index)
                 return
@@ -155,8 +162,7 @@ class CategoryController():
 # --------------------------------------------------------------------------------------------
 
     def fillCategory(self, tab, category):
-        '''
-        Fills current tab with shaders buttons
+        ''' Fills current tab with shaders buttons
         Args:
             tab (qtWidget) qt tab to fill
             category (class) category object
@@ -210,4 +216,4 @@ class CategoryController():
         grid = QtWidgets.QGridLayout()
         grid.addWidget(scroll, 3, 0)
         tab.setLayout(grid)
-        print 'Category {} refreshed'.format(categoryPlaceHolder.name)
+        print('Category {} refreshed'.format(categoryPlaceHolder.name))
