@@ -18,14 +18,13 @@ PY_VERSION = sys.version_info.major
 
 package = pkgutil.get_loader("msl")
 if not package:
-    base_msl_path = __file__
+    ROOT_PATH = os.path.dirname(__file__)
 else:
     if PY_VERSION >= 3:
-        base_msl_path = package.get_filename()
+        ROOT_PATH = os.path.dirname(package.get_filename())
     else:
-        base_msl_path = package.filename
+        ROOT_PATH = os.path.join(os.path.dirname(package.filename), 'msl')
 
-ROOT_PATH = os.path.join(os.path.dirname(base_msl_path), 'msl')
 
 # UI / Stylesheet / icons
 APP_QICON = QIcon(os.path.join(ROOT_PATH, 'ui', 'icons', 'appIcon.png'))
