@@ -62,7 +62,6 @@ class addCategoryDialog():
 
         try:
             name = str(name)
-            name.decode('utf-8')
         except (UnicodeEncodeError, UnicodeDecodeError):
             informationDialog(msg_unicode_error, self.ui)
             return False
