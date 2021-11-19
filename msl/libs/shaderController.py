@@ -4,8 +4,9 @@ ARCANE Shader Library Controller
 Controller for selected shader related methods.
 '''
 from PySide2 import QtCore
-from .dialogs.dlg_addShader import addShaderDialog
-from ..ui.icons import getIcon
+
+from msl.libs.dialogs.dlg_addShader import addShaderDialog
+from msl.ui.icons import getIcon
 
 
 class ShaderController():
@@ -24,7 +25,8 @@ class ShaderController():
         self.ui.btn_saveChanges.clicked.connect(self.saveNotes)
         self.ui.btn_saveChanges.setIcon(getIcon("save"))
         self.ui.btn_saveChanges.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.ui.btn_saveChanges.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.btn_saveChanges.setAttribute(
+            QtCore.Qt.WA_TranslucentBackground)
         self.ui.btn_saveChanges.setStyleSheet("background:transparent;")
         self.ui.btn_saveChanges.installEventFilter(self.ui)
 
