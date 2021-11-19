@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
-#
 # ARCANE Shader Library deleteShader dialog
 # This class ask for user confirmation on shader physical disk deletion
-#
 # --------------------------------------------------------------------------------------------
 
 from PySide2 import QtWidgets
@@ -29,7 +27,8 @@ class deleteShaderDialog():
         ''' open qt dialog box for rename shader '''
         msgBox = QtWidgets.QMessageBox(self.ui)
         msgBox.setWindowTitle(self.msgStr['title'])
-        msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        msgBox.setStandardButtons(
+            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
         msgBox.setIcon(QtWidgets.QMessageBox.Warning)
         msgBox.setText(self.msgStr['deleteConfirmation'])
