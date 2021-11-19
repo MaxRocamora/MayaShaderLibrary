@@ -1,72 +1,54 @@
 # -*- coding: utf-8 -*-
-''' Arcane Tools / Maya Shader Library
+''' Maya Shader Library
 Author: maxirocamora@gmail.com
 
-Load Python Command:
-# import shaderLibrary.shaderLibrary as sl; sl.load()
-
-# Default thumbnail lighting scene
-%LIBRARY%/scene/thumbnail_scene.ma
-
-to do:
-
-    log render output from subprocess to file
-
-    instead of use a mayafile, make a json file for shaders.
-
-    update shader:
-    when export a shader into category, if exist, make update options instead of overwrite
-
-    get maps list connections
-    copy to local maps / deploy maps
-
-    import into selected: ask for replace shader
-
-    ask to save current scene if dirty on dialog on open lightrig
-
-    * generate library from selection!
-        takes all shaders from selection and creates a new category
-    * import all category
+# Load Python Command:
+import shaderLibrary.shaderLibrary as sl; sl.load()
 
 '''
 # --------------------------------------------------------------------------------------------
-
 import os
 
 from PySide2 import QtCore
+from PySide2 import QtUiTools
+from PySide2.QtWidgets import QMainWindow
+
 import maya.cmds as cmds
 
-from .libs.observer import ObserverUI
-from .libs import categoryController as categoryCC
-from .libs import shaderController as shaderCC
-from .libs.qt.loadMayaUi import loadUi, getMayaWindow
-from .libs.qt.qtStyle import cssMainWindow
-from .libs.utils.userSettings import UserSettings
-from .libs.utils.uiStatus import Statusbar
-from .ui.icons import getIcon
-from .version import __app__, __version__, qtWinName
-from . import thumbnail_default_scene
+from msl.libs.observer import ObserverUI
+from msl.libs import categoryController as categoryCC
+from msl.libs import shaderController as shaderCC
+from msl.libs.qt.loadMayaUi import get_maya_main_window
+from msl.libs.qt.qtStyle import cssMainWindow
+from msl.libs.utils.userSettings import UserSettings
+from msl.libs.utils.uiStatus import Statusbar
+from msl.libs.dialogs.dirty_dialog import dirty_file_dialog
+from msl.ui.icons import get_icon
+from msl.version import app_name, version, qtWinName
+from msl import thumbnail_default_scene
 
-appPath = os.path.dirname(__file__)
-ui_main = os.path.join(appPath, 'ui', 'ui', 'main.ui')
-form, base = loadUi(ui_main)
+root_path = os.path.dirname(__file__)
+ui_file = os.path.join(root_path, 'ui', 'ui', 'main.ui')
+
+msgStr = {
+    'unsavedScene': 'YOU HAVE UNSAVED CHANGES ON YOUR CURRENT SCENE.'
+}
 
 # --------------------------------------------------------------------------------------------
 # Class: Main UI
 # --------------------------------------------------------------------------------------------
 
 
-class ProgramUI_shaderLibrary(base, form):
+class ProgramUI_shaderLibrary(QMainWindow):
 
-    msgStr = {
-        'unsaveScene': 'YOU HAVE UNSAVED CHANGES ON YOUR CURRENT SCENE.'
-    }
-
-    def __init__(self, parent=getMayaWindow()):
+    def __init__(self, parent=get_maya_main_window()):
         super(ProgramUI_shaderLibrary, self).__init__(parent)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
-        self.setupUi(self)
-        cssMainWindow(appPath, self, qtWinName, __app__ + ' ' + __version__)
+        self.ui = QtUiTools.QUiLoader().load(ui_file)
+        self.setCentralWidget(self.ui)
+        self.move(parent.geometry().center() - self.ui.geometry().center())
+
+        cssMainWindow(root_path, self, qtWinName, app_name + ' ' + version)
         self.userSettings = UserSettings("shaderLibrary")
         self.uiBar = Statusbar(self.statusBar)
         self.observer = ObserverUI(self)
@@ -74,6 +56,8 @@ class ProgramUI_shaderLibrary(base, form):
         self.shaderCC = shaderCC.ShaderController(self)
         self.setConnections()
         self.loadUserPreferences()
+        self.show()
+        self.activateWindow()
 
 # --------------------------------------------------------------------------------------------
 # Qt UI Signals and event Handler
@@ -81,14 +65,15 @@ class ProgramUI_shaderLibrary(base, form):
 
     def setConnections(self):
         ''' Definition for ui widgets qt signals & attributes '''
-        self.btn_refresh.clicked.connect(self.categoryCC.refreshCategoryTab)
-        self.btn_refresh.setIcon(getIcon("refresh"))
-        self.btn_refresh.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.btn_refresh.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.btn_refresh.setStyleSheet("background:transparent;")
-        self.btn_refresh.installEventFilter(self)
-        self.mnu_defaultLigthRigOpen.triggered.connect(self.openDefaultLightRig)
-        self.mnu_setFolder.triggered.connect(self.setShaderFolder)
+        self.ui.btn_refresh.clicked.connect(self.categoryCC.refreshCategoryTab)
+        self.ui.btn_refresh.setIcon(get_icon("refresh"))
+        self.ui.btn_refresh.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.ui.btn_refresh.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.btn_refresh.setStyleSheet("background:transparent;")
+        self.ui.btn_refresh.installEventFilter(self)
+        self.ui.mnu_defaultLightRigOpen.triggered.connect(
+            self.openDefaultLightRig)
+        self.ui.mnu_setFolder.triggered.connect(self.setShaderFolder)
 
     def eventFilter(self, obj, event):
         '''Connect signals on mouse over'''
@@ -107,18 +92,17 @@ class ProgramUI_shaderLibrary(base, form):
 # --------------------------------------------------------------------------------------------
 
     def closeEvent(self, event):
-        ''' Save user settings on close '''
+        ''' Save user settings into a json file on close '''
         if QtCore is None:
             self.close()
             return
 
         lastCategory = self.categoryCC.currentCategoryTab()
-        favouriteCategorys = [
-            self.tab_materials.tabText(i) for i in range(0, self.tab_materials.count())
-        ]
+        total_tabs = self.tab_materials.count()
+        fCategorys = [self.tab_materials.tabText(i) for i in range(total_tabs)]
 
         self.userPref = {"lastCategory": lastCategory,
-                         'favouriteCategorys': favouriteCategorys
+                         'favouriteCategorys': fCategorys
                          }
         self.userSettings.saveUS(self.userPref)
         self.close()
@@ -146,6 +130,7 @@ class ProgramUI_shaderLibrary(base, form):
         ''' Open default maya file used for render thumbnails '''
         self.uiBar.inform(thumbnail_default_scene)
         if os.path.exists(thumbnail_default_scene):
+            dirty_file_dialog()
             cmds.file(thumbnail_default_scene, force=True, open=True)
 
     def setShaderFolder(self):
