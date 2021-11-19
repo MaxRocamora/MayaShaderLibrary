@@ -1,9 +1,15 @@
-# -*- coding: utf-8 -*-
+# --------------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+#
 # Shader Library Init
+# --------------------------------------------------------------------------------------------
 
 from os import path as os_path
 from os import environ as os_env
 import pkgutil
+
+from PySide2.QtGui import QIcon
 
 # Flag for valid plugin environment, if this is false the maya plugin wont load
 VALID_ENV = True
@@ -13,7 +19,7 @@ package = pkgutil.get_loader("msl")
 ROOT_PATH = os_path.join(os_path.dirname(package.filename), 'msl')
 
 # UI / Stylesheet / icons
-ICON_FILE = os_path.join(ROOT_PATH, 'ui', 'icons', 'appIcon.png')
+APP_QICON = QIcon(os_path.join(ROOT_PATH, 'ui', 'icons', 'appIcon.png'))
 QSS_FILE = os_path.join(ROOT_PATH, 'ui', 'stylesheet', 'arcane.qss')
 QSS_BUTTON = os_path.join(ROOT_PATH, 'ui', 'stylesheet', 'shaderButton.qss')
 
@@ -30,7 +36,9 @@ thumbnail_default_scene = os_path.join(
     library_path, 'scene', 'thumbnail_scene.ma')
 
 # Check core files existence
-for filepath in [thumbnail_default_scene, LIBRARY_SHADERS_PATH, QSS_FILE, ICON_FILE]:
+for filepath in [thumbnail_default_scene,
+                 LIBRARY_SHADERS_PATH,
+                 QSS_FILE, ]:
     if not os_path.exists(filepath):
         VALID_ENV = False
         print('Maya Shader Library: Warning: Missing Path or File', filepath)
