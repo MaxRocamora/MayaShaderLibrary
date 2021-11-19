@@ -4,6 +4,7 @@
         "cbox",
         "cmds",
         "favourite",
+        "hypershade",
         "mayapy",
         "MAYAPY",
         "mtoa",
@@ -16,5 +17,6 @@
         "rgba",
         "shiboken",
         "wips"
-    ]
+    ],
+    "restructuredtext.confPath": "${workspaceFolder}\\docs"
 }
