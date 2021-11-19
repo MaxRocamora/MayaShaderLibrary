@@ -11,6 +11,7 @@
         "Popen",
         "pyside",
         "pysideuic",
+        "QICON",
         "qwidget",
         "rgba",
         "shiboken",
