@@ -2,7 +2,8 @@
 Maya Shader Library
 ===================
 
-A shading library tool to store and organize shaders in Autodesk Maya.
+*A shading library tool to store and organize shaders in Autodesk Maya.*
+
 Create and Manage Categories to organize, save and load maya shaders.
 
 Documentation
@@ -12,14 +13,5 @@ Documentation
    :maxdepth: 2
 
    install
-   guides
+   started
    ui
-
-
-******************
-Indices and tables
-******************
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

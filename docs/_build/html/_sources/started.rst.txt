@@ -1,9 +1,9 @@
-.. _guides:
+.. _started:
 
 Getting Started
 ===============
 
-See Installation for details on how to run the tool.
+See :ref:`installation`. for details on how to install and run this tool.
 
 - Once you load the tool you should see the interface.
 
