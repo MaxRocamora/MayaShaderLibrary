@@ -1,19 +1,19 @@
-# -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+#
 # User Settings Class / Instanced as userUI
-# Pass tool name on creation, this class handle load/save tool properties
-# on a local user json file
+# This class handle load/save tool properties on a local user json file
 # --------------------------------------------------------------------------------------------
 import os
 from sys import platform
 
-from jsonHelp import getDictJson, saveDictJson
+from msl.libs.utils.json_util import load_json, save_json
 
 
 class UserSettings(object):
     def __init__(self, tool_name):
-        '''
-        Manages saving UI settings for tools and saving on local drive
+        '''Manages saving UI settings for tools and saving on local drive
         Args:
             tool_name (string) : tool name, used for filename.ini
         '''
@@ -28,20 +28,19 @@ class UserSettings(object):
             os.mkdir(dirPath)
 
     def saveUS(self, data):
-        '''
-        Saves a dictionary into a json file (windows user path)
+        '''Saves a dictionary into a json file (windows user path)
         Args:
             data (dictionary) : info dictionary to save
         '''
-        saveDictJson(data, self.userPath)
+        save_json(data, self.userPath)
 
     def loadUS(self):
         ''' Load json file from userPath and returns dict content '''
-        return getDictJson(self.userPath)
+        return load_json(self.userPath)
 
     def loadProjectUS(self, project):
         ''' Load json file from userPath and returns dict content '''
-        return getDictJson(self.userProjectPath(project))
+        return load_json(self.userProjectPath(project))
 
     @property
     def userPath(self):
