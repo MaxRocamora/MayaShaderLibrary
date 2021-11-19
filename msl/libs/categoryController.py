@@ -1,8 +1,10 @@
-# -*- coding: utf-8 -*-
-'''
-ARCANE Shader Category Controller
-Controller for category related methods.
-'''
+# --------------------------------------------------------------------------------------------
+# Maya Shader Library
+#
+# Shader Category Controller
+# Controller for category related methods.
+# --------------------------------------------------------------------------------------------
+
 import os
 from PySide2 import QtCore, QtWidgets
 
@@ -21,11 +23,12 @@ msgStr = {
 
 class CategoryController():
 
-    def __init__(self, parent):
-        self.ui = parent
-        self.setConnections()
+    def __init__(self, ui, observer):
+        self.ui = ui
+        self.observer = observer
+        self.set_connections()
 
-    def setConnections(self):
+    def set_connections(self):
         ''' Definition for ui widgets qt signals & attributes '''
         self.ui.mnu_browseCategoryFolder.triggered.connect(
             lambda: self.selectedCategory.browse())
@@ -70,18 +73,18 @@ class CategoryController():
 
     def loadCategorys(self):
         ''' Load Categorys from disk and set up main storing list '''
-        self.ui.observer.categoryList = Category.collectCategorys(self.ui)
-        if len(self.ui.observer.categoryList) == 0:
+        self.observer.categoryList = Category.collectCategorys(self.ui)
+        if len(self.observer.categoryList) == 0:
             self.ui.uiBar.warning(msgStr['CategoryNotFound'])
         else:
             self.ui.cbox_categorys.clear()
-            for category in self.ui.observer.categoryList:
+            for category in self.observer.categoryList:
                 self.ui.cbox_categorys.addItem(category.name)
             self.ui.cbox_categorys.activated.emit(1)
 
     def addCategoryCall(self):
         ''' Calls for addCategoryDialog '''
-        addCategoryDialog(self.ui.observer)
+        addCategoryDialog(self.observer)
 
 # --------------------------------------------------------------------------------------------
 # UI PROPERTIES
@@ -90,7 +93,7 @@ class CategoryController():
     @property
     def selectedCategory(self):
         ''' alias for current selected category class'''
-        return self.ui.observer.selectedCategory
+        return self.observer.selectedCategory
 
     def currentCategoryTab(self):
         ''' returns name of current category tab selected '''
@@ -105,14 +108,14 @@ class CategoryController():
         ''' focus category when user changes tab '''
         index = self.ui.tab_materials.currentIndex()
         if index < 0:
-            self.ui.observer.selectedCategory = False
+            self.observer.selectedCategory = False
             return
 
         name = self.ui.tab_materials.tabText(index)
-        categoryList = self.ui.observer.categoryList
+        categoryList = self.observer.categoryList
         for category in categoryList:
             if category.name == name:
-                self.ui.observer.selectedCategory = category
+                self.observer.selectedCategory = category
                 break
 
     def focusCategory(self, index):
@@ -134,7 +137,7 @@ class CategoryController():
         '''
         newTab = QtWidgets.QWidget(self.ui.tab_materials)
         index = self.ui.cbox_categorys.currentIndex()
-        category = use_category or self.ui.observer.categoryList[index]
+        category = use_category or self.observer.categoryList[index]
 
         path = os.path.join(LIBRARY_SHADERS_PATH, category.name)
         if not os.path.exists(path):
@@ -179,7 +182,7 @@ class CategoryController():
         scroll.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         scroll.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         scroll.setWidget(widget)
-        generateShaderButtons(category.shaders(), self.ui.observer, layout, 4)
+        generateShaderButtons(category.shaders(), self.observer, layout, 4)
         grid = QtWidgets.QGridLayout()
         grid.addWidget(scroll, 3, 0)
         tab.setLayout(grid)
@@ -211,7 +214,7 @@ class CategoryController():
         scroll.setWidget(widget)
 
         shadersUpdated = categoryPlaceHolder.shaders(reload=True)
-        generateShaderButtons(shadersUpdated, self.ui.observer, layout, 4)
+        generateShaderButtons(shadersUpdated, self.observer, layout, 4)
 
         grid = QtWidgets.QGridLayout()
         grid.addWidget(scroll, 3, 0)
