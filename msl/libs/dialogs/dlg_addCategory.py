@@ -1,25 +1,24 @@
 # -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
-#
-# ARCANE Shader Library addCategory dialog
+# Shader Library addCategory dialog
 # This class ask handles adding a new category
-#
 # --------------------------------------------------------------------------------------------
 
 from PySide2 import QtWidgets
-from ..category import Category
+from msl.libs.category import Category
+from msl.libs.dialogs.dlg_inform import informationDialog
+
+msgStr = {
+    'newUnicodeError': 'UnicodeEncodeError!.',
+    'newNameLengthError': 'New Category name needs at least 4 characters.',
+    'newNameExist': 'Category name already in use.'
+}
 
 
 class addCategoryDialog():
-    msgStr = {
-        'NewCatUnicodeError': 'UnicodeEncodeError!.',
-        'NewCatNameLengthError': 'New Category name needs at least 4 characters length.',
-        'NewCatNameExist': 'Category name already in use.'
-    }
 
     def __init__(self, observer):
-        '''
-        Add Category Class
+        ''' Add Category Class
         Args:
             observer (class) observer holding ui/category
         '''
@@ -44,7 +43,8 @@ class addCategoryDialog():
         msgBox.setText(self.msgStr['overwriteShaderDialog'])
         msgBox.setWindowTitle(name)
         msgBox.setDetailedText(name)
-        msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        msgBox.setStandardButtons(
+            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         choice = msgBox.exec_()
         return choice == QtWidgets.QMessageBox.Ok
 
@@ -58,30 +58,28 @@ class addCategoryDialog():
         question = 'Enter Category Name'
         lineEdit = QtWidgets.QLineEdit.Normal
         QInputDialog = QtWidgets.QInputDialog
-        categoryName, result = QInputDialog.getText(self.ui, title,
-                                                    question, lineEdit, "default")
-        if result is True:
-            try:
-                categoryName = str(categoryName)
-                categoryName.decode('utf-8')
-            except (UnicodeEncodeError, UnicodeDecodeError):
-                self.informationDialog(self.msgStr['NewCatUnicodeError'])
-                return False
-            for category in self.ui.observer.categoryList:
-                if category.name.upper() == categoryName.upper():
-                    self.informationDialog(self.msgStr['NewCatNameExist'])
-                    return False
-            if len(categoryName) > 3:
-                return categoryName
-            self.informationDialog(self.msgStr['NewCatNameLengthError'])
-        return False
+        name, result = QInputDialog.getText(self.ui,
+                                            title,
+                                            question,
+                                            lineEdit,
+                                            "default"
+                                            )
+        if not result:
+            return False
 
-    def informationDialog(self, msg):
-        ''' open qt dialog box when no shader is selected or found'''
-        msgBox = QtWidgets.QMessageBox(self.ui)
-        msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
-        msgBox.setIcon(QtWidgets.QMessageBox.Warning)
-        msgBox.setText(msg)
-        msgBox.setWindowTitle("Adding Category")
-        msgBox.setStandardButtons(QtWidgets.QMessageBox.Close)
-        msgBox.exec_()
+        try:
+            name = str(name)
+            name.decode('utf-8')
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            informationDialog(msgStr['newUnicodeError'], self.ui)
+            return False
+
+        for category in self.ui.observer.categoryList:
+            if category.name.upper() == name.upper():
+                informationDialog(msgStr['newNameExist'], self.ui)
+                return False
+
+        if len(name) < 3:
+            informationDialog(msgStr['newNameLengthError'], self.ui)
+
+        return name
