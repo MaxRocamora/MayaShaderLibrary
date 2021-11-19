@@ -34,6 +34,11 @@
     <height>580</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Shader Library</string>
   </property>
@@ -428,12 +433,6 @@
     <addaction name="separator"/>
     <addaction name="mnu_browseCategoryFolder"/>
    </widget>
-   <widget class="QMenu" name="menuShader">
-    <property name="title">
-     <string>Shader</string>
-    </property>
-    <addaction name="actionExport_Selected_Shader"/>
-   </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
      <string>Options</string>
@@ -449,22 +448,35 @@
    </widget>
    <addaction name="menuMenu"/>
    <addaction name="menuCategory"/>
-   <addaction name="menuShader"/>
    <addaction name="menuOptions"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
   <action name="mnu_addNewCategory">
    <property name="text">
     <string>Add New Category</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+    </font>
    </property>
   </action>
   <action name="mnu_browseCategoryFolder">
    <property name="text">
     <string>Browse Category Folder</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+    </font>
+   </property>
   </action>
-  <action name="actionExport_Selected_Shader">
+  <action name="menuactionExport_Selected_Shader">
    <property name="text">
     <string>Collect Maps</string>
    </property>
@@ -472,6 +484,11 @@
   <action name="mnu_reset">
    <property name="text">
     <string>Reset Tool</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+    </font>
    </property>
   </action>
   <action name="actionOverwrite_Confirmation">
@@ -489,10 +506,20 @@
    <property name="text">
     <string>Open Thumbnail LightRig File</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+    </font>
+   </property>
   </action>
   <action name="mnu_reloadCategorys">
    <property name="text">
     <string>Reload Categorys</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+    </font>
    </property>
   </action>
   <action name="mnu_setFolder">
@@ -503,6 +530,11 @@
   <action name="mnu_help_web">
    <property name="text">
     <string>Browse Help Docs</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+    </font>
    </property>
   </action>
  </widget>
