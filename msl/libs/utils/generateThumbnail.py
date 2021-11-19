@@ -1,18 +1,16 @@
 '''
 Opens a maya standalone instance and do a thumbnail render for given shader.
 '''
-from __future__ import print_function
+import maya.cmds as cmds
+import maya.standalone as std
 import sys
 import os
 
 print('Loading Maya StandAlone...')
 
-import maya.standalone as std
 std.initialize(name='python')
 
 print('Generating Thumbnail...')
-
-import maya.cmds as cmds
 
 shaderRig = sys.argv[1]
 shaderFile = sys.argv[2]
@@ -27,7 +25,8 @@ def setupRenderFile():
 
 def setShaderBall():
     shader = 'shd:shdBallShape'
-    shaderSGConn = cmds.listConnections(shader, d=True, et=True, t='shadingEngine')
+    shaderSGConn = cmds.listConnections(
+        shader, d=True, et=True, t='shadingEngine')
     sg = shaderSGConn[0]
     for geo in cmds.ls('*_GEO'):
         cmds.sets(geo, edit=True, forceElement=sg)
@@ -40,7 +39,8 @@ def renderThumbnail():
     cmds.loadPlugin('mtoa')
     cmds.setAttr("defaultArnoldDriver.ai_translator", "png", type="string")
     cmds.setAttr("defaultArnoldDriver.pre", rndFile, type="string")
-    arnoldRender(200, 200, True, True, 'RND_Camera', ' -layer defaultRenderLayer')
+    arnoldRender(200, 200, True, True, 'RND_Camera',
+                 ' -layer defaultRenderLayer')
 
 
 setupRenderFile()
