@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
-# --------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------
 '''
 Observer its loaded by the main app
 Holds selected shader from UI, and the main UI
 When a shader is selected, the shader clicked signal
 sends itself to this class using 'selectedShader' property and updates ui texts
 '''
-from __future__ import print_function
 
 
 class ObserverUI(object):
     def __init__(self, parent):
-        # ui (user interface) is also used to send the ui to qtwindow and qtDialogs.
+        ''' self.ui is also used to send the ui to qtWindow and qtDialogs.'''
         self.ui = parent
         self.shader = False
         self.category = False
@@ -35,7 +34,9 @@ class ObserverUI(object):
         if not v:
             self.shader = False
             return
-        print('Category selected: {} Shaders {}'.format(v.name, len(v.shaders())))
+        print('Category selected: {} Shaders {}'.format(
+            v.name, len(v.shaders()))
+        )
 
     @property
     def selectedShader(self):
@@ -48,8 +49,10 @@ class ObserverUI(object):
 
     def updateUI(self):
         ''' update ui when user selects a shader '''
-        self.ui.lbl_shaderName.setText(self.shader.name + ' / ' + self.shader.category.name)
+        self.ui.lbl_shaderName.setText(
+            self.shader.name + ' / ' + self.shader.category.name)
         self.ui.lbl_shaderType.setText(self.shader.shaderType)
-        self.ui.lbl_shaderUserPC.setText(self.shader.user + ' / ' + self.shader.pc)
+        self.ui.lbl_shaderUserPC.setText(
+            self.shader.user + ' / ' + self.shader.pc)
         self.ui.lbl_shaderCode.setText(self.shader.idName)
         self.ui.te_notes.setText(self.shader.notes)
