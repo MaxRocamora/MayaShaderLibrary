@@ -1,25 +1,24 @@
 # -*- coding: utf-8 -*-
-# --------------------------------------------------------------------------------------------
-#
-# ARCANE Shader Library addShader dialog
+# ------------------------------------------------------------------------
+# Shader Library addShader dialog
 # This class ask handles adding a new shader
-#
-# --------------------------------------------------------------------------------------------
-
+# ------------------------------------------------------------------------
 from PySide2 import QtWidgets
-from ..shader import Shader as Shader
+
+from msl.libs.shader import Shader as Shader
+
+msgStr = {
+    'noCategorySelected': 'No categorys tab found, create one using \
+    the Create Category button',
+    'overwriteShaderDialog': 'Shader name already exists, add a new copy?',
+    'failedExport': 'Add Shader save operation Failed.'
+}
 
 
 class addShaderDialog():
-    msgStr = {
-        'noCategorySelected': 'No categorys tab found, create one using the Create Category button',
-        'overwriteShaderDialog': 'Shader name already exists, add a new copy?',
-        'failedExport': 'Add Shader save operation Failed.'
-    }
 
     def __init__(self, observer):
-        '''
-        Add Shader Class
+        ''' Add Shader Class
         Args:
             observer (class) observer holding ui/category
         '''
@@ -27,7 +26,7 @@ class addShaderDialog():
         self.category = observer.selectedCategory
 
         if not self.category:
-            self.informationDialog(self.msgStr['noCategorySelected'])
+            self.informationDialog(msgStr['noCategorySelected'])
             return
 
         shaderData, msg = Shader.getShader(self.category)
@@ -44,7 +43,7 @@ class addShaderDialog():
         if virtualShader.save():
             self.ui.categoryCC.refreshCategoryTab()
         else:
-            self.informationDialog(self.msgStr['failedExport'])
+            self.informationDialog(msgStr['failedExport'])
 
 # --------------------------------------------------------------------------------------------
 # addShader Support Dialogs
@@ -65,9 +64,10 @@ class addShaderDialog():
         msgBox = QtWidgets.QMessageBox(self.ui)
         msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
         msgBox.setIcon(QtWidgets.QMessageBox.Question)
-        msgBox.setText(self.msgStr['overwriteShaderDialog'])
+        msgBox.setText(msgStr['overwriteShaderDialog'])
         msgBox.setWindowTitle(name)
         msgBox.setDetailedText(name)
-        msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        msgBox.setStandardButtons(
+            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         choice = msgBox.exec_()
-        return True if choice == QtWidgets.QMessageBox.Ok else False
+        return choice == QtWidgets.QMessageBox.Ok
