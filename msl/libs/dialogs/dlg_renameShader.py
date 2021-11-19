@@ -25,7 +25,7 @@ class renameShaderDialog(QtWidgets.QInputDialog):
             observer (class) observer holding ui
         '''
         super(renameShaderDialog, self).__init__()
-        self.ui = observer.ui
+        self.observer = observer
         self.shader = shaderClass
 
     def __call__(self):
@@ -35,7 +35,7 @@ class renameShaderDialog(QtWidgets.QInputDialog):
         lineEdit = QtWidgets.QLineEdit.Normal
         QInputDialog = QtWidgets.QInputDialog
         newName, result = QInputDialog.getText(
-            self.ui, title, question, lineEdit, "default")
+            self.observer.ui, title, question, lineEdit, "default")
         if not result:
             return False
         try:
@@ -52,11 +52,11 @@ class renameShaderDialog(QtWidgets.QInputDialog):
             return False
         else:
             if self.shader.rename(newName):
-                self.ui.categoryCC.refreshCategoryTab()
+                self.observer.main.categoryCC.refreshCategoryTab()
 
     def errorShaderDialog(self, msg):
         ''' open qt dialog box when no shader is selected or found'''
-        msgBox = QtWidgets.QMessageBox(self.ui)
+        msgBox = QtWidgets.QMessageBox(self.observer.ui)
         msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
         msgBox.setIcon(QtWidgets.QMessageBox.Warning)
         msgBox.setText(msg)
@@ -68,5 +68,5 @@ class renameShaderDialog(QtWidgets.QInputDialog):
         ''' returns true if shader new name is already in use '''
         return any(
             shader.name == name
-            for shader in self.ui.observer.selectedCategory.shaders()
+            for shader in self.observer.selectedCategory.shaders()
         )
