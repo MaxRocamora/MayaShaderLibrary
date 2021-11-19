@@ -6,67 +6,57 @@
 from PySide2 import QtWidgets
 
 from msl.libs.shader import Shader as Shader
+from msl.libs.dialogs.dlg_inform import informationDialog
 
-msgStr = {
-    'noCategorySelected': 'No categorys tab found, create one using \
-    the Create Category button',
-    'overwriteShaderDialog': 'Shader name already exists, add a new copy?',
-    'failedExport': 'Add Shader save operation Failed.'
-}
+msg_no_category = 'No categories found, create one using the Create Category button',
+msg_overwrite = 'Shader name already exists, add a new copy?'
+msg_failed_export = 'Add Shader save operation Failed.'
 
 
 class addShaderDialog():
 
     def __init__(self, observer):
-        ''' Add Shader Class
+        ''' Add Shader Dialog
         Args:
             observer (class) observer holding ui/category
         '''
-        self.ui = observer.ui
+        self.observer = observer
         self.category = observer.selectedCategory
 
         if not self.category:
-            self.informationDialog(msgStr['noCategorySelected'])
+            informationDialog(msg_no_category, self.observer.ui)
             return
 
-        shaderData, msg = Shader.getShader(self.category)
-        if not shaderData:
-            self.informationDialog(msg)
+        shader, msg = Shader.getShader(self.category)
+        if not shader:
+            informationDialog(msg, self.observer.ui)
             return
 
         for s in self.category.shaders(reload=True):
-            if s.name == shaderData['name']:
-                if not self.overwriteShaderDialog(s.name):
+            if s.name == shader['name']:
+                overwrite = self.overwrite_shader_dialog(s.name)
+                if not overwrite:
                     return
+                break
 
-        virtualShader = Shader.createShader(shaderData, self.category)
-        if virtualShader.save():
-            self.ui.categoryCC.refreshCategoryTab()
-        else:
-            self.informationDialog(msgStr['failedExport'])
+        _shader = Shader.createShader(shader, self.category)
+        if not _shader.save():
+            informationDialog(msg_failed_export, self.observer.ui)
+            return
+
+        self.observer.main.categoryCC.refreshCategoryTab()
 
 # --------------------------------------------------------------------------------------------
 # addShader Support Dialogs
 # --------------------------------------------------------------------------------------------
 
-    def informationDialog(self, msg):
-        ''' open qt dialog box when no shader is selected or found'''
-        msgBox = QtWidgets.QMessageBox(self.ui)
-        msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
-        msgBox.setIcon(QtWidgets.QMessageBox.Warning)
-        msgBox.setText(msg)
-        msgBox.setWindowTitle("Adding Shader")
-        msgBox.setStandardButtons(QtWidgets.QMessageBox.Close)
-        msgBox.exec_()
-
-    def overwriteShaderDialog(self, name):
+    def overwrite_shader_dialog(self, name):
         ''' open qt dialog box when shader already exists '''
-        msgBox = QtWidgets.QMessageBox(self.ui)
+        msgBox = QtWidgets.QMessageBox(self.observer.ui)
         msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
         msgBox.setIcon(QtWidgets.QMessageBox.Question)
-        msgBox.setText(msgStr['overwriteShaderDialog'])
+        msgBox.setText(msg_overwrite)
         msgBox.setWindowTitle(name)
-        msgBox.setDetailedText(name)
         msgBox.setStandardButtons(
             QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         choice = msgBox.exec_()
