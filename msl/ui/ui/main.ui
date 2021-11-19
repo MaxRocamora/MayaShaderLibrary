@@ -439,12 +439,19 @@
      <string>Options</string>
     </property>
     <addaction name="separator"/>
-    <addaction name="mnu_defaultLigthRigOpen"/>
+    <addaction name="mnu_defaultLightRigOpen"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="mnu_help_web"/>
    </widget>
    <addaction name="menuMenu"/>
    <addaction name="menuCategory"/>
    <addaction name="menuShader"/>
    <addaction name="menuOptions"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="mnu_addNewCategory">
@@ -478,7 +485,7 @@
     <string>Overwrite Confirmation</string>
    </property>
   </action>
-  <action name="mnu_defaultLigthRigOpen">
+  <action name="mnu_defaultLightRigOpen">
    <property name="text">
     <string>Open Thumbnail LightRig File</string>
    </property>
@@ -491,6 +498,11 @@
   <action name="mnu_setFolder">
    <property name="text">
     <string>Set Shaders Storage Folder</string>
+   </property>
+  </action>
+  <action name="mnu_help_web">
+   <property name="text">
+    <string>Browse Help Docs</string>
    </property>
   </action>
  </widget>
