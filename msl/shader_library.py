@@ -99,7 +99,7 @@ class ProgramUI_shaderLibrary(QMainWindow):
             i) for i in range(total_tabs)]
 
         self.userPref = {"lastCategory": lastCategory,
-                         'favouriteCategorys': fCategorys
+                         'favoriteCategorys': fCategorys
                          }
         self.userSettings.saveUS(self.userPref)
         self.close()
@@ -111,7 +111,7 @@ class ProgramUI_shaderLibrary(QMainWindow):
             return False
 
         lastTab = self.userPref.get("lastCategory", 0)
-        favTabs = self.userPref.get("favouriteCategorys", [])
+        favTabs = self.userPref.get("favoriteCategorys", [])
 
         self.categoryCC.loadCategorys()
         for category in self.observer.categoryList:
