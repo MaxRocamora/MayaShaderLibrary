@@ -19,11 +19,10 @@ PY_VERSION = sys.version_info.major
 package = pkgutil.get_loader("msl")
 if not package:
     ROOT_PATH = os.path.dirname(__file__)
+elif PY_VERSION >= 3:
+    ROOT_PATH = os.path.dirname(package.get_filename())
 else:
-    if PY_VERSION >= 3:
-        ROOT_PATH = os.path.dirname(package.get_filename())
-    else:
-        ROOT_PATH = os.path.join(os.path.dirname(package.filename), 'msl')
+    ROOT_PATH = os.path.join(os.path.dirname(package.filename), 'msl')
 
 
 # UI / Stylesheet / icons
