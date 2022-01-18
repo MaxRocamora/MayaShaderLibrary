@@ -11,12 +11,13 @@
 11/2021 - 1.1.0 / python 3, some refactor, typos, pep
 11/2021 - 1.1.1 / docstrings, comments, some fixes
 11/2021 - 1.1.2 / autopin new category, more refactor
+01/2022 - 1.1.3 / fix typo assing = assign
 
 '''
 
 VERSION_MAJOR = 1
 VERSION_MINOR = 1
-VERSION_PATCH = 2
+VERSION_PATCH = 3
 
 version = '{}.{}.{}'.format(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH)
 
