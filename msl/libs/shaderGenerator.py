@@ -98,12 +98,12 @@ class CallMenu:
         smImport.triggered.connect(lambda: self.shader.importShader())
         self.menu.addSeparator()
 
-        actionStr = "Import '{}'' and assing into selection".format(self.name)
+        actionStr = "Import '{}'' and assign into selection".format(self.name)
         smImportSet = QtWidgets.QAction(
             get_icon("impMaya"), actionStr, self.menu)
         self.menu.addAction(smImportSet)
         smImportSet.triggered.connect(
-            lambda: self.shader.importShader(assing=True))
+            lambda: self.shader.importShader(assign=True))
         self.menu.addSeparator()
 
         actionStr = "Rename '{}'".format(self.name)
