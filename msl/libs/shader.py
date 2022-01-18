@@ -178,7 +178,7 @@ class Shader(object):
             self.assignShader(self.ball)
         except TypeError as e:
             # if error is raised, delete the shader ball and abort saving.
-            print('Error on assing shader to shadingBall ({})'.format(str(e)))
+            print('Error on assign shader to shadingBall ({})'.format(str(e)))
             cmds.delete(self.ball)
             return
         cmds.select(shadedBall, r=True)
@@ -224,11 +224,11 @@ class Shader(object):
 # Import Methods (MAYA)
 # --------------------------------------------------------------------------------------------
 
-    def importShader(self, assing=False):
+    def importShader(self, assign=False):
         '''
         imports shader into scene
         Args:
-            assing (boolean) if true, try to assing shader to selected mesh
+            assign (boolean) if true, try to assign shader to selected mesh
         '''
         sel = cmds.ls(sl=True)
         if cmds.objExists(self.name):
@@ -237,7 +237,7 @@ class Shader(object):
             cmds.file(self.cgFile, type='mayaAscii', i=True, force=True)
 
         try:
-            if assing:
+            if assign:
                 self.assignShader(sel)
         except TypeError as e:
             print(str(e))
