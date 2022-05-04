@@ -15,7 +15,7 @@ from msl.libs.dialogs.dlg_addCategory import addCategoryDialog
 from msl.ui.icons import get_icon
 
 msgStr = {
-    'CategoryNotFound': 'No categorys found, \
+    'CategoryNotFound': 'No Categories found, \
     create one using the Create Category button',
     'LibraryFolderNotFound': 'Library Folder not found!'
 }
@@ -23,8 +23,9 @@ msgStr = {
 
 class CategoryController():
 
-    def __init__(self, ui, observer):
-        self.ui = ui
+    def __init__(self, main, observer):
+        self.main = main
+        self.ui = main
         self.observer = observer
         self.set_connections()
 
@@ -75,7 +76,7 @@ class CategoryController():
         ''' Load Categorys from disk and set up main storing list '''
         self.observer.categoryList = Category.collectCategorys(self.ui)
         if len(self.observer.categoryList) == 0:
-            self.ui.uiBar.warning(msgStr['CategoryNotFound'])
+            self.main.uiBar.warning(msgStr['CategoryNotFound'])
         else:
             self.ui.cbox_categorys.clear()
             for category in self.observer.categoryList:
