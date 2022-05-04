@@ -47,7 +47,7 @@ class ProgramUI_shaderLibrary(QMainWindow):
         self.userSettings = UserSettings("shaderLibrary")
         self.uiBar = Statusbar(self.ui.statusBar())
         self.observer = ObserverUI(self, self.ui)
-        self.categoryCC = CategoryController(self.ui, self.observer)
+        self.categoryCC = CategoryController(self, self.observer)
         self.shaderCC = ShaderController(self.ui, self.observer)
         self.setConnections()
         self.loadUserPreferences()
