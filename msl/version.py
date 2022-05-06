@@ -19,7 +19,7 @@ VERSION_MAJOR = 1
 VERSION_MINOR = 1
 VERSION_PATCH = 3
 
-version = '{}.{}.{}'.format(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH)
+version = f'{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}'
 
 app_name = 'Maya Shader Library'
 qtWinName = 'Arcane2:Qt_' + app_name + '_ui'
