@@ -1,4 +1,4 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
 #
@@ -7,9 +7,9 @@
 # When a shader is selected, the shader clicked signal
 # sends itself to this class using 'selectedShader'
 # property and updates ui texts
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
-class ObserverUI(object):
+class ObserverUI():
     def __init__(self, main, ui):
         self.main = main
         self.ui = ui
