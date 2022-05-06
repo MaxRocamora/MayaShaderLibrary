@@ -33,7 +33,7 @@ class Shader():
         self.ball = 'shdBall'
 
     def __str__(self):
-        return "Shader Class {} , Category {}".format(self.name, self.category)
+        return f"Shader Class {self.name} , Category {self.category}"
 
 # ----------------------------------------------------------------------------------------
 # Properties
@@ -178,7 +178,7 @@ class Shader():
             self.assignShader(self.ball)
         except TypeError as e:
             # if error is raised, delete the shader ball and abort saving.
-            print('Error on assign shader to shadingBall ({})'.format(str(e)))
+            print(f'Error on assign shader to shadingBall ({str(e)})')
             cmds.delete(self.ball)
             return
         cmds.select(shadedBall, r=True)
@@ -200,11 +200,11 @@ class Shader():
             try:
                 with open(self.configFile, 'w') as loadedJsn:
                     json.dump(dictData, loadedJsn, sort_keys=True, indent=4)
-            except IOError:
-                print('Config File for shader {} not found.'.format(self.name))
+            except OSError:
+                print(f'Config File for shader {self.name} not found.')
 
         # opens and read json into dictData
-        with open(self.configFile, 'r') as loadedJsn:
+        with open(self.configFile) as loadedJsn:
             dictData = json.load(loadedJsn)
             dictData["idName"] = self.idName
             dictData["name"] = self.name
@@ -370,10 +370,10 @@ class Shader():
             isShader = cmds.getClassification(selType, satisfies="shader")
             shaders = [selection[0]]
             if not isShader:
-                return False, 'No shader found for type ({})'.format(selType)
+                return False, f'No shader found for type ({selType})'
 
         if shaders[0] in ignoreDefaults:
-            msg = 'Shader found is maya default ({})'.format(shaders[0])
+            msg = f'Shader found is maya default ({shaders[0]})'
             return False, msg
 
         shaderData['name'] = shaders[0]
