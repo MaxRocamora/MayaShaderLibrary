@@ -33,7 +33,7 @@ url = 'https://mayashaderlibrary.readthedocs.io'
 class ProgramUI_shaderLibrary(QMainWindow):
 
     def __init__(self, parent=get_maya_main_window()):
-        super(ProgramUI_shaderLibrary, self).__init__(parent)
+        super().__init__(parent)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
         self.setObjectName(qtWinName)
         self.ui = QtUiTools.QUiLoader().load(ui_file)
@@ -41,7 +41,7 @@ class ProgramUI_shaderLibrary(QMainWindow):
         self.move(parent.geometry().center() - self.ui.geometry().center())
         self.setWindowIcon(APP_QICON)
         self.setWindowTitle(app_name + ' ' + version)
-        with open(QSS_FILE, "r") as fh:
+        with open(QSS_FILE) as fh:
             self.setStyleSheet(fh.read())
 
         self.userSettings = UserSettings("shaderLibrary")
