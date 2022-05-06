@@ -33,7 +33,7 @@ class CategoryController():
         ''' Definition for ui widgets qt signals & attributes '''
         self.ui.mnu_browseCategoryFolder.triggered.connect(
             lambda: self.selectedCategory.browse())
-        self.ui.mnu_reloadCategorys.triggered.connect(self.loadCategorys)
+        self.ui.mnu_reloadCategorys.triggered.connect(self.loadCategories)
         self.ui.cbox_categorys.activated.connect(
             lambda: self.focusTabName(self.ui.cbox_categorys.currentText()))
 
@@ -72,9 +72,9 @@ class CategoryController():
 
         self.ui.tab_materials.currentChanged.connect(self.tabChanged)
 
-    def loadCategorys(self):
-        ''' Load Categorys from disk and set up main storing list '''
-        self.observer.categoryList = Category.collectCategorys(self.ui)
+    def loadCategories(self):
+        ''' Load Categories from disk and set up main storing list '''
+        self.observer.categoryList = Category.collectCategories(self.ui)
         if len(self.observer.categoryList) == 0:
             self.main.uiBar.warning(msgStr['CategoryNotFound'])
         else:
