@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # --------------------------------------------------------------------------------------------
 # ARCANE Shader Library renameShader dialog
 #
@@ -24,7 +23,7 @@ class renameShaderDialog(QtWidgets.QInputDialog):
             shaderClass (class) shader class calling this input
             observer (class) observer holding ui
         '''
-        super(renameShaderDialog, self).__init__()
+        super().__init__()
         self.observer = observer
         self.shader = shaderClass
 
