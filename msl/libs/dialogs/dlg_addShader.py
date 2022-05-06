@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------
 # Shader Library addShader dialog
 # This class ask handles adding a new shader
