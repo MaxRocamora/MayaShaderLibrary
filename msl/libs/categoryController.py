@@ -220,4 +220,4 @@ class CategoryController():
         grid = QtWidgets.QGridLayout()
         grid.addWidget(scroll, 3, 0)
         tab.setLayout(grid)
-        print('Category {} refreshed'.format(categoryPlaceHolder.name))
+        print(f'Category {categoryPlaceHolder.name} refreshed')
