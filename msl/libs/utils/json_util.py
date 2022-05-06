@@ -13,14 +13,14 @@ def load_json(jsonFile):
     jsonFile :: system file to read data.
     '''
     if not os.path.exists(jsonFile):
-        print("load_json: JSON File not found: {}.".format(jsonFile))
+        print(f"load_json: JSON File not found: {jsonFile}.")
         return False
 
-    with open(jsonFile, 'r') as fIn:
+    with open(jsonFile) as fIn:
         try:
             return json.load(fIn)
         except ValueError as e:
-            print("JSON object issue: {}".format(str(e)))
+            print(f"JSON object issue: {str(e)}")
             return False
 
 
@@ -39,5 +39,5 @@ def save_json(dataDict, jsonFile):
     try:
         with open(jsonFile, 'w') as loadedJsn:
             json.dump(dataDict, loadedJsn, sort_keys=True, indent=4)
-    except IOError:
+    except OSError:
         print('IOError: No such file of directory:', jsonFile)
