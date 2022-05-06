@@ -21,7 +21,7 @@ class Category():
         self._shaders = self.collectShaders()
 
     def __str__(self):
-        return "Category Class {}".format(self.name)
+        return f"Category Class {self.name}"
 
     # ------------------------------------------------------------------------------------
     # Properties
