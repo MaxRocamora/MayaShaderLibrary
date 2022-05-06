@@ -1,17 +1,17 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
 #
 # User Settings Class / Instanced as userUI
 # This class handle load/save tool properties on a local user json file
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 import os
 from sys import platform
 
 from msl.libs.utils.json_util import load_json, save_json
 
 
-class UserSettings(object):
+class UserSettings():
     def __init__(self, tool_name):
         '''Manages saving UI settings for tools and saving on local drive
         Args:
