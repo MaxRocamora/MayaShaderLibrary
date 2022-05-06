@@ -1,4 +1,4 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
 #
@@ -7,7 +7,7 @@
 # use information returned from 'getShader'
 # to create this class use 'createShader' classmethod.
 #
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 import os
 import json
 import platform
@@ -20,7 +20,7 @@ import maya.cmds as cmds
 from msl.libs.utils.json_util import load_json
 
 
-class Shader(object):
+class Shader():
     def __init__(self, name, category):
         ''' shader class
         Args:
@@ -35,9 +35,9 @@ class Shader(object):
     def __str__(self):
         return "Shader Class {} , Category {}".format(self.name, self.category)
 
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Properties
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
     @property
     def idName(self):
