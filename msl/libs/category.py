@@ -1,10 +1,10 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
 #
 # Category Class
 #
-# ------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 import os
 import subprocess
 
@@ -13,7 +13,7 @@ from msl.libs.dialogs.dlg_inform import informationDialog
 from msl.libs.shader import Shader as Shader
 
 
-class Category(object):
+class Category():
     def __init__(self, category, path):
         ''' When a category is created, stores all its shaders '''
         self._name = category
@@ -23,9 +23,9 @@ class Category(object):
     def __str__(self):
         return "Category Class {}".format(self.name)
 
-# --------------------------------------------------------------------------------------------
-# Properties
-# --------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------
+    # Properties
+    # ------------------------------------------------------------------------------------
 
     @property
     def name(self):
@@ -54,18 +54,18 @@ class Category(object):
         if os.path.exists(location):
             subprocess.Popen("explorer " + location)
 
-# --------------------------------------------------------------------------------------------
-# Collect / Generate Methods
-# --------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------
+    # Collect / Generate Methods
+    # ------------------------------------------------------------------------------------
 
     def collectShaders(self):
         ''' Returns a list of shader objects from chosen category '''
         folders = [x.upper() for x in os.listdir(self.folder)]
         return [Shader.loadShader(name=f, category=self) for f in folders]
 
-# --------------------------------------------------------------------------------------------
-# Static Methods
-# --------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------
+    # Static Methods
+    # ------------------------------------------------------------------------------------
 
     @staticmethod
     def create(name):
@@ -74,10 +74,10 @@ class Category(object):
             os.mkdir(os.path.abspath(os.path.join(LIBRARY_SHADERS_PATH, name)))
 
     @staticmethod
-    def collectCategorys(ui):
-        ''' Load Categorys from disk and set up main storing list '''
+    def collectCategories(ui):
+        ''' Load Categories from disk and set up main storing list '''
         if not os.path.exists(LIBRARY_SHADERS_PATH):
-            informationDialog("Warning: Categorys Folder not found.", ui)
+            informationDialog("Warning: Categories Folder not found.", ui)
             print('Path:', LIBRARY_SHADERS_PATH)
             return []
 
