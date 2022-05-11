@@ -1,5 +1,7 @@
 import maya.cmds as cmds
 
+from msl.libs.logger import log
+
 
 def dirty_file_dialog():
     ''' Ask user to save their current scene
@@ -19,4 +21,4 @@ def dirty_file_dialog():
         try:
             cmds.file(save=True, type='mayaAscii')
         except RuntimeError as e:
-            print(str(e))
+            log.error(e)
