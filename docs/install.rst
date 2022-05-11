@@ -3,8 +3,8 @@
 Installation
 ============
 
-MayaShaderLibrary tested on Maya 2017, 2018, and 2019, 2022
-Supports Python 2.7/3.7
+MayaShaderLibrary
+Maya +2022 / Python +3.6
 
 Download
 --------
@@ -25,7 +25,7 @@ Maya Install
 
 *MAYA_SHADER_LIBRARY = your_install_directory\\library*
 
-.. note:: Maya.env is usually located under "User/My Documents/Maya/2018"
+.. note:: Maya.env is usually located under "User/My Documents/Maya/2022"
 
 Running the script
 ------------------
@@ -34,5 +34,5 @@ Create a shelf button with the following python code:
 
 .. code-block:: python
 
-	import msl.shader_library as maya_shader_library
-	maya_shader_library.load()
+	import msl
+	msl.run()
