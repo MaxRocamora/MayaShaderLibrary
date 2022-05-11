@@ -1,6 +1,7 @@
-# ----------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # Shader Class
 # Get Shader from cg app using 'getShader' staticmethod
@@ -18,6 +19,7 @@ import datetime
 import maya.cmds as cmds
 
 from msl.libs.utils.json_util import load_json
+from msl.libs.logger import log
 
 
 class Shader():
@@ -28,7 +30,7 @@ class Shader():
             category (class) category class
         '''
         self.properties = {}
-        self._idName = name
+        self._id_name = name
         self._category = category
         self.ball = 'shdBall'
 
@@ -40,8 +42,8 @@ class Shader():
 # ----------------------------------------------------------------------------------------
 
     @property
-    def idName(self):
-        return self._idName
+    def id_name(self):
+        return self._id_name
 
     @property
     def name(self):
@@ -66,30 +68,30 @@ class Shader():
     @property
     def folder(self):
         ''' physical path of ths shader '''
-        return os.path.abspath(os.path.join(self.category.folder, self.idName))
+        return os.path.abspath(os.path.join(self.category.folder(), self.id_name))
 
     @property
-    def cgFile(self):
+    def cg_file(self):
         ''' return cg file path for this shader '''
         return os.path.join(self.folder, self.name + "_shader.ma")
 
     @property
-    def configFile(self):
+    def config_file(self):
         ''' return config file path for this shader '''
-        return os.path.join(self.folder, self.idName + "_shader.json")
+        return os.path.join(self.folder, self.id_name + "_shader.json")
 
     @property
-    def hasProperties(self):
+    def has_properties(self):
         ''' return if shader has a json properties file '''
-        return os.path.exists(self.configFile)
+        return os.path.exists(self.config_file)
 
     @property
-    def shaderType(self):
+    def shader_type(self):
         ''' node type or shader type for this shader '''
         return self.properties.get('shaderType', 'N/A')
 
-    @shaderType.setter
-    def shaderType(self, v):
+    @shader_type.setter
+    def shader_type(self, v):
         self.properties['shaderType'] = v
 
     @property
@@ -102,12 +104,12 @@ class Shader():
         self.properties['node'] = v
 
     @property
-    def sourceFile(self):
+    def source_file(self):
         ''' source cgFile for this shader '''
         return self.properties.get('sourceFile', 'N/A')
 
-    @sourceFile.setter
-    def sourceFile(self, v):
+    @source_file.setter
+    def source_file(self, v):
         self.properties['sourceFile'] = v
 
     @property
@@ -156,9 +158,9 @@ class Shader():
 # Load Methods
 # --------------------------------------------------------------------------------------------
 
-    def loadShaderProperties(self):
+    def load_shader_properties(self):
         ''' Load shaders properties from json file on disk '''
-        self.properties = dict(load_json(self.configFile))
+        self.properties = dict(load_json(self.config_file))
 
 # --------------------------------------------------------------------------------------------
 # Export Methods (MAYA)
@@ -166,11 +168,11 @@ class Shader():
 
     def save(self):
         ''' Takes this shader asset and export into file
-        Creates folder, configFile, thumbnail, cg file and copy maps
+        Creates folder, _f thumbnail, cg file and copy maps
         '''
         mementoSelection = cmds.ls(sl=True)
-        print('Adding this shader {} into this category {}'.format(
-            self.name, self.category.name))
+        log.info('Adding shader {} into this category {}'.format(
+            self.name, self.category.name()))
         if cmds.objExists(self.ball):
             cmds.delete(self.ball)
         try:
@@ -178,35 +180,35 @@ class Shader():
             self.assignShader(self.ball)
         except TypeError as e:
             # if error is raised, delete the shader ball and abort saving.
-            print(f'Error on assign shader to shadingBall ({str(e)})')
+            log.warning(f'Error on assign shader to shadingBall ({str(e)})')
             cmds.delete(self.ball)
             return
         cmds.select(shadedBall, r=True)
         # Once the shader was successfully exported, make folder and files
         if not os.path.exists(self.folder):
             os.mkdir(os.path.abspath(self.folder))
-        cmds.file(self.cgFile, type='mayaAscii',
+        cmds.file(self.cg_file, type='mayaAscii',
                   exportSelected=True, force=True)
         cmds.delete(self.ball)
         # Copy maps (optional)
-        self.saveShaderProperties()
+        self.save_shader_properties()
         cmds.select(mementoSelection, r=True)
         return True
 
-    def saveShaderProperties(self):
+    def save_shader_properties(self):
         ''' Save shaders properties into json file on disk '''
-        if not self.hasProperties:
+        if not self.has_properties:
             dictData = {}
             try:
-                with open(self.configFile, 'w') as loadedJsn:
-                    json.dump(dictData, loadedJsn, sort_keys=True, indent=4)
+                with open(self.config_file, 'w') as _json:
+                    json.dump(dictData, _json, sort_keys=True, indent=4)
             except OSError:
-                print(f'Config File for shader {self.name} not found.')
+                log.error(f'Config File for shader {self.name} not found.')
 
         # opens and read json into dictData
-        with open(self.configFile) as loadedJsn:
-            dictData = json.load(loadedJsn)
-            dictData["idName"] = self.idName
+        with open(self.config_file) as _json:
+            dictData = json.load(_json)
+            dictData["id_name"] = self.id_name
             dictData["name"] = self.name
             dictData["category"] = self.category.name
             dictData["notes"] = self.notes
@@ -217,8 +219,8 @@ class Shader():
             dictData['PC'] = str(platform.node())
             dictData['User'] = str(os.getenv('username'))
             dictData['Edited On'] = str(datetime.datetime.now())
-        with open(self.configFile, 'w') as loadedJsn:
-            json.dump(dictData, loadedJsn, sort_keys=True, indent=4)
+        with open(self.config_file, 'w') as _json:
+            json.dump(dictData, _json, sort_keys=True, indent=4)
 
 # --------------------------------------------------------------------------------------------
 # Import Methods (MAYA)
@@ -232,15 +234,15 @@ class Shader():
         '''
         sel = cmds.ls(sl=True)
         if cmds.objExists(self.name):
-            print('shader is in scene, ask for replace', self.name)
+            log.info(f'Shader exists in scene, asking for replace {self.name}')
         else:
-            cmds.file(self.cgFile, type='mayaAscii', i=True, force=True)
+            cmds.file(self.cg_file, type='mayaAscii', i=True, force=True)
 
         try:
             if assign:
                 self.assignShader(sel)
         except TypeError as e:
-            print(str(e))
+            log.info(str(e))
         finally:
             if cmds.objExists(self.ball):
                 cmds.delete(self.ball)
@@ -265,20 +267,22 @@ class Shader():
 # Delete/Rename/Browse Methods
 # --------------------------------------------------------------------------------------------
 
-    def rename(self, newName=False):
+    def rename(self, new_name=False):
         ''' rename cg file and config file and this class '''
-        if not newName:
+        if not new_name:
             return False
 
-        oldConfigFile = self.configFile
-        oldCGFile = self.cgFile
-        oldThumbFile = self.thumbnail
-        self.properties['name'] = newName
-        os.rename(oldConfigFile, self.configFile)
-        os.rename(oldCGFile, self.cgFile)
-        if os.path.exists(oldThumbFile):
-            os.rename(oldThumbFile, self.thumbnail)
-        self.saveShaderProperties()
+        _old_config_file = self.config_file
+        _old_CG_file = self.cg_file
+        _old_thumb_file = self.thumbnail
+        self.properties['name'] = new_name
+        os.rename(_old_config_file, self.config_file)
+        os.rename(_old_CG_file, self.cg_file)
+
+        if os.path.exists(_old_thumb_file):
+            os.rename(_old_thumb_file, self.thumbnail)
+        self.save_shader_properties()
+
         return True
 
     def delete(self):
@@ -298,90 +302,89 @@ class Shader():
 # --------------------------------------------------------------------------------------------
 
     @staticmethod
-    def loadShader(name, category):
-        '''
-        Use this method to load a shader from disk.
+    def load_shader(name, category):
+        ''' Use this method to load a shader from disk.
         Args:
             name (string): name of the internal folder of this shader
         Returns:
             shader class object
         '''
         shader = Shader(name, category)
-        shader.loadShaderProperties()
+        shader.load_shader_properties()
         return shader
 
     @staticmethod
-    def createShader(shaderData, category):
+    def create_shader(shader_data, category):
         ''' Use this method to create a virtual shader,
         sets own attributes and returns this class.
         the id is generated by taking the last free folder
         from 'SHD_0000' pattern.
         Args:
-            shaderData (dic) Contains all values from getShader() staticmethod
+            shader_data (dic) Contains all values from getShader() staticmethod
             category (class) parent category
         '''
         nextId = 0
-        while 'SHD_' + str(nextId).zfill(4) in os.listdir(category.folder):
+        while 'SHD_' + str(nextId).zfill(4) in os.listdir(category.folder()):
             nextId += 1
         name = 'SHD_' + str(nextId).zfill(4)
         shader = Shader(name, category)
-        shader.name = shaderData['name']
-        shader.node = shaderData['node']
-        shader.shaderType = shaderData['shaderType']
-        shader.maps = shaderData['maps']
-        shader.sourceFile = shaderData['sourceFile']
+        shader.name = shader_data['name']
+        shader.node = shader_data['node']
+        shader.shaderType = shader_data['shaderType']
+        shader.maps = shader_data['maps']
+        shader.sourceFile = shader_data['sourceFile']
         return shader
 
     @staticmethod
-    def getShader(category):
-        '''
-        Use this method to get selected shader from cg app
-        After get the current shader, fill shaderData dict with
+    def get_shader(category):
+        ''' Use this method to get selected shader from selection
+        After get the current shader, fill shader_data dict with
         necessary information and returns it.
         Args:
             category (string): category of this shader
         Returns:
-            shaderData (dic): info from shader or False
+            shader_data (dic): info from shader or False
             msg (string): error message
         '''
-        ignoreDefaults = ['lambert1', 'particleCloud1',
-                          'shaderGlow1', 'defaultColorMgtGlobals']
+        ignore_defaults = ['lambert1', 'particleCloud1',
+                           'shaderGlow1', 'defaultColorMgtGlobals']
         app = 'maya'
-        shaderData = {'name': 'default',
-                      'maps': [],
-                      'app': app,
-                      'node': 'defaultNode',
-                      'shaderType': 'N/A'
-                      }
+        shader_data = {'name': 'default',
+                       'maps': [],
+                       'app': app,
+                       'node': 'defaultNode',
+                       'shaderType': 'N/A'
+                       }
 
         selection = cmds.ls(sl=True)
-        if len(selection) == 0:
+        if not selection:
             return False, 'Nothing Selected!'
-        elif len(selection) > 1:
+
+        if len(selection) > 1:
             return False, 'Multiple objects selected!'
-        selType = cmds.nodeType(selection[0])
-        if selType == 'transform':
+
+        sel_type = cmds.nodeType(selection[0])
+        if sel_type == 'transform':
             shape = cmds.ls(dag=1, o=1, s=1, sl=1)
             sg = cmds.listConnections(shape, type='shadingEngine')
             shaders = cmds.ls(cmds.listConnections(sg), materials=1)
             if len(shaders) == 0:
                 return False, 'No shader found on selected object'
         else:
-            isShader = cmds.getClassification(selType, satisfies="shader")
+            isShader = cmds.getClassification(sel_type, satisfies="shader")
             shaders = [selection[0]]
             if not isShader:
-                return False, f'No shader found for type ({selType})'
+                return False, f'No shader found for type ({sel_type})'
 
-        if shaders[0] in ignoreDefaults:
+        if shaders[0] in ignore_defaults:
             msg = f'Shader found is maya default ({shaders[0]})'
             return False, msg
 
-        shaderData['name'] = shaders[0]
-        shaderData['node'] = shaders[0]
-        shaderData['maps'] = ['maps1', 'maps2']
-        shaderData['shaderType'] = cmds.nodeType(shaders[0])
-        shaderData['sourceFile'] = cmds.file(
-            query=True, sceneName=True, shortName=True)
-        shaderData['category'] = category.name
+        shader_data['name'] = shaders[0]
+        shader_data['node'] = shaders[0]
+        shader_data['shaderType'] = cmds.nodeType(shaders[0])
+        shader_data['sourceFile'] = cmds.file(query=True, sceneName=True, shortName=True)
+        shader_data['category'] = category.name
+        shader_data['maps'] = ['maps1', 'maps2']  # maps not implented
 
-        return shaderData, 1
+        return shader_data, 1
