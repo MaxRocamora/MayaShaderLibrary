@@ -67,7 +67,7 @@
     <property name="lineWidth">
      <number>1</number>
     </property>
-    <widget class="QComboBox" name="cbox_categorys">
+    <widget class="QComboBox" name="cbox_categories">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -89,7 +89,7 @@
       </size>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_browseCategory">
+    <widget class="QToolButton" name="btn_browse_category">
      <property name="geometry">
       <rect>
        <x>610</x>
@@ -120,7 +120,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_addCategory">
+    <widget class="QToolButton" name="btn_add_category">
      <property name="geometry">
       <rect>
        <x>551</x>
@@ -151,7 +151,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_favoriteCat">
+    <widget class="QToolButton" name="btn_favorite">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -213,7 +213,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_unPinTab">
+    <widget class="QToolButton" name="btn_unpin">
      <property name="geometry">
       <rect>
        <x>260</x>
@@ -258,7 +258,7 @@
      <number>-1</number>
     </property>
    </widget>
-   <widget class="QToolButton" name="btn_saveChanges">
+   <widget class="QToolButton" name="btn_save_changes">
     <property name="geometry">
      <rect>
       <x>670</x>
@@ -313,7 +313,7 @@
     <property name="title">
      <string>Shader Info</string>
     </property>
-    <widget class="QLabel" name="lbl_shaderName">
+    <widget class="QLabel" name="lbl_shader_name">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -326,7 +326,7 @@
       <string>ShaderName</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lbl_shaderUserPC">
+    <widget class="QLabel" name="lbl_shader_user_pc">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -339,7 +339,7 @@
       <string>UserInfo</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lbl_shaderType">
+    <widget class="QLabel" name="lbl_shader_type">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -352,7 +352,7 @@
       <string>ShaderType</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lbl_shaderCode">
+    <widget class="QLabel" name="lbl_shader_code">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -376,7 +376,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QToolButton" name="btn_addShader">
+   <widget class="QToolButton" name="btn_add_shader">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -421,7 +421,7 @@
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="mnu_reloadCategorys"/>
+    <addaction name="mnu_reload_categories"/>
     <addaction name="separator"/>
     <addaction name="mnu_reset"/>
    </widget>
@@ -429,16 +429,16 @@
     <property name="title">
      <string>Category</string>
     </property>
-    <addaction name="mnu_addNewCategory"/>
+    <addaction name="mnu_add_new_category"/>
     <addaction name="separator"/>
-    <addaction name="mnu_browseCategoryFolder"/>
+    <addaction name="mnu_browse_category_folder"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
      <string>Options</string>
     </property>
     <addaction name="separator"/>
-    <addaction name="mnu_defaultLightRigOpen"/>
+    <addaction name="mnu_open_default_light_rig"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -456,7 +456,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <action name="mnu_addNewCategory">
+  <action name="mnu_add_new_category">
    <property name="text">
     <string>Add New Category</string>
    </property>
@@ -466,7 +466,7 @@
     </font>
    </property>
   </action>
-  <action name="mnu_browseCategoryFolder">
+  <action name="mnu_browse_category_folder">
    <property name="text">
     <string>Browse Category Folder</string>
    </property>
@@ -502,7 +502,7 @@
     <string>Overwrite Confirmation</string>
    </property>
   </action>
-  <action name="mnu_defaultLightRigOpen">
+  <action name="mnu_open_default_light_rig">
    <property name="text">
     <string>Open Thumbnail LightRig File</string>
    </property>
@@ -512,7 +512,7 @@
     </font>
    </property>
   </action>
-  <action name="mnu_reloadCategorys">
+  <action name="mnu_reload_categories">
    <property name="text">
     <string>Reload Categorys</string>
    </property>
