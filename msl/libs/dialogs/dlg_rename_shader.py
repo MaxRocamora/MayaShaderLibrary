@@ -1,10 +1,10 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # ARCANE Shader Library renameShader dialog
 #
 # This class ask for user a new shader name, and handles errors
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
-from PySide2 import QtWidgets
+from PySide2.QtWidgets import QInputDialog, QLineEdit, QMessageBox
 
 msgStr = {
     'nameUnicodeError': 'New name has a UnicodeEncodeError!',
@@ -14,7 +14,7 @@ msgStr = {
 }
 
 
-class renameShaderDialog(QtWidgets.QInputDialog):
+class RenameShaderDialog(QInputDialog):
 
     def __init__(self, shaderClass, observer):
         '''
@@ -31,8 +31,7 @@ class renameShaderDialog(QtWidgets.QInputDialog):
         ''' open qt dialog box for rename shader '''
         title = "Rename Shader"
         question = 'Enter Shader New Name'
-        lineEdit = QtWidgets.QLineEdit.Normal
-        QInputDialog = QtWidgets.QInputDialog
+        lineEdit = QLineEdit.Normal
         newName, result = QInputDialog.getText(
             self.observer.ui, title, question, lineEdit, "default")
         if not result:
@@ -55,12 +54,12 @@ class renameShaderDialog(QtWidgets.QInputDialog):
 
     def errorShaderDialog(self, msg):
         ''' open qt dialog box when no shader is selected or found'''
-        msgBox = QtWidgets.QMessageBox(self.observer.ui)
+        msgBox = QMessageBox(self.observer.ui)
         msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
-        msgBox.setIcon(QtWidgets.QMessageBox.Warning)
+        msgBox.setIcon(QMessageBox.Warning)
         msgBox.setText(msg)
         msgBox.setWindowTitle("Renaming Shader")
-        msgBox.setStandardButtons(QtWidgets.QMessageBox.Close)
+        msgBox.setStandardButtons(QMessageBox.Close)
         msgBox.exec_()
 
     def nameInUse(self, name):
