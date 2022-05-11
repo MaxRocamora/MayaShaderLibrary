@@ -7,37 +7,37 @@
 import json
 import os
 
+from msl.libs.logger import log
 
-def load_json(jsonFile):
-    ''' Reads a dict from json file
-    jsonFile :: system file to read data.
-    '''
-    if not os.path.exists(jsonFile):
-        print(f"load_json: JSON File not found: {jsonFile}.")
+
+def load_json(json_file):
+    ''' Reads a dict from json file '''
+    if not os.path.exists(json_file):
+        log.warning(f"load_json: JSON File not found: {json_file}.")
         return False
 
-    with open(jsonFile) as fIn:
+    with open(json_file) as fIn:
         try:
             return json.load(fIn)
         except ValueError as e:
-            print(f"JSON object issue: {str(e)}")
+            log.warning(f"JSON object issue: {str(e)}")
             return False
 
 
-def save_json(dataDict, jsonFile):
+def save_json(data, json_file):
     ''' Saves a dictionary into a json file
     Args:
-        dataDict (dictionary) : info dictionary to save
-        jsonFile (file) : target file to save into
+        data (dictionary) : info dictionary to save
+        json_file (file) : target file to save into
     '''
     if os is None:
         return
 
-    if not os.path.dirname(jsonFile):
-        os.mkdir(jsonFile)
+    if not os.path.dirname(json_file):
+        os.mkdir(json_file)
 
     try:
-        with open(jsonFile, 'w') as loadedJsn:
-            json.dump(dataDict, loadedJsn, sort_keys=True, indent=4)
+        with open(json_file, 'w') as loadedJsn:
+            json.dump(data, loadedJsn, sort_keys=True, indent=4)
     except OSError:
-        print('IOError: No such file of directory:', jsonFile)
+        log.warning('IOError: No such file of directory:', json_file)
