@@ -11,7 +11,7 @@ dlg_title = 'Confirm Deletion'
 dlg_msg = 'You are about to delete selected shader files.'
 
 
-class deleteShaderDialog():
+class DeleteShaderDialog():
 
     def __init__(self, shaderClass, observer):
         '''
