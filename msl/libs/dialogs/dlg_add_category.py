@@ -9,14 +9,14 @@
 from PySide2 import QtWidgets
 
 from msl.libs.category import Category
-from msl.libs.dialogs.dlg_inform import informationDialog
+from msl.libs.dialogs.dlg_inform import information_dialog
 
 msg_unicode_error = 'UnicodeEncodeError!.'
 msg_name_error = 'New Category name needs at least 4 characters.'
 msg_name_exists = 'Category name already in use.'
 
 
-class addCategoryDialog():
+class AddCategoryDialog():
 
     def __init__(self, observer):
         ''' Add Category Dialog Class
@@ -25,7 +25,7 @@ class addCategoryDialog():
         '''
         self.observer = observer
         self.ui = observer.ui
-        self.category = observer.selectedCategory
+        self.category = observer.selected_category
         self.name = 'defaultCategory'
 
         name = self._new_category_dialog()
@@ -40,10 +40,10 @@ class addCategoryDialog():
         '''
         name = name.upper()
         Category.create(name)
-        self.observer.main.categoryCC.loadCategorys()
-        for category in self.observer.categoryList:
-            if category.name == name:
-                self.observer.main.categoryCC.pinTab(category)
+        self.observer.main.category_ctrl.load_categories()
+        for category in self.observer.categories:
+            if category.name() == name:
+                self.observer.main.category_ctrl.pin_tab(category)
 
     def _new_category_dialog(self):
         ''' open qt dialog box for new category'''
@@ -63,15 +63,15 @@ class addCategoryDialog():
         try:
             name = str(name)
         except (UnicodeEncodeError, UnicodeDecodeError):
-            informationDialog(msg_unicode_error, self.ui)
+            information_dialog(msg_unicode_error, self.ui)
             return False
 
-        for category in self.observer.categoryList:
+        for category in self.observer.categories:
             if category.name.upper() == name.upper():
-                informationDialog(msg_name_exists, self.ui)
+                information_dialog(msg_name_exists, self.ui)
                 return False
 
         if len(name) < 3:
-            informationDialog(msg_name_error, self.ui)
+            information_dialog(msg_name_error, self.ui)
 
         return name
