@@ -1,6 +1,7 @@
-# ----------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # Observer its loaded by the main app
 # Holds selected shader from UI and the main UI
@@ -8,6 +9,8 @@
 # sends itself to this class using 'selectedShader'
 # property and updates ui texts
 # ----------------------------------------------------------------------------------------
+from msl.libs.logger import log
+
 
 class ObserverUI():
     def __init__(self, main, ui):
@@ -15,45 +18,42 @@ class ObserverUI():
         self.ui = ui
         self.shader = False
         self.category = False
-        self._categoryList = []
+        self._categories = []
 
     @property
-    def categoryList(self):
-        return self._categoryList
+    def categories(self):
+        return self._categories
 
-    @categoryList.setter
-    def categoryList(self, v):
-        self._categoryList = v
+    @categories.setter
+    def categories(self, v):
+        self._categories = v
 
     @property
-    def selectedCategory(self):
+    def selected_category(self):
         return self.category
 
-    @selectedCategory.setter
-    def selectedCategory(self, v):
+    @selected_category.setter
+    def selected_category(self, v):
         self.category = v
         if not v:
             self.shader = False
             return
-        print('Category selected: {} Shaders {}'.format(
-            v.name, len(v.shaders()))
-        )
+        log.info(f'Category selected: {v.name()} Shaders {len(v.shaders())}')
 
     @property
-    def selectedShader(self):
+    def selected_shader(self):
         return self.shader
 
-    @selectedShader.setter
-    def selectedShader(self, v):
+    @selected_shader.setter
+    def selected_shader(self, v):
         self.shader = v
-        self.updateUI()
+        self.update_UI()
 
-    def updateUI(self):
+    def update_UI(self):
         ''' update ui when user selects a shader '''
-        self.ui.lbl_shaderName.setText(
-            self.shader.name + ' / ' + self.shader.category.name)
-        self.ui.lbl_shaderType.setText(self.shader.shaderType)
-        self.ui.lbl_shaderUserPC.setText(
-            self.shader.user + ' / ' + self.shader.pc)
-        self.ui.lbl_shaderCode.setText(self.shader.idName)
+        self.ui.lbl_shader_name.setText(
+            f'{self.shader.name} / {self.shader.category.name()}')
+        self.ui.lbl_shader_type.setText(self.shader.shader_type)
+        self.ui.lbl_shader_user_pc.setText(f'{self.shader.user} / {self.shader.pc}')
+        self.ui.lbl_shader_code.setText(self.shader.id_name)
         self.ui.te_notes.setText(self.shader.notes)
