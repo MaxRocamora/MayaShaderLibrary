@@ -5,14 +5,14 @@
 from PySide2 import QtWidgets
 
 from msl.libs.shader import Shader as Shader
-from msl.libs.dialogs.dlg_inform import informationDialog
+from msl.libs.dialogs.dlg_inform import information_dialog
 
 msg_no_category = 'No categories found, create one using the Create Category button',
 msg_overwrite = 'Shader name already exists, add a new copy?'
 msg_failed_export = 'Add Shader save operation Failed.'
 
 
-class addShaderDialog():
+class AddShaderDialog():
 
     def __init__(self, observer):
         ''' Add Shader Dialog
@@ -23,12 +23,12 @@ class addShaderDialog():
         self.category = observer.selectedCategory
 
         if not self.category:
-            informationDialog(msg_no_category, self.observer.ui)
+            information_dialog(msg_no_category, self.observer.ui)
             return
 
         shader, msg = Shader.getShader(self.category)
         if not shader:
-            informationDialog(msg, self.observer.ui)
+            information_dialog(msg, self.observer.ui)
             return
 
         for s in self.category.shaders(reload=True):
@@ -40,7 +40,7 @@ class addShaderDialog():
 
         _shader = Shader.createShader(shader, self.category)
         if not _shader.save():
-            informationDialog(msg_failed_export, self.observer.ui)
+            information_dialog(msg_failed_export, self.observer.ui)
             return
 
         self.observer.main.categoryCC.refreshCategoryTab()
