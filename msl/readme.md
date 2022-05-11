@@ -17,7 +17,6 @@ Python Package root
 
 # To do
 
-- log render output from subprocess to file
 - instead of use a maya ascii file, make a json file for shaders.
 - update shader:
 - when export a shader into category, if exist, make update options instead of overwrite
@@ -26,4 +25,4 @@ Python Package root
 - import into selected mesh, ask for replace shader if exists
 - generate library from selection: takes all shaders from selection and creates a new category
 - import all shaders from current category
-- replace prints for log
+
