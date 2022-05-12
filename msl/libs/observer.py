@@ -18,7 +18,6 @@ class Observer(Singleton):
         self._category = False
         self._categories = []
         # self.ui (holds main ui)
-        # self.category_ctrl
         # self.view (hold view class)
 
     def categories(self):
