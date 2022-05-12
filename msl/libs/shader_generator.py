@@ -114,7 +114,7 @@ class CallMenu:
         text = f"Browse '{self.name}' folder on disk"
         smBrowse = QtWidgets.QAction(get_icon("browse"), text, self.menu)
         self.menu.addAction(smBrowse)
-        smBrowse.triggered.connect(self.shader.browse)
+        smBrowse.triggered.connect(self.shader.explore)
         self.menu.addSeparator()
 
         text = f"Generate {self.name} Thumbnail"
