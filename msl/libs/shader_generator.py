@@ -76,7 +76,7 @@ class CallUser:
         self.button = button
 
     def __call__(self):
-        self.observer.selected_shader = self.shader
+        self.observer.select_shader(self.shader)
 
 
 class CallMenu:
@@ -88,7 +88,7 @@ class CallMenu:
         self.observer = observer
 
     def __call__(self, mousePosition):
-        self.observer.selectedShader = self.shader
+        self.observer.select_shader(self.shader)
         self.menu = QtWidgets.QMenu()
 
         text = f"Import '{self.name}'' into scene"
@@ -126,7 +126,7 @@ class CallMenu:
         text = f"Delete '{self.name}' from lib"
         smDelete = QtWidgets.QAction(get_icon("delete"), text, self.menu)
         self.menu.addAction(smDelete)
-        smDelete.triggered.connect(DeleteShaderDialog(self.shader, self.observer))
+        smDelete.triggered.connect(DeleteShaderDialog(self.shader))
         self.menu.addSeparator()
         self.menu.popup(QtGui.QCursor.pos())
 
