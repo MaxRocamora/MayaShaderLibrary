@@ -4,67 +4,56 @@
 # This class ask for user a new shader name, and handles errors
 # ----------------------------------------------------------------------------------------
 
-from PySide2.QtWidgets import QInputDialog, QLineEdit, QMessageBox
+from PySide2.QtWidgets import QInputDialog, QLineEdit
+
+from msl.libs.qt_dialogs import warning_message
 
 msgStr = {
-    'nameUnicodeError': 'New name has a UnicodeEncodeError!',
-    'nameLengthError': 'New Shader name needs at least 4 characters.',
-    'shaderNameExist': 'Shader name already in use.',
-    'overwriteShaderDialog': 'Shader already exists, overwrite?'
+    'unicode_error': 'New name has a UnicodeEncodeError!',
+    'length_error': 'New Shader name needs at least 4 characters.',
+    'name_exists': 'Shader name already in use.'
 }
 
 
 class RenameShaderDialog(QInputDialog):
 
-    def __init__(self, shaderClass, observer):
+    def __init__(self, shader: type, observer: type):
         '''
         QInput dialog class for user rename shader action
         Args:
-            shaderClass (class) shader class calling this input
+            shader (class) shader class calling this input
             observer (class) observer holding ui
         '''
         super().__init__()
         self.observer = observer
-        self.shader = shaderClass
+        self.shader = shader
 
     def __call__(self):
         ''' open qt dialog box for rename shader '''
         title = "Rename Shader"
         question = 'Enter Shader New Name'
         lineEdit = QLineEdit.Normal
-        newName, result = QInputDialog.getText(
+        new_name, result = QInputDialog.getText(
             self.observer.ui, title, question, lineEdit, "default")
         if not result:
             return False
         try:
-            newName = str(newName)
-            newName.decode('utf-8')
+            new_name = str(new_name)
         except (UnicodeEncodeError, UnicodeDecodeError):
-            self.errorShaderDialog(msgStr['nameUnicodeError'])
+            warning_message(msgStr['unicode_error'], self.observer.ui)
             return False
-        if len(newName) <= 3:
-            self.errorShaderDialog(msgStr['nameLengthError'])
+        if len(new_name) <= 3:
+            warning_message(msgStr['length_error'], self.observer.ui)
             return False
-        if self.nameInUse(newName):
-            self.errorShaderDialog(msgStr['shaderNameExist'])
+        if self.name_in_use(new_name):
+            warning_message(msgStr['name_exists'], self.observer.ui)
             return False
         else:
-            if self.shader.rename(newName):
-                self.observer.main.categoryCC.refreshCategoryTab()
+            if self.shader.rename(new_name):
+                self.shader.category.reload()
 
-    def errorShaderDialog(self, msg):
-        ''' open qt dialog box when no shader is selected or found'''
-        msgBox = QMessageBox(self.observer.ui)
-        msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
-        msgBox.setIcon(QMessageBox.Warning)
-        msgBox.setText(msg)
-        msgBox.setWindowTitle("Renaming Shader")
-        msgBox.setStandardButtons(QMessageBox.Close)
-        msgBox.exec_()
-
-    def nameInUse(self, name):
+    def name_in_use(self, name: str):
         ''' returns true if shader new name is already in use '''
         return any(
-            shader.name == name
-            for shader in self.observer.selectedCategory.shaders()
+            shader.name == name for shader in self.shader.category.shaders()
         )
