@@ -15,7 +15,7 @@ class Statusbar():
             widget (widget) main ui statusbar widget
         '''
         self.statusbar = widget
-        self.success('', timed=0)
+        self.success('...', timed=0)
 
     def success(self, msg, timed=0):
         '''Color green message / for successful operations'''
