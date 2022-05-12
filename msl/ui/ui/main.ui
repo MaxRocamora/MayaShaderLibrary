@@ -89,41 +89,10 @@
       </size>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_browse_category">
+    <widget class="QToolButton" name="btn_add_cat">
      <property name="geometry">
       <rect>
        <x>610</x>
-       <y>10</y>
-       <width>48</width>
-       <height>48</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>48</width>
-       <height>48</height>
-      </size>
-     </property>
-     <property name="statusTip">
-      <string>Browse Category Folder</string>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>64</width>
-       <height>64</height>
-      </size>
-     </property>
-     <property name="autoRaise">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="btn_add_category">
-     <property name="geometry">
-      <rect>
-       <x>551</x>
        <y>10</y>
        <width>48</width>
        <height>48</height>
@@ -151,7 +120,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_favorite">
+    <widget class="QToolButton" name="btn_pin_cat">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -182,7 +151,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_refresh">
+    <widget class="QToolButton" name="btn_refresh_cat">
      <property name="geometry">
       <rect>
        <x>670</x>
@@ -213,7 +182,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="btn_unpin">
+    <widget class="QToolButton" name="btn_unpin_cat">
      <property name="geometry">
       <rect>
        <x>260</x>
