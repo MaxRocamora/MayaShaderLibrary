@@ -11,7 +11,6 @@
 # ----------------------------------------------------------------------------------------
 import os
 import json
-import platform
 import shutil
 import datetime
 
@@ -160,7 +159,10 @@ class Shader():
 
     def load_shader_properties(self):
         ''' Load shaders properties from json file on disk '''
-        self.properties = dict(load_json(self.config_file))
+        try:
+            self.properties = dict(load_json(self.config_file))
+        except TypeError:
+            self.properties = {}
 
 # --------------------------------------------------------------------------------------------
 # Export Methods (MAYA)
@@ -209,14 +211,12 @@ class Shader():
             dictData = json.load(_json)
             dictData["id_name"] = self.id_name
             dictData["name"] = self.name
-            dictData["category"] = self.category.name
+            dictData["category"] = self.category.name()
             dictData["notes"] = self.notes
             dictData["sourceFile"] = self.source_file
             dictData["maps"] = self.maps
             dictData["node"] = self.node
             dictData["shaderType"] = self.shader_type
-            dictData['PC'] = str(platform.node())
-            dictData['User'] = str(os.getenv('username'))
             dictData['Edited On'] = str(datetime.datetime.now())
         with open(self.config_file, 'w') as _json:
             json.dump(dictData, _json, sort_keys=True, indent=4)
