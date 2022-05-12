@@ -13,7 +13,7 @@ from msl.libs.shader import Shader
 from msl.libs.qt_dialogs import warning_message
 from msl.ui.icons import get_icon
 
-msg_no_category = 'No categories found, create one using the Create Category button',
+msg_no_category = 'No categories found, create one using the Create Category button'
 msg_overwrite = 'Shader name already exists, add a new copy?'
 msg_failed_export = 'Add Shader save operation Failed.'
 
@@ -63,7 +63,7 @@ class ShaderController():
             warning_message(msg_failed_export, self.observer.ui)
             return
 
-        self.observer.category_ctrl.refresh_category_tab()
+        self.observer.category().reload()
 
     def _overwrite_shader_dialog(self, name):
         ''' open qt dialog box when shader already exists '''
