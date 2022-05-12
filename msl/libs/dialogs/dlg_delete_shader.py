@@ -36,4 +36,4 @@ class DeleteShaderDialog():
         choice = msgBox.exec_()
         if choice == QtWidgets.QMessageBox.Ok:
             self.shader.delete()
-            self.observer.category_ctrl.refresh_category_tab()
+            self.shader.category.reload()
