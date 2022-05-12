@@ -15,9 +15,8 @@ class Statusbar():
             widget (widget) main ui statusbar widget
         '''
         self.statusbar = widget
-        self.success('...', timed=0)
 
-    def success(self, msg, timed=0):
+    def ok(self, msg, timed=0):
         '''Color green message / for successful operations'''
         if timed > 0:
             self.statusbar.showMessage(msg, timed)
@@ -26,7 +25,7 @@ class Statusbar():
         self.statusbar.setStyleSheet(
             "color: lime; background: rgba(20, 20, 20, 255);")  # green warning
 
-    def inform(self, msg, timed=0):
+    def info(self, msg, timed=0):
         '''Color orange message / for inform messages'''
         if timed > 0:
             self.statusbar.showMessage(msg, timed)
