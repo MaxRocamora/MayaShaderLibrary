@@ -13,13 +13,13 @@ from PySide2.QtWidgets import QMainWindow
 
 import maya.cmds as cmds
 
-from msl.libs.observer import ObserverUI
+from msl.libs.observer import Observer
 from msl.libs.category_controller import CategoryController
 from msl.libs.shader_controller import ShaderController
 from msl.libs.utils.get_maya_window import get_maya_main_window
 from msl.libs.utils.userSettings import UserSettings
 from msl.libs.utils.statusbar import Statusbar
-from msl.libs.dialogs.dirty_dialog import dirty_file_dialog
+from msl.libs.qt_dialogs import dirty_file_dialog
 from msl.ui.icons import get_icon
 from msl.version import app_name, version
 from msl.config import thumbnail_default_scene, QSS_FILE, APP_QICON, QT_WIN_NAME
@@ -44,9 +44,11 @@ class ShaderLibraryAPP(QMainWindow):
 
         self.user_settings = UserSettings("shaderLibrary")
         self.status_bar = Statusbar(self.ui.statusBar())
-        self.observer = ObserverUI(self, self.ui)
-        self.category_ctrl = CategoryController(self, self.observer)
-        self.shader_ctrl = ShaderController(self.ui, self.observer)
+        self.observer = Observer()
+        self.observer.ui = self.ui
+        self.category_ctrl = CategoryController(self)
+        self.observer.category_ctrl = self.category_ctrl
+        self.shader_ctrl = ShaderController(self.ui)
         self.set_connections()
         self.load_user_preferences()
         self.show()
@@ -57,13 +59,13 @@ class ShaderLibraryAPP(QMainWindow):
     # ------------------------------------------------------------------------------------
 
     def set_connections(self):
-        ''' Definition for ui widgets qt signals & attributes '''
-        self.ui.btn_refresh.clicked.connect(self.category_ctrl.refresh_category_tab)
-        self.ui.btn_refresh.setIcon(get_icon("refresh"))
-        self.ui.btn_refresh.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.ui.btn_refresh.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.ui.btn_refresh.setStyleSheet("background:transparent;")
-        self.ui.btn_refresh.installEventFilter(self)
+        '''ui widgets signals & attributes '''
+        self.ui.btn_refresh_cat.clicked.connect(self.category_ctrl.refresh_category_tab)
+        self.ui.btn_refresh_cat.setIcon(get_icon("refresh"))
+        self.ui.btn_refresh_cat.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.ui.btn_refresh_cat.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.btn_refresh_cat.setStyleSheet("background:transparent;")
+        self.ui.btn_refresh_cat.installEventFilter(self)
         self.ui.mnu_open_default_light_rig.triggered.connect(self.open_default_light_rig)
         self.ui.mnu_help_web.triggered.connect(self.open_web_help)
 
@@ -109,9 +111,9 @@ class ShaderLibraryAPP(QMainWindow):
         fav_tabs = self.userPref.get("favoriteCategories", [])
 
         self.category_ctrl.load_categories()
-        for category in self.observer.categories:
+        for category in self.observer.categories():
             if category.name in fav_tabs:
-                self.category_ctrl.pin_tab(category)
+                self.category.pin()
         self.category_ctrl.focus_tab(last_tab)
 
     # ------------------------------------------------------------------------------------
