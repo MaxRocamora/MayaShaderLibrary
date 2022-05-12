@@ -4,21 +4,21 @@
 # https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # Shader Class
-# Get Shader from cg app using 'getShader' staticmethod
-# use information returned from 'getShader'
-# to create this class use 'createShader' classmethod.
+# Get Shader from disk using 'get_shader' staticmethod
+# use information returned from 'get_shader'
+# To create this class use 'create_shader()' classmethod.
 #
 # ----------------------------------------------------------------------------------------
 import os
 import json
 import platform
-import subprocess
 import shutil
 import datetime
 
 import maya.cmds as cmds
 
 from msl.libs.utils.json_util import load_json
+from msl.libs.utils.folder import browse
 from msl.libs.logger import log
 
 
@@ -68,7 +68,7 @@ class Shader():
     @property
     def folder(self):
         ''' physical path of ths shader '''
-        return os.path.abspath(os.path.join(self.category.folder(), self.id_name))
+        return os.path.abspath(os.path.join(self.category.path(), self.id_name))
 
     @property
     def cg_file(self):
@@ -171,13 +171,12 @@ class Shader():
         Creates folder, _f thumbnail, cg file and copy maps
         '''
         mementoSelection = cmds.ls(sl=True)
-        log.info('Adding shader {} into this category {}'.format(
-            self.name, self.category.name()))
+        log.info(f'Adding shader {self.name} into this category {self.category.name()}')
         if cmds.objExists(self.ball):
             cmds.delete(self.ball)
         try:
             shadedBall = cmds.polySphere(name=self.ball)
-            self.assignShader(self.ball)
+            self.assign_shader(self.ball)
         except TypeError as e:
             # if error is raised, delete the shader ball and abort saving.
             log.warning(f'Error on assign shader to shadingBall ({str(e)})')
@@ -212,10 +211,10 @@ class Shader():
             dictData["name"] = self.name
             dictData["category"] = self.category.name
             dictData["notes"] = self.notes
-            dictData["sourceFile"] = self.sourceFile
+            dictData["sourceFile"] = self.source_file
             dictData["maps"] = self.maps
             dictData["node"] = self.node
-            dictData["shaderType"] = self.shaderType
+            dictData["shaderType"] = self.shader_type
             dictData['PC'] = str(platform.node())
             dictData['User'] = str(os.getenv('username'))
             dictData['Edited On'] = str(datetime.datetime.now())
@@ -226,7 +225,7 @@ class Shader():
 # Import Methods (MAYA)
 # --------------------------------------------------------------------------------------------
 
-    def importShader(self, assign=False):
+    def import_shader(self, assign=False):
         '''
         imports shader into scene
         Args:
@@ -240,7 +239,7 @@ class Shader():
 
         try:
             if assign:
-                self.assignShader(sel)
+                self.assign_shader(sel)
         except TypeError as e:
             log.info(str(e))
         finally:
@@ -248,13 +247,13 @@ class Shader():
                 cmds.delete(self.ball)
         cmds.select(sel, r=True)
 
-    def assignShader(self, items=None):
+    def assign_shader(self, items=None):
         ''' Assign the shader to the given item '''
-        shaderSG = self.getSG()
-        if items and shaderSG:
-            cmds.sets(items, e=True, forceElement=shaderSG)
+        sg = self.get_shading_group()
+        if items and sg:
+            cmds.sets(items, e=True, forceElement=sg)
 
-    def getSG(self):
+    def get_shading_group(self):
         ''' gets shading group of this shader '''
         if cmds.objExists(self.node):
             shaderSGConn = cmds.listConnections(
@@ -291,15 +290,13 @@ class Shader():
             print('Deleting Folder:', self.folder)
             shutil.rmtree(self.folder)
 
-    def browse(self):
-        ''' Open current shader folder '''
-        location = os.path.abspath(self.folder)
-        if os.path.exists(location):
-            subprocess.Popen("explorer " + location)
+    def explore(self):
+        ''' Open Category folder '''
+        browse(self.folder)
 
-# --------------------------------------------------------------------------------------------
-# Generate Methods
-# --------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------
+    # Generate Methods
+    # ------------------------------------------------------------------------------------
 
     @staticmethod
     def load_shader(name, category):
@@ -324,7 +321,7 @@ class Shader():
             category (class) parent category
         '''
         nextId = 0
-        while 'SHD_' + str(nextId).zfill(4) in os.listdir(category.folder()):
+        while 'SHD_' + str(nextId).zfill(4) in os.listdir(category.path()):
             nextId += 1
         name = 'SHD_' + str(nextId).zfill(4)
         shader = Shader(name, category)
