@@ -17,14 +17,17 @@ class Observer(Singleton):
         self._shader = False
         self._category = False
         self._categories = []
-        # self.ui
+        # self.ui (holds main ui)
         # self.category_ctrl
+        # self.view (hold view class)
 
     def categories(self):
         return self._categories
 
     def set_categories(self, v):
+        ''' load given categories and updates view '''
         self._categories = v
+        self.view.update_view(v)
 
     def category(self):
         ''' current selected category'''
@@ -50,6 +53,4 @@ class Observer(Singleton):
         self.ui.lbl_shader_name.setText(
             f'{self.shader().name} / {self.shader().category.name()}')
         self.ui.lbl_shader_type.setText(self.shader().shader_type)
-        self.ui.lbl_shader_user_pc.setText(f'{self.shader().user} / {self.shader().pc}')
-        self.ui.lbl_shader_code.setText(self.shader().id_name)
         self.ui.te_notes.setText(self.shader().notes)
