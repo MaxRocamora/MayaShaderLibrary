@@ -7,21 +7,22 @@
 # --------------------------------------------------------------------------------------------
 from PySide2 import QtWidgets
 
+from msl.libs.observer import Observer
+
 dlg_title = 'Confirm Deletion'
 dlg_msg = 'You are about to delete selected shader files.'
 
 
 class DeleteShaderDialog():
 
-    def __init__(self, shaderClass, observer):
+    def __init__(self, _shader):
         '''
         QInput dialog class for user delete shader action
         Args:
-            shaderClass (class) shader class calling this input
-            observer (class) observer holding ui
+            _shader (class) shader class calling this input
         '''
-        self.observer = observer
-        self.shader = shaderClass
+        self.observer = Observer()
+        self.shader = _shader
 
     def __call__(self):
         ''' open qt dialog box for rename shader '''
@@ -35,4 +36,4 @@ class DeleteShaderDialog():
         choice = msgBox.exec_()
         if choice == QtWidgets.QMessageBox.Ok:
             self.shader.delete()
-            self.observer.main.categoryCC.refreshCategoryTab()
+            self.observer.category_ctrl.refresh_category_tab()
