@@ -95,31 +95,22 @@ class ShaderLibraryAPP(QMainWindow):
             self.close()
             return
 
-        # get categories pinned and focused
-        last_category = 0
-        total_tabs = self.ui.tab_materials.count()
-        fav_categories = [self.ui.tab_materials.tabText(i) for i in range(total_tabs)]
-
-        self.userPref = {"last": last_category,
-                         'favorites': fav_categories
-                         }
-        self.user_settings.saveUS(self.userPref)
+        # get categories pinned
+        fav_categories = [cat.name() for cat in self.observer.categories() if cat.pinned()]
+        self.user_pref = {'pinned': fav_categories}
+        self.user_settings.saveUS(self.user_pref)
         self.close()
 
     def load_user_preferences(self):
         ''' Loads user preferences '''
-        self.userPref = self.user_settings.loadUS()
-        if not self.userPref:
+        self.user_pref = self.user_settings.loadUS()
+        if not self.user_pref:
             return False
 
-        # last_tab = self.userPref.get("last", 0)
-        fav_tabs = self.userPref.get("favorites", [])
-
-        # self.category_ctrl.load_categories()
+        fav_tabs = self.user_pref.get("pinned", [])
         for category in self.observer.categories():
-            if category.name in fav_tabs:
-                self.category.pin()
-        # self.category_ctrl.focus_tab(last_tab)
+            if category.name() in fav_tabs:
+                category.pin()
 
     # ------------------------------------------------------------------------------------
     # MENU OPTIONS
