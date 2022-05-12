@@ -21,10 +21,11 @@ else:
     ROOT_PATH = os.path.dirname(__file__)
 
 
-# UI / Stylesheet / icons
+# Stylesheet / icons / Url
 APP_QICON = QIcon(os.path.join(ROOT_PATH, 'ui', 'icons', 'appIcon.png'))
 QSS_FILE = os.path.join(ROOT_PATH, 'ui', 'stylesheet', 'arcane.qss')
 QSS_BUTTON = os.path.join(ROOT_PATH, 'ui', 'stylesheet', 'shaderButton.qss')
+URL_DOC = 'https://mayashaderlibrary.readthedocs.io'
 
 # Maya Files and default shader repository
 try:
