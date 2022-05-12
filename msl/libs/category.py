@@ -13,7 +13,6 @@ from msl.config import LIBRARY_SHADERS_PATH
 from msl.libs.observer import Observer
 from msl.libs.qt_dialogs import warning_message
 from msl.libs.shader import Shader as Shader
-from msl.libs.utils.folder import browse
 from msl.libs.shader_generator import generate_shader_buttons
 from msl.libs.logger import log
 
@@ -25,6 +24,7 @@ class Category():
         self._base_path = base_path
         self._shaders = self._collect_shaders()
         self._pinned = False
+        self._index = -1
         self.observer = Observer()
 
     def __str__(self):
@@ -52,9 +52,9 @@ class Category():
         ''' ui pin state '''
         return self._pinned
 
-    def explore(self):
-        ''' Open Category folder '''
-        browse(self.path())
+    def index(self):
+        ''' tab index'''
+        return self._index
 
     def _collect_shaders(self):
         ''' Returns a list of shader objects from chosen category '''
@@ -117,7 +117,6 @@ class Category():
         '''
 
         if self.pinned():
-            log.debug('already pinned')
             return
 
         # tab stores widget
@@ -126,14 +125,23 @@ class Category():
 
         # Creating, focus & Fill Tab
         self.observer.ui.tab_materials.addTab(self.tab, self.name())
-        index = self.observer.ui.tab_materials.count() - 1
-        last_tab = self.observer.ui.tab_materials.widget(index)
+        self._index = self.observer.ui.tab_materials.count() - 1
+        last_tab = self.observer.ui.tab_materials.widget(self.index())
         self.observer.ui.tab_materials.setCurrentWidget(last_tab)
         self._pinned = True
         self.fill_tab()
 
     def unpin(self):
         log.info(f'UnPin {self.name()}')
-        self.observer.ui.tab_materials.removeTab(
-            self.observer.ui.tab_materials.currentIndex())
+        self.observer.ui.tab_materials.removeTab(self.index())
         self._pinned = False
+
+    def focus(self):
+        ''' forces a focus on tab '''
+        self.observer.ui.tab_materials.setCurrentIndex(self.index())
+
+    def reload(self):
+        ''' rebuilds tab and reload shaders '''
+        self.unpin()
+        self.shaders(1)
+        self.pin()
