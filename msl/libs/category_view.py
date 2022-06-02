@@ -11,7 +11,7 @@ from msl.libs.observer import Observer
 from msl.libs.category import Category
 
 
-class Categoryview():
+class CategoryView():
 
     def __init__(self, view):
         self.view = view

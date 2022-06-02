@@ -21,7 +21,7 @@ from msl.libs.utils.userSettings import UserSettings
 from msl.libs.utils.statusbar import Statusbar
 from msl.libs.utils.folder import browse
 from msl.libs.qt_dialogs import dirty_file_dialog
-from msl.libs.category_view import Categoryview
+from msl.libs.category_view import CategoryView
 from msl.version import app_name, version
 from msl.config import (LIBRARY_SHADERS_PATH, URL_DOC,
                         thumbnail_default_scene, QSS_FILE,
@@ -50,7 +50,7 @@ class ShaderLibraryAPP(QMainWindow):
         self.observer = Observer()
         self.observer.ui = self.ui
         self.observer.status_bar = self.status_bar
-        self.view = Categoryview(self.ui.view_category)
+        self.view = CategoryView(self.ui.view_category)
         self.observer.view = self.view
         self.shader_ctrl = ShaderController(self.ui)
         self.view.load_categories()
