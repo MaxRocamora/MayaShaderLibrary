@@ -7,6 +7,7 @@
 # When a shader is selected, the shader clicked signal
 # sends itself to this class using 'selected_shader'
 # property and updates ui texts
+# ui attribute is set from main
 # ----------------------------------------------------------------------------------------
 from msl.libs.logger import log
 from msl.libs.utils.singleton import Singleton
@@ -17,8 +18,6 @@ class Observer(Singleton):
         self._shader = False
         self._category = False
         self._categories = []
-        # self.ui (holds main ui)
-        # self.view (hold view class)
 
     def categories(self):
         return self._categories
@@ -44,11 +43,15 @@ class Observer(Singleton):
         return self._shader
 
     def select_shader(self, v):
+        log.info(f'shader selected {v}')
         self._shader = v
         self.update_UI()
 
     def update_UI(self):
         ''' update ui when user selects a shader '''
+        if not self.shader():
+            return
+
         self.ui.lbl_shader_name.setText(
             f'{self.shader().name} / {self.shader().category.name()}')
         self.ui.lbl_shader_type.setText(self.shader().shader_type)
