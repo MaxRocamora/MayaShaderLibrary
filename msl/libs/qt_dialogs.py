@@ -1,3 +1,10 @@
+# ----------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
+#
+# Dialog Windows
+# ----------------------------------------------------------------------------------------
 from PySide2 import QtWidgets
 import maya.cmds as cmds
 
