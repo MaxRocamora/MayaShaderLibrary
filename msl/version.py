@@ -14,12 +14,13 @@
 11/2021 - 1.1.2 / autopin new category, more refactor
 01/2022 - 1.1.3 / fix typo assing = assign
 05/2022 - 1.2.0 / dropped python2 support, refactor methods to snake_case
+06/2022 - 1.2.1 / fixes
 
 '''
 
 VERSION_MAJOR = 1
 VERSION_MINOR = 2
-VERSION_PATCH = 0
+VERSION_PATCH = 1
 
 version = f'{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}'
 
