@@ -4,9 +4,9 @@ import maya.cmds as cmds
 from msl.libs.logger import log
 
 
-def warning_message(msg: str, ui: type):
+def warning_message(msg: str):
     ''' open qt dialog box '''
-    msgBox = QtWidgets.QMessageBox(ui)
+    msgBox = QtWidgets.QMessageBox(None)
     msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
     msgBox.setIcon(QtWidgets.QMessageBox.Warning)
     msgBox.setText(msg)
