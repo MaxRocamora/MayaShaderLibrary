@@ -1,6 +1,7 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # Shader Library: addCategory dialog
 # This class handles adding a new category
@@ -23,7 +24,6 @@ class AddCategoryDialog():
         ''' Add Category Dialog Class '''
         self.observer = Observer()
         self.category = self.observer.category()
-        self.name = 'defaultCategory'
 
         name = self._new_category_dialog()
         if name:
@@ -37,7 +37,7 @@ class AddCategoryDialog():
         '''
         name = name.upper()
         Category.create(name)
-        self.observer.category_ctrl.load_categories()
+        self.observer.set_categories(Category.generate_categories())
         for category in self.observer.categories:
             if category.name() == name:
                 category.pin()
@@ -48,7 +48,7 @@ class AddCategoryDialog():
         question = 'Enter Category Name'
         lineEdit = QtWidgets.QLineEdit.Normal
         QInputDialog = QtWidgets.QInputDialog
-        name, result = QInputDialog.getText(self.ui,
+        name, result = QInputDialog.getText(None,
                                             title,
                                             question,
                                             lineEdit,
@@ -60,15 +60,15 @@ class AddCategoryDialog():
         try:
             name = str(name)
         except (UnicodeEncodeError, UnicodeDecodeError):
-            warning_message(msg_unicode_error, self.ui)
+            warning_message(msg_unicode_error)
             return False
 
         for category in self.observer.categories():
             if category.name().upper() == name.upper():
-                warning_message(msg_name_exists, self.ui)
+                warning_message(msg_name_exists)
                 return False
 
         if len(name) < 3:
-            warning_message(msg_name_error, self.ui)
+            warning_message(msg_name_error)
 
         return name
