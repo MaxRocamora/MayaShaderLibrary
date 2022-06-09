@@ -45,9 +45,7 @@ class CategoryView():
 
     def load_categories(self):
         ''' Load Categories from disk to ui and observer '''
-        self.observer.set_categories(
-            Category.generate_categories(self.observer.ui)
-        )
+        self.observer.set_categories(Category.generate_categories())
         self.observer.status_bar.info('Categories Loaded from Disk.')
 
     def tab_changed(self):
