@@ -1,6 +1,10 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
+#
 # QtDesigner UI File loader for Maya PySide2 / Python 3
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
 from PySide2 import QtWidgets
 from shiboken2 import wrapInstance
