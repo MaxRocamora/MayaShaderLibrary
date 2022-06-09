@@ -1,6 +1,7 @@
 # ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # Shader Library Init, Loader
 # ----------------------------------------------------------------------------------------
