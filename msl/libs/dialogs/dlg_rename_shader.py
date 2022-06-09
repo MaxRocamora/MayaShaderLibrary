@@ -40,13 +40,13 @@ class RenameShaderDialog(QInputDialog):
         try:
             new_name = str(new_name)
         except (UnicodeEncodeError, UnicodeDecodeError):
-            warning_message(msgStr['unicode_error'], self.observer.ui)
+            warning_message(msgStr['unicode_error'])
             return False
         if len(new_name) <= 3:
-            warning_message(msgStr['length_error'], self.observer.ui)
+            warning_message(msgStr['length_error'])
             return False
         if self.name_in_use(new_name):
-            warning_message(msgStr['name_exists'], self.observer.ui)
+            warning_message(msgStr['name_exists'])
             return False
         else:
             if self.shader.rename(new_name):
