@@ -43,12 +43,12 @@ class ShaderController():
         ''' adds a new shader '''
 
         if not self.observer.category():
-            warning_message(msg_no_category, self.observer.ui)
+            warning_message(msg_no_category)
             return
 
         shader, msg = Shader.get_shader(self.observer.category())
         if not shader:
-            warning_message(msg, self.observer.ui)
+            warning_message(msg)
             return
 
         for s in self.observer.category().shaders(True):
@@ -60,14 +60,14 @@ class ShaderController():
 
         _shader = Shader.create_shader(shader, self.observer.category())
         if not _shader.save():
-            warning_message(msg_failed_export, self.observer.ui)
+            warning_message(msg_failed_export)
             return
 
         self.observer.category().reload()
 
     def _overwrite_shader_dialog(self, name):
         ''' open qt dialog box when shader already exists '''
-        msgBox = QtWidgets.QMessageBox(self.observer.ui)
+        msgBox = QtWidgets.QMessageBox(None)
         msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
         msgBox.setIcon(QtWidgets.QMessageBox.Question)
         msgBox.setText(msg_overwrite)
