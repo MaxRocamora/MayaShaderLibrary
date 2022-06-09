@@ -68,8 +68,7 @@ class ShaderLibraryAPP(QMainWindow):
         self.ui.mnu_open_default_light_rig.triggered.connect(self.open_default_light_rig)
         self.ui.mnu_help_web.triggered.connect(lambda: webbrowser.open(URL_DOC))
         self.ui.mnu_reload_categories.triggered.connect(self.observer.view.load_categories)
-        self.ui.mnu_add_new_category.triggered.connect(
-            lambda: AddCategoryDialog(self.observer))
+        self.ui.mnu_add_new_category.triggered.connect(lambda: AddCategoryDialog())
         self.ui.mnu_browse_category_folder.triggered.connect(
             lambda: browse(LIBRARY_SHADERS_PATH))
 
@@ -79,9 +78,9 @@ class ShaderLibraryAPP(QMainWindow):
             return
         if event.type() == QtCore.QEvent.Enter:
             self.old_message = self.status_bar.statusbar.currentMessage()
-            self.status_bar.inform(obj.statusTip())
+            self.status_bar.info(obj.statusTip())
         elif event.type() == QtCore.QEvent.Leave:
-            self.status_bar.inform(self.old_message)
+            self.status_bar.info(self.old_message)
         event.accept()
         return False
 
@@ -118,7 +117,7 @@ class ShaderLibraryAPP(QMainWindow):
 
     def open_default_light_rig(self,):
         ''' Open default maya file used for render thumbnails '''
-        self.status_bar.inform(thumbnail_default_scene)
+        self.status_bar.info(thumbnail_default_scene)
         if os.path.exists(thumbnail_default_scene):
             dirty_file_dialog()
             cmds.file(thumbnail_default_scene, force=True, open=True)
