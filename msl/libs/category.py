@@ -72,10 +72,10 @@ class Category():
             os.mkdir(os.path.abspath(os.path.join(LIBRARY_SHADERS_PATH, name)))
 
     @staticmethod
-    def generate_categories(ui):
+    def generate_categories():
         ''' Load Categories from disk and set up main storing list '''
         if not os.path.exists(LIBRARY_SHADERS_PATH):
-            warning_message("Warning: Categories Folder not found.", ui)
+            warning_message("Warning: Categories Folder not found.")
             log.warning('Path:', LIBRARY_SHADERS_PATH)
             return []
 
