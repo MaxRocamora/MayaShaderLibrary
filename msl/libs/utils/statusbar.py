@@ -1,11 +1,12 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # UI StatusBar Class
 # imported as uiStatusBar
 # instanced as: self.statusbar = uiStatus.uiStatusbar()
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
 
 class Statusbar():
