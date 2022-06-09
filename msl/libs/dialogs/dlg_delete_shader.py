@@ -1,10 +1,11 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # Shader Library deleteShader dialog
 # This class ask for user confirmation on shader physical disk deletion
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 from PySide2 import QtWidgets
 
 from msl.libs.observer import Observer
