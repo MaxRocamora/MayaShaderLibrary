@@ -1,3 +1,10 @@
+# ----------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
+#
+# Category ListModel
+# ----------------------------------------------------------------------------------------
 from PySide2.QtGui import QIcon
 from PySide2.QtCore import Qt, QAbstractListModel
 
