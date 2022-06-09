@@ -53,7 +53,7 @@ def fill_shader_layout(layout, wide, buttons):
     ''' Fills given layout with buttons shaders
     Args:
         layout (widget) layout widget to fill
-        wide (int) maximun columns to split buttons
+        wide (int) maximum columns to split buttons
         buttons (list) list of button widgets
     '''
     b = 0
@@ -132,7 +132,7 @@ class CallMenu:
 
     def launch_thumbnail(self, shader):
         ''' Launch python script for thumbnail generation
-        Render Command sends the script, the lightrig scene
+        Render Command sends the script, the lightRig scene
         used for rendering, the shader maya file,
         and the target png file for the thumbnail.
         '''
