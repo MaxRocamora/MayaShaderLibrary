@@ -15,14 +15,13 @@ Default Thumbnail Scene
 Python Package root
 /msl
 
-# To do
+# TO DO
 
 - instead of use a maya ascii file, make a json file for shaders.
 - update shader:
-- when export a shader into category, if exist, make update options instead of overwrite
+- when export a shader into category, if exists, add update options instead of overwrite
 - show maps list connections
 - copy to local maps / deploy maps
 - import into selected mesh, ask for replace shader if exists
 - generate library from selection: takes all shaders from selection and creates a new category
-- import all shaders from current category
 
