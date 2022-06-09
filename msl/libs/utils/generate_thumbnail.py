@@ -1,6 +1,10 @@
-'''
-Opens a maya standalone instance and do a thumbnail render for given shader.
-'''
+# ----------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
+#
+# Opens a maya standalone instance and do a thumbnail render for given shader.
+# ----------------------------------------------------------------------------------------
 import maya.cmds as cmds
 import maya.standalone as std
 import sys
