@@ -5,7 +5,7 @@
 #
 # Shader Library: addCategory dialog
 # This class handles adding a new category
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
 from PySide2 import QtWidgets
 
