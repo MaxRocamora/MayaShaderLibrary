@@ -1,16 +1,17 @@
 {
-    "Edited On": "2019-02-10 18:01:39.197000", 
-    "PC": "pc1", 
-    "User": "Max", 
-    "category": "EXAMPLECATEGORY", 
-    "idName": "SHD_0002", 
+    "Edited On": "2022-06-09 00:14:06.217648",
+    "PC": "pc1",
+    "User": "Max",
+    "category": "EXAMPLECATEGORY",
+    "idName": "SHD_0002",
+    "id_name": "SHD_0002",
     "maps": [
-        "maps1", 
+        "maps1",
         "maps2"
-    ], 
-    "name": "whiteSkin", 
-    "node": "aiStandardSurface1", 
-    "notes": "Enter notes here...", 
-    "shaderType": "aiStandardSurface", 
+    ],
+    "name": "white",
+    "node": "aiStandardSurface1",
+    "notes": "example generic white shader",
+    "shaderType": "aiStandardSurface",
     "sourceFile": ""
 }
