@@ -1,13 +1,13 @@
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Maya Shader Library
 # Author: maxirocamora@gmail.com
 # https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # Observer is a singleton Class holding UI, Categories, and Selected Shader
 # When a shader is selected, the shader clicked signal
-# sends itself to this class using 'selected_shader'
-# property and updates ui texts
-# ui attribute is set from main
+# sends itself to this class using .selected_shader() and updates ui shader info
+# Note:
+# .ui attribute is set from main
 # ----------------------------------------------------------------------------------------
 from msl.libs.logger import log
 from msl.libs.utils.singleton import Singleton
