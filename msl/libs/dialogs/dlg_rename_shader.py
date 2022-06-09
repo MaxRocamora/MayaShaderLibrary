@@ -1,6 +1,9 @@
 # ----------------------------------------------------------------------------------------
-# ARCANE Shader Library renameShader dialog
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
 #
+# RenameShader dialog
 # This class ask for user a new shader name, and handles errors
 # ----------------------------------------------------------------------------------------
 
