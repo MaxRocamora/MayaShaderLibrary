@@ -1,3 +1,8 @@
+# ----------------------------------------------------------------------------------------
+# Maya Shader Library
+# Author: maxirocamora@gmail.com
+# https://github.com/MaxRocamora/MayaShaderLibrary
+#
 # Python Singleton BaseClass
 '''
 Usage:
@@ -6,6 +11,7 @@ class MyClass(Singleton, otherClass):
     pass
 
 '''
+# ----------------------------------------------------------------------------------------
 
 
 class Singleton():
