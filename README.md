@@ -8,4 +8,4 @@ See the [Official Documentation](https://mayashaderlibrary.readthedocs.io/en/lat
 *Maya +2022 Python 3 only*
 
 ----------------------------------
-![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/uiMenu.png)
+![ScreenShot](https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/tool.png)
