@@ -9,6 +9,7 @@ import os
 from sys import platform
 
 from msl.libs.utils.json_util import load_json, save_json
+from msl.libs.logger import log
 
 
 class UserSettings():
@@ -18,33 +19,29 @@ class UserSettings():
             tool_name (string) : tool name, used for filename.ini
         '''
         self.tool_name = tool_name
-        self.verifyPath()
+        self._verify_user_path()
 
-    def verifyPath(self):
+    def _verify_user_path(self):
         ''' Check for root .ini files directory or make it '''
-        dirPath = os.path.split(self.userPath)[0]
-        if not os.path.exists(dirPath):
-            print('Config .ini directory not found, making one:', dirPath)
-            os.mkdir(dirPath)
+        dir_path = os.path.split(self.user_path)[0]
+        if not os.path.exists(dir_path):
+            log.warning(f'Config .ini directory not found, making one into {dir_path}')
+            os.mkdir(dir_path)
 
-    def saveUS(self, data):
+    def save(self, data):
         '''Saves a dictionary into a json file (windows user path)
         Args:
             data (dictionary) : info dictionary to save
         '''
-        save_json(data, self.userPath)
+        save_json(data, self.user_path)
 
-    def loadUS(self):
-        ''' Load json file from userPath and returns dict content '''
-        return load_json(self.userPath)
-
-    def loadProjectUS(self, project):
-        ''' Load json file from userPath and returns dict content '''
-        return load_json(self.userProjectPath(project))
+    def load(self):
+        ''' Load json file from user_path and returns dict content '''
+        return load_json(self.user_path)
 
     @property
-    def userPath(self):
-        ''' Returns user folder of this tool '''
+    def user_path(self):
+        ''' Returns windows or mac user folder of this tool '''
         if platform == 'win32':
             return str(os.getenv('USERPROFILE')) + \
                 '/ArcaneTools/' + self.tool_name + ".ini"
