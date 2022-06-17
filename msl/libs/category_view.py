@@ -32,7 +32,7 @@ class CategoryView():
 
     def item_selected(self, index):
         item = self.model.categories[index.row()]
-        self.observer.status_bar.info(f'{item} Pinned!')
+        self.observer.status_message(f'{item} Pinned!')
         self.observer.select_category(item)
         item.pin()
         item.focus()
@@ -40,13 +40,13 @@ class CategoryView():
     def item_selected_double(self, index):
         item = self.model.categories[index.row()]
         self.observer.select_category(item)
-        self.observer.status_bar.info(f'{item} UnPinned!')
+        self.observer.status_message(f'{item} UnPinned!')
         item.unpin()
 
     def load_categories(self):
         ''' Load Categories from disk to ui and observer '''
         self.observer.set_categories(Category.generate_categories())
-        self.observer.status_bar.info('Categories Loaded from Disk.')
+        self.observer.status_message('Categories Loaded from Disk.')
 
     def tab_changed(self):
         ''' focus category when user changes tab '''
