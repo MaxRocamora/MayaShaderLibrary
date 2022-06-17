@@ -18,7 +18,6 @@ from msl.libs.observer import Observer
 from msl.libs.shader_controller import ShaderController
 from msl.libs.utils.get_maya_window import get_maya_main_window
 from msl.libs.utils.userSettings import UserSettings
-from msl.libs.utils.statusbar import Statusbar
 from msl.libs.utils.folder import browse
 from msl.libs.qt_dialogs import dirty_file_dialog
 from msl.libs.category_view import CategoryView
@@ -45,24 +44,20 @@ class ShaderLibraryAPP(QMainWindow):
             self.setStyleSheet(fh.read())
 
         self.user_settings = UserSettings("shaderLibrary")
-        self.status_bar = Statusbar(self.ui.statusBar())
         self.observer = Observer()
         self.observer.ui = self.ui
-        self.observer.status_bar = self.status_bar
+        self.observer.status_bar = self.ui.statusBar()
         self.view = CategoryView(self.ui.view_category)
         self.observer.view = self.view
         self.shader_ctrl = ShaderController(self.ui)
         self.view.load_categories()
-        self.set_connections()
+        self._set_connections()
         self.load_user_preferences()
         self.show()
         self.activateWindow()
+        self.observer.status_message(f'{app_name} {version} loaded.')
 
-    # ------------------------------------------------------------------------------------
-    # Qt Connections and event Handler
-    # ------------------------------------------------------------------------------------
-
-    def set_connections(self):
+    def _set_connections(self):
         '''ui widgets signals & attributes '''
         self.ui.mnu_open_default_light_rig.triggered.connect(self.open_default_light_rig)
         self.ui.mnu_help_web.triggered.connect(lambda: webbrowser.open(URL_DOC))
@@ -70,18 +65,6 @@ class ShaderLibraryAPP(QMainWindow):
         self.ui.mnu_add_new_category.triggered.connect(lambda: AddCategoryDialog())
         self.ui.mnu_browse_category_folder.triggered.connect(
             lambda: browse(LIBRARY_SHADERS_PATH))
-
-    def eventFilter(self, obj, event):
-        '''Connect signals on mouse over'''
-        if QtCore is None:
-            return
-        if event.type() == QtCore.QEvent.Enter:
-            self.old_message = self.status_bar.statusbar.currentMessage()
-            self.status_bar.info(obj.statusTip())
-        elif event.type() == QtCore.QEvent.Leave:
-            self.status_bar.info(self.old_message)
-        event.accept()
-        return False
 
     # ------------------------------------------------------------------------------------
     # USER PREFERENCES
@@ -96,12 +79,12 @@ class ShaderLibraryAPP(QMainWindow):
         # get categories pinned and save them into user preferences
         fav_categories = [cat.name() for cat in self.observer.categories() if cat.pinned()]
         self.user_pref = {'pinned': fav_categories}
-        self.user_settings.saveUS(self.user_pref)
+        self.user_settings.save(self.user_pref)
         self.close()
 
     def load_user_preferences(self):
         ''' Loads user preferences '''
-        self.user_pref = self.user_settings.loadUS()
+        self.user_pref = self.user_settings.load()
         if not self.user_pref:
             return
 
