@@ -56,3 +56,7 @@ class Observer(Singleton):
             f'{self.shader().name} / {self.shader().category.name()}')
         self.ui.lbl_shader_type.setText(self.shader().shader_type)
         self.ui.te_notes.setText(self.shader().notes)
+
+    def status_message(self, msg):
+        ''' writes a message into the statusbar'''
+        self.ui.statusBar().showMessage(msg)
