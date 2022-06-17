@@ -145,7 +145,7 @@ class CallMenu:
                        shader.cg_file, shader.thumbnail]
                        )
 
-        with self.waitCursor():
+        with self.wait_cursor():
             process = subprocess.Popen(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             output, error = process.communicate()
@@ -153,7 +153,7 @@ class CallMenu:
             log.info(error)
 
     @contextmanager
-    def waitCursor(self):
+    def wait_cursor(self):
         try:
             QtWidgets.QApplication.setOverrideCursor(
                 QtGui.QCursor(QtCore.Qt.WaitCursor))
