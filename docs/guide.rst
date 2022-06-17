@@ -12,7 +12,8 @@ See :ref:`installation` for details on how to install and run this tool.
 Categories
 ----------
 
-| The MayaShaderLibrary works by creating Categories, inside each category you will save/load your shaders.
+The MayaShaderLibrary works by creating Categories, inside each category you will save/load your shaders.
+
 - Categories will be created and listed, but not displayed until you 'pin' them to the interface.
 - To remove a category from the ui, double click on the category name.
 
