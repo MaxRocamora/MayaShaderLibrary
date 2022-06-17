@@ -24,8 +24,7 @@ from msl.libs.qt_dialogs import dirty_file_dialog
 from msl.libs.category_view import CategoryView
 from msl.version import app_name, version
 from msl.config import (LIBRARY_SHADERS_PATH, URL_DOC,
-                        thumbnail_default_scene, QSS_FILE,
-                        APP_QICON, QT_WIN_NAME)
+                        thumbnail_default_scene, QSS_FILE, APP_QICON, QT_WIN_NAME)
 
 ui_file = os.path.join(os.path.dirname(__file__), 'ui', 'ui', 'main.ui')
 
@@ -60,7 +59,7 @@ class ShaderLibraryAPP(QMainWindow):
         self.activateWindow()
 
     # ------------------------------------------------------------------------------------
-    # Qt UI Signals and event Handler
+    # Qt Connections and event Handler
     # ------------------------------------------------------------------------------------
 
     def set_connections(self):
@@ -94,7 +93,7 @@ class ShaderLibraryAPP(QMainWindow):
             self.close()
             return
 
-        # get categories pinned
+        # get categories pinned and save them into user preferences
         fav_categories = [cat.name() for cat in self.observer.categories() if cat.pinned()]
         self.user_pref = {'pinned': fav_categories}
         self.user_settings.saveUS(self.user_pref)
@@ -104,8 +103,9 @@ class ShaderLibraryAPP(QMainWindow):
         ''' Loads user preferences '''
         self.user_pref = self.user_settings.loadUS()
         if not self.user_pref:
-            return False
+            return
 
+        # restore last pinned categories
         fav_tabs = self.user_pref.get("pinned", [])
         for category in self.observer.categories():
             if category.name() in fav_tabs:
