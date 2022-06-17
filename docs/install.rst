@@ -4,7 +4,7 @@ Installation
 ============
 
 MayaShaderLibrary
-Maya +2022 / Python +3.6
+Requires: Maya +2022 / Python +3.6
 
 Download
 --------

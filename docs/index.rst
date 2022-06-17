@@ -13,5 +13,4 @@ Documentation
    :maxdepth: 2
 
    install
-   started
-   ui
+   guide
