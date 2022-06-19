@@ -61,7 +61,6 @@ class ShaderLibraryAPP(QMainWindow):
         '''ui widgets signals & attributes '''
         self.ui.mnu_open_default_light_rig.triggered.connect(self.open_default_light_rig)
         self.ui.mnu_help_web.triggered.connect(lambda: webbrowser.open(URL_DOC))
-        self.ui.mnu_reload_categories.triggered.connect(self.observer.view.load_categories)
         self.ui.mnu_add_new_category.triggered.connect(lambda: AddCategoryDialog())
         self.ui.mnu_browse_category_folder.triggered.connect(
             lambda: browse(LIBRARY_SHADERS_PATH))
