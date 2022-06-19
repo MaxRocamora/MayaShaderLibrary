@@ -16,12 +16,13 @@
 01/2022 - 1.1.3 / fix typo
 05/2022 - 1.2.0 / dropped python2 support, refactor methods to snake_case
 06/2022 - 1.2.1 / fixes
+06/2022 - 1.2.2 / more fixes, shader buttons to widgets
 
 '''
 
 VERSION_MAJOR = 1
 VERSION_MINOR = 2
-VERSION_PATCH = 1
+VERSION_PATCH = 2
 
 version = f'{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}'
 
