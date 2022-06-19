@@ -212,13 +212,6 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMenu">
-    <property name="title">
-     <string>Menu</string>
-    </property>
-    <addaction name="mnu_reload_categories"/>
-    <addaction name="separator"/>
-   </widget>
    <widget class="QMenu" name="menuCategory">
     <property name="title">
      <string>Category</string>
@@ -240,7 +233,6 @@
     </property>
     <addaction name="mnu_help_web"/>
    </widget>
-   <addaction name="menuMenu"/>
    <addaction name="menuCategory"/>
    <addaction name="menuOptions"/>
    <addaction name="menuHelp"/>
