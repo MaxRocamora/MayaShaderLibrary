@@ -17,10 +17,9 @@ class Observer(Singleton):
     def __init__(self):
         self._shader = False
         self._category = False
-        self._categories = []
 
     def categories(self):
-        return self._categories
+        return self._categories if hasattr(self, '_categories') else []
 
     def set_categories(self, v):
         ''' load given categories and updates view '''
@@ -56,6 +55,7 @@ class Observer(Singleton):
             f'{self.shader().name} / {self.shader().category.name()}')
         self.ui.lbl_shader_type.setText(self.shader().shader_type)
         self.ui.te_notes.setText(self.shader().notes)
+        self.ui.lbl_shader_code.setText(self.shader().id_name)
 
     def status_message(self, msg):
         ''' writes a message into the statusbar'''
