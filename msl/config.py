@@ -12,7 +12,7 @@ from PySide2.QtGui import QIcon
 
 QT_WIN_NAME = 'Arcane2:Qt_ShaderLibrary_ui'
 
-# Flag for valid plugin environment, if this is false the maya plugin wont load
+# Flag for valid plugin environment, if this is false the maya plugin won't load
 VALID_ENV = True
 
 package = pkgutil.get_loader("msl")
