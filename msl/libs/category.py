@@ -13,7 +13,7 @@ from msl.config import LIBRARY_SHADERS_PATH
 from msl.libs.observer import Observer
 from msl.libs.qt_dialogs import warning_message
 from msl.libs.shader import Shader as Shader
-from msl.libs.shader_generator import generate_shader_buttons
+from msl.libs.shader_widget import ShaderWidget
 from msl.libs.logger import log
 
 
@@ -103,10 +103,27 @@ class Category():
         scroll.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         scroll.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         scroll.setWidget(widget)
-        generate_shader_buttons(self.shaders(), self.observer, layout, 4)
+        self._fill_shader_layout(layout, 4)
         grid = QtWidgets.QGridLayout()
         grid.addWidget(scroll, 3, 0)
         self.tab.setLayout(grid)
+
+    def _fill_shader_layout(self, layout, wide):
+        ''' Fills given layout with buttons shaders
+        Args:
+            layout (widget) layout widget to fill
+            wide (int) maximum columns to split buttons
+        '''
+        shader_widgets = [ShaderWidget(shader) for shader in self.shaders()]
+        b = 0
+        row = 0
+        while b < len(shader_widgets):
+            for col in range(wide):
+                if b >= len(shader_widgets):
+                    break
+                layout.addWidget(shader_widgets[b], row, col)
+                b += 1
+            row += 1
 
     def pin(self):
         ''' Add selected category to main tab panel (pin tab)
