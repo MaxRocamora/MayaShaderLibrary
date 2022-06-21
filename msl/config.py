@@ -23,7 +23,7 @@ else:
 
 
 # Stylesheet / icons / Url
-APP_QICON = QIcon(os.path.join(ROOT_PATH, 'ui', 'icons', 'appIcon.png'))
+APP_QICON = QIcon(os.path.join(ROOT_PATH, 'ui', 'icons', 'app.png'))
 QSS_FILE = os.path.join(ROOT_PATH, 'ui', 'stylesheet', 'arcane.qss')
 QSS_BUTTON = os.path.join(ROOT_PATH, 'ui', 'stylesheet', 'shaderButton.qss')
 URL_DOC = 'https://mayashaderlibrary.readthedocs.io'
