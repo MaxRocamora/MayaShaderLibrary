@@ -9,17 +9,19 @@ from PySide2 import QtWidgets
 import maya.cmds as cmds
 
 from msl.libs.logger import log
+from msl.ui.icons import get_icon
 
 
-def warning_message(msg: str):
+def warning_message(message: str):
     ''' open qt dialog box '''
-    msgBox = QtWidgets.QMessageBox(None)
-    msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
-    msgBox.setIcon(QtWidgets.QMessageBox.Warning)
-    msgBox.setText(msg)
-    msgBox.setWindowTitle('MSL')
-    msgBox.setStandardButtons(QtWidgets.QMessageBox.Close)
-    msgBox.exec_()
+    msg = QtWidgets.QMessageBox(None)
+    msg.setStyleSheet("background: rgba(40, 40, 40, 255);")
+    msg.setIcon(QtWidgets.QMessageBox.Warning)
+    msg.setWindowIcon(get_icon('app'))
+    msg.setText(message)
+    msg.setWindowTitle('MSL')
+    msg.setStandardButtons(QtWidgets.QMessageBox.Close)
+    msg.exec_()
 
 
 def dirty_file_dialog():
