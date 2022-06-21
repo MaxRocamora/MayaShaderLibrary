@@ -13,7 +13,7 @@ from PySide2.QtWidgets import QMainWindow
 
 import maya.cmds as cmds
 
-from msl.libs.dialogs.dlg_add_category import AddCategoryDialog
+from msl.libs.add_category import AddCategoryDialog
 from msl.libs.observer import Observer
 from msl.libs.shader_controller import ShaderController
 from msl.libs.utils.get_maya_window import get_maya_main_window
