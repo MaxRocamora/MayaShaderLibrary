@@ -27,7 +27,7 @@ class ShaderController():
     def set_connections(self):
         '''ui widgets signals & attributes '''
         self.ui.btn_add_shader.clicked.connect(self.add_shader_dialog)
-        self.ui.btn_add_shader.setIcon(get_icon("plus"))
+        self.ui.btn_add_shader.setIcon(get_icon("add"))
         self.ui.btn_add_shader.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.ui.btn_add_shader.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.ui.btn_add_shader.setStyleSheet("background:transparent;")
