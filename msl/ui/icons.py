@@ -1,15 +1,16 @@
-# --------------------------------------------------------------------------------------------
-# Icon Qt Dict for interfaces
-# --------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
+# Icon Qt Dict for the ui
+# ----------------------------------------------------------------------------------------
 import os
+
 from PySide2 import QtGui
 
-iconPath = os.path.join(os.path.dirname(__file__), 'icons')
+path = os.path.join(os.path.dirname(__file__), 'icons')
 ICONS = {}
 
-for icon in os.listdir(iconPath):
-    iconName, ext = os.path.splitext(icon)
-    ICONS[iconName.lower()] = QtGui.QIcon(os.path.join(iconPath, icon))
+for icon_filename in os.listdir(path):
+    filename, _ = os.path.splitext(icon_filename)
+    ICONS[filename.lower()] = QtGui.QIcon(os.path.join(path, icon_filename))
 
 
 def get_icon(name):
