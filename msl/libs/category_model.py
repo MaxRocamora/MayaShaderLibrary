@@ -24,7 +24,7 @@ class CategoryModel(QAbstractListModel):
             return text
 
         if role == Qt.DecorationRole:
-            return QIcon(get_icon('appIcon'))
+            return QIcon(get_icon('app'))
 
     def getItem(self, index):
         row = index.row()
