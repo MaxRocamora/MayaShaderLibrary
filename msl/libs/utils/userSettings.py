@@ -8,7 +8,7 @@
 import os
 from sys import platform
 
-from msl.libs.utils.json_util import load_json, save_json
+from msl.libs.utils.json_util import json_load, save_json
 from msl.libs.logger import log
 
 
@@ -37,7 +37,7 @@ class UserSettings():
 
     def load(self):
         ''' Load json file from user_path and returns dict content '''
-        return load_json(self.user_path)
+        return json_load(self.user_path)
 
     @property
     def user_path(self):
