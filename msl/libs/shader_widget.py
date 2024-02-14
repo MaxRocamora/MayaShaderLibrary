@@ -57,6 +57,7 @@ class ShaderWidget(QToolButton):
 
     def selected(self):
         """Widget clicked callback."""
+        SIGNALS.active_shader.emit(self.shader)
         SIGNALS.update_shader_ui.emit(
             f'{self.shader.name}_{self.shader.category.name()}',
             self.shader.shader_type,

@@ -7,7 +7,7 @@
 import os
 
 from PySide2.QtCore import QModelIndex, Qt
-from PySide2.QtWidgets import QListWidget
+from PySide2.QtWidgets import QListWidget, QMainWindow
 
 from msl.config import LIBRARY_PATH
 from msl.libs.category import Category
@@ -19,11 +19,12 @@ from msl.ui.icons import get_icon
 
 
 class CategoryList:
-    def __init__(self, list_widget: QListWidget):
+    def __init__(self, list_widget: QListWidget, ui: QMainWindow):
         """Category View Controller."""
         self.list = list_widget
         self.list.setAlternatingRowColors(True)
         self.categories = []
+        self.ui = ui
 
         # connections
         SIGNALS.reload_categories.connect(self.update)
@@ -46,7 +47,7 @@ class CategoryList:
         if not folders:
             return []
 
-        return [Category(name, LIBRARY_PATH) for name in folders]
+        return [Category(name, LIBRARY_PATH, self.ui) for name in folders]
 
     def update(self, select_on_update: str = None):
         """Update the view with the given categories list.
