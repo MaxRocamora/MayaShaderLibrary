@@ -43,19 +43,6 @@
    <string>Shader Library</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tab_materials">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>0</y>
-      <width>501</width>
-      <height>461</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>-1</number>
-    </property>
-   </widget>
    <widget class="QToolButton" name="btn_save_changes">
     <property name="geometry">
      <rect>
@@ -207,6 +194,17 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>0</y>
+      <width>511</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="vbox"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

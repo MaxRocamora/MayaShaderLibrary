@@ -18,29 +18,30 @@ msg_overwrite = 'Shader name already exists, add a new copy?'
 msg_failed_export = 'Add Shader save operation Failed.'
 
 
-class ShaderController():
-    def __init__(self, ui):
+class ShaderController:
+    def __init__(self, ui: QtWidgets.QWidget):
+        """Shader Controller."""
         self.ui = ui
         self.observer = Observer()
         self.set_connections()
 
     def set_connections(self):
-        '''ui widgets signals & attributes '''
+        """Ui widgets signals & attributes."""
         self.ui.btn_add_shader.clicked.connect(self.add_shader_dialog)
-        self.ui.btn_add_shader.setIcon(get_icon("add"))
+        self.ui.btn_add_shader.setIcon(get_icon('add'))
         self.ui.btn_add_shader.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.ui.btn_add_shader.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.ui.btn_add_shader.setStyleSheet("background:transparent;")
+        self.ui.btn_add_shader.setStyleSheet('background:transparent;')
         self.ui.btn_add_shader.installEventFilter(self.ui)
         self.ui.btn_save_changes.clicked.connect(self.save_notes)
-        self.ui.btn_save_changes.setIcon(get_icon("save"))
+        self.ui.btn_save_changes.setIcon(get_icon('save'))
         self.ui.btn_save_changes.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.ui.btn_save_changes.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.ui.btn_save_changes.setStyleSheet("background:transparent;")
+        self.ui.btn_save_changes.setStyleSheet('background:transparent;')
         self.ui.btn_save_changes.installEventFilter(self.ui)
 
     def add_shader_dialog(self):
-        ''' adds a new shader '''
+        """Adds a new shader."""
 
         if not self.observer.category():
             warning_message(msg_no_category)
@@ -66,19 +67,18 @@ class ShaderController():
         self.observer.category().reload()
 
     def _overwrite_shader_dialog(self, name):
-        ''' open qt dialog box when shader already exists '''
+        """Open qt dialog box when shader already exists."""
         msgBox = QtWidgets.QMessageBox(None)
-        msgBox.setStyleSheet("background: rgba(40, 40, 40, 255);")
+        msgBox.setStyleSheet('background: rgba(40, 40, 40, 255);')
         msgBox.setIcon(QtWidgets.QMessageBox.Question)
         msgBox.setText(msg_overwrite)
         msgBox.setWindowTitle(name)
-        msgBox.setStandardButtons(
-            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         choice = msgBox.exec_()
         return choice == QtWidgets.QMessageBox.Ok
 
     def save_notes(self):
-        ''' Saving notes on selected shader '''
+        """Saving notes on selected shader."""
         shader = self.observer.shader()
         if shader:
             shader.notes = str(self.ui.te_notes.document().toPlainText())

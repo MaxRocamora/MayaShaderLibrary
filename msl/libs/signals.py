@@ -10,6 +10,7 @@ from PySide2.QtCore import QObject, Signal
 class GlobalSignals(QObject):
     """A container for global signals, which allow cross-application communication."""
 
+    show_message = Signal(str)
     reload_categories = Signal(str)
     # update_shot_files = Signal(str)
 

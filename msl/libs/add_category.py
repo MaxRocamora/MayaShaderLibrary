@@ -6,10 +6,12 @@
 # Shader Library: addCategory dialog
 # This class handles adding a new category
 # ----------------------------------------------------------------------------------------
+import os
 
 from PySide2 import QtWidgets
 
-from msl.libs.category import Category
+from msl.config import LIBRARY_PATH
+from msl.libs.qt_dialogs import warning_message
 from msl.libs.signals import SIGNALS
 
 
@@ -19,7 +21,7 @@ class AddCategoryDialog:
 
         input_name = self._new_category_dialog()
         if input_name:
-            name = Category.create(input_name)
+            name = self.create_category(input_name)
             if name:
                 SIGNALS.reload_categories.emit(name)
 
@@ -32,5 +34,41 @@ class AddCategoryDialog:
         name, result = QInputDialog.getText(None, title, question, lineEdit, 'default')
         if not result:
             return False
+
+        return name
+
+    def create_category(self, name: str) -> str:
+        """Create category, validates name and create folder."""
+
+        msg_unicode_error = 'UnicodeEncodeError!.'
+        msg_name_error = f'New Category {name} needs at least 3 characters.'
+        msg_name_exists = f'Category name: {name}, already in use.'
+
+        # string validation
+        try:
+            name = str(name)
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            warning_message(msg_unicode_error)
+            return
+
+        # name length validation
+        if len(name) < 3:
+            warning_message(msg_name_error)
+            return
+
+        name = name.upper()
+
+        path = os.path.abspath(os.path.join(LIBRARY_PATH, name))
+
+        # name in use validation
+        if os.path.exists(path):
+            warning_message(msg_name_exists)
+            return
+
+        try:
+            os.mkdir(path)
+        except (OSError, WindowsError) as e:
+            warning_message(f'Error Creating folder: {e}')
+            return
 
         return name
