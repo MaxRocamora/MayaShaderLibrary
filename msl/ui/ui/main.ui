@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -192,7 +192,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QListView" name="view_category">
+   <widget class="QListWidget" name="categories">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -200,6 +200,12 @@
       <width>151</width>
       <height>461</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
    </widget>
   </widget>
@@ -209,7 +215,7 @@
      <x>0</x>
      <y>0</y>
      <width>880</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCategory">
@@ -247,9 +253,7 @@
     <string>Add New Category</string>
    </property>
    <property name="font">
-    <font>
-     <family>Segoe UI</family>
-    </font>
+    <font/>
    </property>
   </action>
   <action name="mnu_browse_category_folder">
@@ -257,9 +261,7 @@
     <string>Browse Category Folder</string>
    </property>
    <property name="font">
-    <font>
-     <family>Segoe UI</family>
-    </font>
+    <font/>
    </property>
   </action>
   <action name="menuactionExport_Selected_Shader">
@@ -272,9 +274,7 @@
     <string>Reset Tool</string>
    </property>
    <property name="font">
-    <font>
-     <family>Segoe UI</family>
-    </font>
+    <font/>
    </property>
   </action>
   <action name="actionOverwrite_Confirmation">
@@ -293,9 +293,7 @@
     <string>Open Thumbnail LightRig File</string>
    </property>
    <property name="font">
-    <font>
-     <family>Segoe UI</family>
-    </font>
+    <font/>
    </property>
   </action>
   <action name="mnu_reload_categories">
@@ -303,9 +301,7 @@
     <string>Reload Categories</string>
    </property>
    <property name="font">
-    <font>
-     <family>Segoe UI</family>
-    </font>
+    <font/>
    </property>
   </action>
   <action name="mnu_setFolder">
@@ -318,9 +314,7 @@
     <string>Browse Help Docs</string>
    </property>
    <property name="font">
-    <font>
-     <family>Segoe UI</family>
-    </font>
+    <font/>
    </property>
   </action>
  </widget>

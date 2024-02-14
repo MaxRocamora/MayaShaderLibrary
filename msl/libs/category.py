@@ -9,17 +9,17 @@
 import os
 from PySide2 import QtCore, QtWidgets
 
-from msl.config import LIBRARY_SHADERS_PATH
+from msl.config import LIBRARY_PATH
 from msl.libs.observer import Observer
 from msl.libs.qt_dialogs import warning_message
-from msl.libs.shader import Shader as Shader
+from msl.libs.shader import Shader
 from msl.libs.shader_widget import ShaderWidget
 from msl.libs.logger import log
 
 
-class Category():
+class Category:
     def __init__(self, name: str, base_path: str):
-        ''' When a category is created, stores all its shaders '''
+        """When a category is created, stores all its shaders."""
         self._name = name
         self._base_path = base_path
         self._shaders = self._collect_shaders()
@@ -27,37 +27,48 @@ class Category():
         self._index = -1
         self.observer = Observer()
 
-    def __str__(self):
-        return f"Category: {self.name()}"
+    def __str__(self) -> str:
+        """Returns name of the category."""
+        return self.name()
 
-    def name(self):
+    def __len__(self) -> int:
+        """Number of shaders in this category."""
+        return len(self.shaders())
+
+    def __bool__(self) -> bool:
+        """Returns if category has shaders."""
+        return bool(self.name())
+
+    def name(self) -> str:
+        """Category name."""
         return self._name
 
     def path(self):
-        ''' physical path of ths shader '''
+        """Physical path of ths shader."""
         return os.path.abspath(os.path.join(self._base_path, self.name()))
 
     def shaders(self, _reload: bool = False):
-        ''' Returns list of shaders of this category
+        """Returns list of shaders of this category.
+
         Args:
             _reload (boolean): If true, reload shaders from disk before return
         Returns:
             list: shaders objects
-        '''
+        """
         if _reload:
             self._shaders = self._collect_shaders()
         return self._shaders
 
     def pinned(self):
-        ''' ui pin state '''
+        """Pin to UI state."""
         return self._pinned
 
     def index(self):
-        ''' tab index'''
+        """Current tab index."""
         return self._index
 
     def _collect_shaders(self):
-        ''' Returns a list of shader objects from chosen category '''
+        """Returns a list of shader objects from chosen category."""
         folders = [x.upper() for x in os.listdir(self.path())]
         return [Shader.load_shader(name=f, category=self) for f in folders]
 
@@ -66,31 +77,62 @@ class Category():
     # ------------------------------------------------------------------------------------
 
     @staticmethod
-    def create(name):
-        ''' create category folder '''
-        if os.path.exists(LIBRARY_SHADERS_PATH):
-            os.mkdir(os.path.abspath(os.path.join(LIBRARY_SHADERS_PATH, name)))
+    def create(name: str) -> str:
+        """Create category, validates name and create folder."""
+
+        msg_unicode_error = 'UnicodeEncodeError!.'
+        msg_name_error = f'New Category {name} needs at least 3 characters.'
+        msg_name_exists = f'Category name: {name}, already in use.'
+
+        # string validation
+        try:
+            name = str(name)
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            warning_message(msg_unicode_error)
+            return
+
+        # name length validation
+        if len(name) < 3:
+            warning_message(msg_name_error)
+            return
+
+        name = name.upper()
+
+        path = os.path.abspath(os.path.join(LIBRARY_PATH, name))
+
+        # name in use validation
+        if os.path.exists(path):
+            warning_message(msg_name_exists)
+            return
+
+        try:
+            os.mkdir(path)
+        except (OSError, WindowsError) as e:
+            warning_message(f'Error Creating folder: {e}')
+            return
+
+        return name
 
     @staticmethod
-    def generate_categories():
-        ''' Load Categories from disk and set up main storing list '''
-        if not os.path.exists(LIBRARY_SHADERS_PATH):
-            warning_message("Warning: Categories Folder not found.")
-            log.warning('Path:', LIBRARY_SHADERS_PATH)
+    def load_stored_categories():
+        """Load Categories from disk and set up main storing list."""
+        if not os.path.exists(LIBRARY_PATH):
+            warning_message('Warning: Categories Folder not found.')
+            log.warning(f'Path: {LIBRARY_PATH} not found.')
             return []
 
-        folders = [x.upper() for x in os.listdir(LIBRARY_SHADERS_PATH)]
+        folders = [x.upper() for x in os.listdir(LIBRARY_PATH)]
         if not folders:
             return []
 
-        return [Category(name, LIBRARY_SHADERS_PATH) for name in folders]
+        return [Category(name, LIBRARY_PATH) for name in folders]
 
     # ------------------------------------------------------------------------------------
     # Qt UI Methods
     # ------------------------------------------------------------------------------------
 
     def fill_tab(self):
-        ''' Fills category tab with shaders buttons '''
+        """Fills category tab with shaders buttons."""
         widget = QtWidgets.QWidget()
         layout = QtWidgets.QGridLayout(widget)
         layout.setSpacing(5)
@@ -108,12 +150,13 @@ class Category():
         grid.addWidget(scroll, 3, 0)
         self.tab.setLayout(grid)
 
-    def _fill_shader_layout(self, layout, wide):
-        ''' Fills given layout with buttons shaders
+    def _fill_shader_layout(self, layout, wide: int):
+        """Fills given layout with buttons shaders.
+
         Args:
-            layout (widget) layout widget to fill
-            wide (int) maximum columns to split buttons
-        '''
+            layout (widget): layout widget to fill
+            wide (int): maximum columns to split buttons
+        """
         shader_widgets = [ShaderWidget(shader) for shader in self.shaders()]
         b = 0
         row = 0
@@ -126,12 +169,7 @@ class Category():
             row += 1
 
     def pin(self):
-        ''' Add selected category to main tab panel (pin tab)
-        Args:
-            use_category (class)
-                if true uses given category data
-                if false uses current cbox category
-        '''
+        """Add selected category to main tab panel (pin tab)."""
 
         if self.pinned():
             return
@@ -146,19 +184,11 @@ class Category():
         last_tab = self.observer.ui.tab_materials.widget(self.index())
         self.observer.ui.tab_materials.setCurrentWidget(last_tab)
         self._pinned = True
+
         self.fill_tab()
 
-    def unpin(self):
-        log.info(f'UnPin {self.name()}')
-        self.observer.ui.tab_materials.removeTab(self.index())
-        self._pinned = False
-
-    def focus(self):
-        ''' forces a focus on tab '''
-        self.observer.ui.tab_materials.setCurrentIndex(self.index())
-
     def reload(self):
-        ''' rebuilds tab and reload shaders '''
+        """Rebuilds tab and reload shaders."""
         self.unpin()
         self.shaders(1)
         self.pin()

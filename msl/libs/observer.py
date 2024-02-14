@@ -9,54 +9,52 @@
 # Note:
 # .ui attribute is set from main
 # ----------------------------------------------------------------------------------------
+from typing import TYPE_CHECKING
+
 from msl.libs.logger import log
 from msl.libs.utils.singleton import Singleton
+
+if TYPE_CHECKING:
+    from msl.libs.category import Category
 
 
 class Observer(Singleton):
     def __init__(self):
+        """Observer class."""
         self._shader = False
         self._category = False
 
-    def categories(self):
-        return self._categories if hasattr(self, '_categories') else []
-
-    def set_categories(self, v):
-        ''' load given categories and updates view '''
-        self._categories = v
-        self.view.update_view(v)
-
     def category(self):
-        ''' current selected category'''
+        """Current selected category."""
         return self._category
 
-    def select_category(self, v):
-        self._category = v
-        if not v:
-            self.shader = False
-            return
-        log.info(f'Category selected: {v.name()} Shaders {len(v.shaders())}')
+    def select_category(self, category: 'Category'):
+        """Select a category from the list and updates UI."""
+        self._category = category
+        log.info(f'Category selected: {category.name()} Shaders {len(category)}')
 
     def shader(self):
-        ''' current selected shader '''
+        """Current selected shader."""
         return self._shader
 
-    def select_shader(self, v):
-        log.info(f'shader selected {v}')
-        self._shader = v
+    def select_shader(self, value: str):
+        """Select a shader from the list and updates UI."""
+        log.info(f'shader selected {value}')
+        self._shader = value
         self.update_UI()
 
     def update_UI(self):
-        ''' update ui when user selects a shader '''
+        """Update ui when user selects a shader."""
         if not self.shader():
             return
 
         self.ui.lbl_shader_name.setText(
-            f'{self.shader().name} / {self.shader().category.name()}')
+            f'{self.shader().name} / {self.shader().category.name()}'
+        )
         self.ui.lbl_shader_type.setText(self.shader().shader_type)
         self.ui.te_notes.setText(self.shader().notes)
         self.ui.lbl_shader_code.setText(self.shader().id_name)
 
-    def status_message(self, msg):
-        ''' writes a message into the statusbar'''
+    def status_message(self, msg: str):
+        """Writes a message into the statusbar."""
         self.ui.statusBar().showMessage(msg)

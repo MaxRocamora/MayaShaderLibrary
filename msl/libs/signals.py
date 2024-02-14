@@ -4,13 +4,14 @@
 # https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # ----------------------------------------------------------------------------------------
-
-import os
-import subprocess
+from PySide2.QtCore import QObject, Signal
 
 
-def browse(folder: str):
-    """Open a folder in the system file explorer."""
-    location = os.path.abspath(folder)
-    if os.path.exists(location):
-        subprocess.Popen('explorer ' + location)
+class GlobalSignals(QObject):
+    """A container for global signals, which allow cross-application communication."""
+
+    reload_categories = Signal(str)
+    # update_shot_files = Signal(str)
+
+
+SIGNALS = GlobalSignals()
