@@ -1,8 +1,4 @@
-/* **************************************************** */
-/* QTOOL BUTTON */
-/* **************************************************** */
-
-QToolButton
+button_css = """QToolButton
 {
     color: #e2e2e2;
     border-radius: 2px;
@@ -23,3 +19,4 @@ QToolButton:hover
 {
     border: 1px solid #ffb300;
 }
+"""

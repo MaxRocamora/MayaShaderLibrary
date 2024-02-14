@@ -17,6 +17,7 @@
 # 06/2022 - 1.2.1 / fixes
 # 06/2022 - 1.2.2 / more fixes, shader buttons to widgets
 # 02/2023 - 1.3.0 / Ruff code format, fix some bugs, update messages, fixed default path
+# 02/2023 - 1.5.0 / Complete Refactor, added types.
 # ----------------------------------------------------------------------------------------
 
 VERSION_MAJOR = 1

@@ -6,15 +6,16 @@
 # ----------------------------------------------------------------------------------------
 import os
 
-from PySide2.QtCore import QModelIndex
+from PySide2.QtCore import QModelIndex, Qt
 from PySide2.QtWidgets import QListWidget
 
 from msl.config import LIBRARY_PATH
 from msl.libs.category import Category
+from msl.libs.shader import Shader
 from msl.libs.logger import log
-from msl.libs.observer import Observer
 from msl.libs.qt_dialogs import warning_message
 from msl.libs.signals import SIGNALS
+from msl.ui.icons import get_icon
 
 
 class CategoryList:
@@ -22,12 +23,17 @@ class CategoryList:
         """Category View Controller."""
         self.list = list_widget
         self.list.setAlternatingRowColors(True)
-        self.observer = Observer()
         self.categories = []
 
         # connections
         SIGNALS.reload_categories.connect(self.update)
         self.list.clicked.connect(self.item_selected)
+        self.ui.btn_add_shader.clicked.connect(self.add_shader_dialog)
+        self.ui.btn_add_shader.setIcon(get_icon('add'))
+        self.ui.btn_add_shader.setWindowFlags(Qt.FramelessWindowHint)
+        self.ui.btn_add_shader.setAttribute(Qt.WA_TranslucentBackground)
+        self.ui.btn_add_shader.setStyleSheet('background:transparent;')
+        self.ui.btn_add_shader.installEventFilter(self.ui)
 
     def load_stored_categories(self):
         """Load Categories from disk and set up main storing list."""
@@ -76,3 +82,34 @@ class CategoryList:
         """Pin Category when user clicks on it."""
         item = self._categories[index.row()]
         item.focus()
+
+    def add_shader_dialog(self):
+        """Adds a new shader."""
+
+        msg_no_category = 'No categories found, create one first.'
+        msg_failed_export = 'Add Shader save operation Failed.'
+
+        category = self.current_category()
+
+        if not category:
+            warning_message(msg_no_category)
+            return
+
+        shader, msg = Shader.get_shader(category)
+        if not shader:
+            warning_message(msg)
+            return
+
+        for s in category.shaders(True):
+            if s.name == shader['name']:
+                overwrite = self._overwrite_shader_dialog(s.name)
+                if not overwrite:
+                    return
+                break
+
+        new_shader = Shader.create_shader(shader)
+        if not new_shader.save():
+            warning_message(msg_failed_export)
+            return
+
+        category.reload()

@@ -12,7 +12,7 @@ class GlobalSignals(QObject):
 
     show_message = Signal(str)
     reload_categories = Signal(str)
-    # update_shot_files = Signal(str)
+    update_shader_ui = Signal(str, str, str, str)
 
 
 SIGNALS = GlobalSignals()

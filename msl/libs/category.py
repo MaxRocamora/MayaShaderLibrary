@@ -9,8 +9,7 @@
 import os
 
 from PySide2 import QtCore
-
-from msl.libs.observer import Observer
+from PySide2.QtWidgets import QMainWindow
 
 from msl.libs.shader import Shader
 from msl.libs.shader_widget import ShaderWidget
@@ -18,12 +17,12 @@ from msl.libs.logger import log
 
 
 class Category:
-    def __init__(self, name: str, base_path: str):
+    def __init__(self, name: str, base_path: str, ui: QMainWindow):
         """When a category is created, stores all its shaders."""
         self._name = name
         self._base_path = base_path
+        self.ui = ui
         self._shaders = self._collect_shaders()
-        self.observer = Observer()
 
     def __str__(self) -> str:
         """Returns name of the category."""
@@ -45,15 +44,15 @@ class Category:
         """Physical path of ths shader."""
         return os.path.abspath(os.path.join(self._base_path, self.name()))
 
-    def shaders(self, _reload: bool = False) -> list[Shader]:
+    def shaders(self, reload: bool = False) -> list[Shader]:
         """Returns list of shaders of this category.
 
         Args:
-            _reload (boolean): If true, reload shaders from disk before return
+            reload (boolean): If true, reload shaders from disk before return
         Returns:
             list: shaders objects
         """
-        if _reload:
+        if reload:
             self._shaders = self._collect_shaders()
         return self._shaders
 
@@ -61,10 +60,6 @@ class Category:
         """Returns a list of shader objects from chosen category."""
         folders = [x.upper() for x in os.listdir(self.path())]
         return [Shader.load_shader(name=f, category=self) for f in folders]
-
-    # ------------------------------------------------------------------------------------
-    # Qt UI Grid Methods
-    # ------------------------------------------------------------------------------------
 
     def focus(self):
         """Fills category tab with shaders buttons."""
@@ -74,8 +69,8 @@ class Category:
 
     def _clear_grid(self):
         """Clears shaders UI layout."""
-        for i in reversed(range(self.observer.ui.scroll_layout.count())):
-            widget = self.observer.ui.scroll_layout.itemAt(i).widget()
+        for i in reversed(range(self.ui.scroll_layout.count())):
+            widget = self.ui.scroll_layout.itemAt(i).widget()
             if widget:
                 widget.deleteLater()
 
@@ -86,7 +81,7 @@ class Category:
             layout (widget): layout widget to fill
             wide (int): maximum columns to split buttons
         """
-        shader_widgets = [ShaderWidget(shader) for shader in self.shaders()]
+        shader_widgets = [ShaderWidget(shader, self.ui) for shader in self.shaders()]
         b = 0
         row = 0
 
@@ -95,7 +90,7 @@ class Category:
                 if b >= len(shader_widgets):
                     break
 
-                self.observer.ui.scroll_layout.addWidget(
+                self.ui.scroll_layout.addWidget(
                     shader_widgets[b],
                     row,
                     col,
@@ -107,5 +102,5 @@ class Category:
 
     def reload(self):
         """Rebuilds tab and reload shaders."""
-        self.shaders(1)
+        self.shaders(reload=True)
         self.focus()

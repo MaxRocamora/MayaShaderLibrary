@@ -8,78 +8,50 @@
 # ----------------------------------------------------------------------------------------
 from PySide2 import QtCore, QtWidgets
 
-from msl.libs.observer import Observer
-from msl.libs.shader import Shader
-from msl.libs.qt_dialogs import warning_message
+from msl.libs.signals import SIGNALS
 from msl.ui.icons import get_icon
-
-msg_no_category = 'No categories found, create one using the Create Category button'
-msg_overwrite = 'Shader name already exists, add a new copy?'
-msg_failed_export = 'Add Shader save operation Failed.'
 
 
 class ShaderController:
     def __init__(self, ui: QtWidgets.QWidget):
         """Shader Controller."""
         self.ui = ui
-        self.observer = Observer()
+        self.active_category = None
         self.set_connections()
 
     def set_connections(self):
         """Ui widgets signals & attributes."""
-        self.ui.btn_add_shader.clicked.connect(self.add_shader_dialog)
-        self.ui.btn_add_shader.setIcon(get_icon('add'))
-        self.ui.btn_add_shader.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.ui.btn_add_shader.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.ui.btn_add_shader.setStyleSheet('background:transparent;')
-        self.ui.btn_add_shader.installEventFilter(self.ui)
         self.ui.btn_save_changes.clicked.connect(self.save_notes)
         self.ui.btn_save_changes.setIcon(get_icon('save'))
         self.ui.btn_save_changes.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.ui.btn_save_changes.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.ui.btn_save_changes.setStyleSheet('background:transparent;')
         self.ui.btn_save_changes.installEventFilter(self.ui)
+        SIGNALS.update_shader_ui.connect(self.update_ui)
 
-    def add_shader_dialog(self):
-        """Adds a new shader."""
-
-        if not self.observer.category():
-            warning_message(msg_no_category)
-            return
-
-        shader, msg = Shader.get_shader(self.observer.category())
-        if not shader:
-            warning_message(msg)
-            return
-
-        for s in self.observer.category().shaders(True):
-            if s.name == shader['name']:
-                overwrite = self._overwrite_shader_dialog(s.name)
-                if not overwrite:
-                    return
-                break
-
-        _shader = Shader.create_shader(shader, self.observer.category())
-        if not _shader.save():
-            warning_message(msg_failed_export)
-            return
-
-        self.observer.category().reload()
-
-    def _overwrite_shader_dialog(self, name):
+    def _overwrite_shader_dialog(self, name: str) -> bool:
         """Open qt dialog box when shader already exists."""
         msgBox = QtWidgets.QMessageBox(None)
         msgBox.setStyleSheet('background: rgba(40, 40, 40, 255);')
         msgBox.setIcon(QtWidgets.QMessageBox.Question)
-        msgBox.setText(msg_overwrite)
+        msgBox.setText('Shader name already exists, add a new copy?')
         msgBox.setWindowTitle(name)
         msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         choice = msgBox.exec_()
+
         return choice == QtWidgets.QMessageBox.Ok
 
     def save_notes(self):
         """Saving notes on selected shader."""
-        shader = self.observer.shader()
+        # !TODO: get selected shader
+        shader = None  # !self.observer.selected_shader()
         if shader:
             shader.notes = str(self.ui.te_notes.document().toPlainText())
             shader.save_shader_properties()
+
+    def update_ui(self, name: str, shader_type: str, notes: str, id_name: str):
+        """Update UI with selected shader info."""
+        self.ui.lbl_shader_name.setText(name)
+        self.ui.lbl_shader_type.setText(shader_type)
+        self.ui.te_notes.setText(notes)
+        self.ui.lbl_shader_code.setText(id_name)

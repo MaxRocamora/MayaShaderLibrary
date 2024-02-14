@@ -24,7 +24,6 @@ else:
 # * Stylesheet / icons / Url
 APP_QICON = QIcon(os.path.join(ROOT_PATH, 'ui', 'icons', 'app.png'))
 QSS_FILE = os.path.join(ROOT_PATH, 'ui', 'css', 'stylesheet.qss')
-QSS_BUTTON = os.path.join(ROOT_PATH, 'ui', 'css', 'shader_button.qss')
 URL_DOC = 'https://mayashaderlibrary.readthedocs.io'
 
 # * Shader repository location, from env variable or default path

@@ -15,7 +15,6 @@ import maya.cmds as cmds
 
 from msl.libs.add_category import AddCategoryDialog
 from msl.libs.categories import CategoryList
-from msl.libs.observer import Observer
 from msl.libs.qt_dialogs import dirty_file_dialog
 from msl.libs.signals import SIGNALS
 from msl.libs.shader_controller import ShaderController
@@ -44,10 +43,8 @@ class ShaderLibraryAPP(QMainWindow):
             self.setStyleSheet(fh.read())
 
         self.settings = QtCore.QSettings('MayaTools', 'MayaShaderLibrary')
-        self.observer = Observer()
-        self.observer.ui = self.ui
         self.shader_ctrl = ShaderController(self.ui)
-        self.view = CategoryList(self.ui.categories)
+        self.categories_widget = CategoryList(self.ui.categories, self.ui)
         self._set_connections()
         self._build_ui()
         self._restore_session()
@@ -88,7 +85,7 @@ class ShaderLibraryAPP(QMainWindow):
     def _restore_session(self):
         """Load user preferences from the last session."""
         last = self.settings.value('last_selected', None)
-        self.view.update(last)
+        self.categories_widget.update(last)
 
     def open_default_light_rig(self):
         """Opens the maya file used for render thumbnails."""
@@ -104,7 +101,7 @@ class ShaderLibraryAPP(QMainWindow):
     def closeEvent(self, event: QtCore.QEvent):
         """Save user settings and close."""
 
-        last_selected = self.view.current_category()
+        last_selected = self.categories_widget.current_category()
         if last_selected:
             self.settings.setValue('last_selected', last_selected.name())
 
