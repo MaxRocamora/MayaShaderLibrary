@@ -22,12 +22,21 @@ rndFile = os.path.splitext(sys.argv[3])[0]
 
 
 def setup_render_file():
+    """Open shader lighting file and import shader file."""
     cmds.file(shaderRig, force=True, open=True)
-    cmds.file(shaderFile, i=True, type="mayaAscii", ignoreVersion=True,
-              ns="shd", options="v=0;", pr=True)
+    cmds.file(
+        shaderFile,
+        i=True,
+        type='mayaAscii',
+        ignoreVersion=True,
+        ns='shd',
+        options='v=0;',
+        pr=True,
+    )
 
 
 def set_shader_ball():
+    """Set shader ball for rendering."""
     shader = 'shd:shdBallShape'
     shaderSGConn = cmds.listConnections(shader, d=True, et=True, t='shadingEngine')
     sg = shaderSGConn[0]
@@ -37,11 +46,13 @@ def set_shader_ball():
 
 
 def render_thumbnail():
-    # arnold render
+    """Render thumbnail for the shader."""
+
     from mtoa.cmds.arnoldRender import arnoldRender
+
     cmds.loadPlugin('mtoa')
-    cmds.setAttr("defaultArnoldDriver.ai_translator", "png", type="string")
-    cmds.setAttr("defaultArnoldDriver.pre", rndFile, type="string")
+    cmds.setAttr('defaultArnoldDriver.ai_translator', 'png', type='string')
+    cmds.setAttr('defaultArnoldDriver.pre', rndFile, type='string')
     arnoldRender(200, 200, True, True, 'RND_Camera', ' -layer defaultRenderLayer')
 
 

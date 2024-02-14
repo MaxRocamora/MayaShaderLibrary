@@ -8,7 +8,6 @@
 # ----------------------------------------------------------------------------------------
 import os
 
-from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow
 
 from msl.libs.shader import Shader
@@ -48,12 +47,13 @@ class Category:
         """Returns list of shaders of this category.
 
         Args:
-            reload (boolean): If true, reload shaders from disk before return
+            reload (bool): If true, reload shaders from disk before return
         Returns:
             list: shaders objects
         """
         if reload:
             self._shaders = self._collect_shaders()
+
         return self._shaders
 
     def _collect_shaders(self) -> list[Shader]:
@@ -78,7 +78,6 @@ class Category:
         """Fills given layout with buttons shaders.
 
         Args:
-            layout (widget): layout widget to fill
             wide (int): maximum columns to split buttons
         """
         shader_widgets = [ShaderWidget(shader, self.ui) for shader in self.shaders()]
@@ -94,7 +93,6 @@ class Category:
                     shader_widgets[b],
                     row,
                     col,
-                    alignment=QtCore.Qt.AlignCenter,
                 )
 
                 b += 1

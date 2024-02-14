@@ -36,7 +36,6 @@ class ShaderLibraryAPP(QMainWindow):
         self.ui = QtUiTools.QUiLoader().load(ui_file)
         self.setCentralWidget(self.ui)
         self.move(parent.geometry().center() - self.ui.geometry().center())
-        self.setFixedSize(self.ui.maximumWidth(), self.ui.maximumHeight())
         self.setWindowIcon(APP_QICON)
         self.setWindowTitle(f'{app_name} {version}')
         with open(QSS_FILE) as fh:
@@ -72,10 +71,9 @@ class ShaderLibraryAPP(QMainWindow):
         # create scroll widget and layout
         self.ui.scroll_widget = QWidget()
         self.ui.scroll_layout = QGridLayout(self.ui.scroll_widget)
-        self.ui.scroll_layout.setSpacing(5)
-        self.ui.scroll_layout.setHorizontalSpacing(5)
-        self.ui.scroll_layout.setVerticalSpacing(5)
-        self.ui.scroll_layout.setContentsMargins(2, 2, 2, 2)
+        self.ui.scroll_layout.setHorizontalSpacing(2)
+        self.ui.scroll_layout.setVerticalSpacing(2)
+        self.ui.scroll_layout.setContentsMargins(0, 0, 0, 0)
         self.ui.scroll_layout.setAlignment(QtCore.Qt.AlignTop)
 
         # add scroll area to main layout

@@ -89,7 +89,7 @@ class Shader:
     @property
     def config_file(self) -> str:
         """Return config file path for this shader."""
-        return os.path.join(self.folder, self.id_name + '_shader.json')
+        return os.path.join(self.folder, 'shader.json')
 
     @property
     def has_properties(self) -> bool:
@@ -115,7 +115,7 @@ class Shader:
         self.properties['node'] = value
 
     @property
-    def source_file(self):
+    def source_file(self) -> str:
         """Source cgFile for this shader."""
         return self.properties.get('sourceFile', 'N/A')
 
@@ -133,7 +133,7 @@ class Shader:
         self.properties['maps'] = value
 
     @property
-    def notes(self):
+    def notes(self) -> str:
         """Custom notes for this asset."""
         return self.properties.get('notes', 'Enter notes here...')
 
@@ -240,7 +240,7 @@ class Shader:
     # Import Methods (MAYA)
     # ------------------------------------------------------------------------------------
 
-    def import_shader(self, assign=False):
+    def import_shader(self, assign: bool = False):
         """Imports shader into scene.
 
         Args:
@@ -260,15 +260,16 @@ class Shader:
         finally:
             if cmds.objExists(self.ball):
                 cmds.delete(self.ball)
+
         cmds.select(sel, r=True)
 
-    def assign_shader(self, items=None):
+    def assign_shader(self, items: list = None):
         """Assign the shader to the given item."""
         sg = self.get_shading_group()
         if items and sg:
             cmds.sets(items, e=True, forceElement=sg)
 
-    def get_shading_group(self):
+    def get_shading_group(self) -> str:
         """Gets shading group of this shader."""
         if cmds.objExists(self.node):
             shaderSGConn = cmds.listConnections(
@@ -276,26 +277,26 @@ class Shader:
             )
             if shaderSGConn:
                 return shaderSGConn[0]
+
         return False
 
     # ------------------------------------------------------------------------------------
     # Delete/Rename/Browse Methods
     # ------------------------------------------------------------------------------------
 
-    def rename(self, new_name=False):
+    def rename(self, new_name: str = False) -> bool:
         """Rename cg file and config file and this class."""
         if not new_name:
             return False
 
-        _old_config_file = self.config_file
         _old_CG_file = self.cg_file
         _old_thumb_file = self.thumbnail
         self.properties['name'] = new_name
-        os.rename(_old_config_file, self.config_file)
         os.rename(_old_CG_file, self.cg_file)
 
         if os.path.exists(_old_thumb_file):
             os.rename(_old_thumb_file, self.thumbnail)
+
         self.save_shader_properties()
 
         return True
@@ -315,21 +316,21 @@ class Shader:
     # ------------------------------------------------------------------------------------
 
     @staticmethod
-    def load_shader(name: str, category: 'Category'):
+    def load_shader(name: str, category: 'Category') -> 'Shader':
         """Use this method to load a shader from disk.
 
         Args:
-            name (string): name of the internal folder of this shader
+            name (str): name of the internal folder of this shader
             category (Category): category class
         Returns:
-            shader class object
+            Shader object
         """
         shader = Shader(name, category)
         shader.load_shader_properties()
         return shader
 
     @staticmethod
-    def create_shader(shader_data: dict, category: 'Category'):
+    def create_shader(shader_data: dict, category: 'Category') -> 'Shader':
         """Use this method to create a virtual shader.
 
         Sets own attributes and returns this class.
@@ -341,9 +342,12 @@ class Shader:
             category (Category): parent category
         """
         nextId = 0
+
         while 'SHD_' + str(nextId).zfill(4) in os.listdir(category.path()):
             nextId += 1
+
         name = 'SHD_' + str(nextId).zfill(4)
+
         shader = Shader(name, category)
         shader.name = shader_data['name']
         shader.node = shader_data['node']
@@ -411,6 +415,6 @@ class Shader:
         shader_data['shaderType'] = cmds.nodeType(shaders[0])
         shader_data['sourceFile'] = cmds.file(query=True, sceneName=True, shortName=True)
         shader_data['category'] = category.name
-        shader_data['maps'] = ['maps1', 'maps2']  # maps not implemented
+        shader_data['maps'] = ['maps1', 'maps2']  # ! maps not implemented
 
         return shader_data, 1
