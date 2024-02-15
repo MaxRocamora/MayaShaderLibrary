@@ -6,7 +6,7 @@
 # ----------------------------------------------------------------------------------------
 import os
 
-from PySide2.QtCore import QModelIndex, Qt
+from PySide2.QtCore import QModelIndex
 from PySide2.QtWidgets import QListWidget, QMainWindow
 
 from msl.config import LIBRARY_PATH
@@ -15,7 +15,6 @@ from msl.libs.shader import Shader
 from msl.libs.logger import log
 from msl.libs.qt_dialogs import warning_message
 from msl.libs.signals import SIGNALS
-from msl.ui.icons import get_icon
 
 
 class CategoryList:
@@ -30,11 +29,6 @@ class CategoryList:
         SIGNALS.reload_categories.connect(self.update)
         self.list.clicked.connect(self.item_selected)
         self.ui.btn_add_shader.clicked.connect(self.add_shader_dialog)
-        self.ui.btn_add_shader.setIcon(get_icon('add'))
-        self.ui.btn_add_shader.setWindowFlags(Qt.FramelessWindowHint)
-        self.ui.btn_add_shader.setAttribute(Qt.WA_TranslucentBackground)
-        self.ui.btn_add_shader.setStyleSheet('background:transparent;')
-        self.ui.btn_add_shader.installEventFilter(self.ui)
 
     def load_stored_categories(self):
         """Load Categories from disk and set up main storing list."""

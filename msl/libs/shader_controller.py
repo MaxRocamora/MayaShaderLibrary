@@ -10,7 +10,7 @@ from PySide2 import QtCore, QtWidgets
 
 from msl.libs.shader import Shader
 from msl.libs.signals import SIGNALS
-from msl.ui.icons import get_icon
+from msl.resources.icons import get_icon
 
 
 class ShaderController:

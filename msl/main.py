@@ -9,7 +9,7 @@ import webbrowser
 
 from PySide2 import QtCore
 from PySide2 import QtUiTools
-from PySide2.QtWidgets import QMainWindow, QWidget, QGridLayout, QScrollArea
+from PySide2.QtWidgets import QMainWindow, QWidget, QGridLayout, QScrollArea, QToolButton
 
 import maya.cmds as cmds
 
@@ -20,11 +20,10 @@ from msl.libs.signals import SIGNALS
 from msl.libs.shader_controller import ShaderController
 from msl.libs.utils.get_maya_window import get_maya_main_window
 from msl.libs.utils.folder import browse
-from msl.config import APP_QICON, QT_WIN_NAME
+from msl.config import APP_QICON, QT_WIN_NAME, UI
 from msl.config import LIBRARY_PATH, thumbnail_default_scene, QSS_FILE, URL_DOC
+from msl.resources.icons import get_icon
 from msl.version import app_name, version
-
-ui_file = os.path.join(os.path.dirname(__file__), 'ui', 'ui', 'main.ui')
 
 
 class ShaderLibraryAPP(QMainWindow):
@@ -33,31 +32,80 @@ class ShaderLibraryAPP(QMainWindow):
         super().__init__(parent)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
         self.setObjectName(QT_WIN_NAME)
-        self.ui = QtUiTools.QUiLoader().load(ui_file)
+        self.ui = QtUiTools.QUiLoader().load(UI)
         self.setCentralWidget(self.ui)
         self.move(parent.geometry().center() - self.ui.geometry().center())
         self.setWindowIcon(APP_QICON)
         self.setWindowTitle(f'{app_name} {version}')
+        self.settings = QtCore.QSettings('MayaTools', 'MayaShaderLibrary')
         with open(QSS_FILE) as fh:
             self.setStyleSheet(fh.read())
 
-        self.settings = QtCore.QSettings('MayaTools', 'MayaShaderLibrary')
+        self.setup_ui()
         self.shader_ctrl = ShaderController(self.ui)
         self.categories_widget = CategoryList(self.ui.categories, self.ui)
-        self._set_connections()
         self._build_ui()
         self._restore_session()
         self.show()
         self.activateWindow()
         self.status_message(f'{app_name} {version} loaded.')
 
-    def _set_connections(self):
+    def setup_ui(self):
         """Ui widgets signals & attributes."""
-        self.ui.mnu_open_default_light_rig.triggered.connect(self.open_default_light_rig)
-        self.ui.mnu_help_web.triggered.connect(lambda: webbrowser.open(URL_DOC))
-        self.ui.mnu_add_new_category.triggered.connect(lambda: AddCategoryDialog())
-        self.ui.mnu_browse_category_folder.triggered.connect(lambda: browse(LIBRARY_PATH))
         SIGNALS.show_message.connect(self.status_message)
+
+        # create category button
+        self.ui.btn_create = QToolButton()
+        self.ui.toolbar.addWidget(self.ui.btn_create)
+        self.ui.btn_create.clicked.connect(lambda: AddCategoryDialog())
+        self.ui.btn_create.setToolTip('Create a new category.')
+        self.ui.btn_create.setIcon(get_icon('new'))
+        self.ui.btn_create.setPopupMode(QToolButton.InstantPopup)
+        self.ui.btn_create.setArrowType(QtCore.Qt.NoArrow)
+
+        # browse category folder button
+        self.ui.btn_browse = QToolButton()
+        self.ui.btn_browse.setText('Browse Folder')
+        self.ui.toolbar.addWidget(self.ui.btn_browse)
+        self.ui.btn_browse.clicked.connect(lambda: browse(LIBRARY_PATH))
+        self.ui.btn_browse.setToolTip('Browse categories folder.')
+        self.ui.btn_browse.setIcon(get_icon('browse'))
+        self.ui.btn_browse.setPopupMode(QToolButton.InstantPopup)
+        self.ui.btn_browse.setArrowType(QtCore.Qt.NoArrow)
+
+        self.ui.toolbar.addSeparator()
+
+        # open default light rig button
+        self.ui.btn_open_thumb_file = QToolButton()
+        self.ui.toolbar.addWidget(self.ui.btn_open_thumb_file)
+        self.ui.btn_open_thumb_file.clicked.connect(self.open_default_light_rig)
+        self.ui.btn_open_thumb_file.setToolTip('Open Thumbnail render scene.')
+        self.ui.btn_open_thumb_file.setIcon(get_icon('light'))
+        self.ui.btn_open_thumb_file.setPopupMode(QToolButton.InstantPopup)
+        self.ui.btn_open_thumb_file.setArrowType(QtCore.Qt.NoArrow)
+
+        self.ui.toolbar.addSeparator()
+
+        self.ui.btn_add_shader = QToolButton()
+        self.ui.toolbar.addWidget(self.ui.btn_add_shader)
+        self.ui.btn_add_shader.setToolTip('Add Selected Shader.')
+        self.ui.btn_add_shader.setIcon(get_icon('add'))
+        self.ui.btn_add_shader.setPopupMode(QToolButton.InstantPopup)
+        self.ui.btn_add_shader.setArrowType(QtCore.Qt.NoArrow)
+
+        self.ui.toolbar.addSeparator()
+
+        # help button
+        self.ui.btn_help = QToolButton()
+        self.ui.btn_help.setToolTip('Open Documentation')
+        self.ui.btn_help.setIcon(get_icon('help'))
+        self.ui.btn_help.setPopupMode(QToolButton.InstantPopup)
+        self.ui.btn_help.setArrowType(QtCore.Qt.NoArrow)
+
+        # connections
+
+        self.ui.toolbar.addWidget(self.ui.btn_help)
+        self.ui.btn_help.clicked.connect(lambda: webbrowser.open(URL_DOC))
 
     def _build_ui(self):
         """Builds the UI."""
@@ -87,7 +135,7 @@ class ShaderLibraryAPP(QMainWindow):
 
     def open_default_light_rig(self):
         """Opens the maya file used for render thumbnails."""
-        self.status_bar.info(thumbnail_default_scene)
+        self.status_message(thumbnail_default_scene)
         if os.path.exists(thumbnail_default_scene):
             dirty_file_dialog()
             cmds.file(thumbnail_default_scene, force=True, open=True)

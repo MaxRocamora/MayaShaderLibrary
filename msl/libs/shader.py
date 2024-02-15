@@ -148,7 +148,9 @@ class Shader:
     @property
     def thumbnail_default(self) -> str:
         """Path to thumbnail file or default."""
-        return os.path.join(os.path.dirname(__file__), 'resources', 'default_thumb.jpg')
+        return os.path.join(
+            os.path.dirname(__file__), 'resources', 'img', 'default_thumb.jpg'
+        )
 
     @property
     def thumbnail(self) -> str:

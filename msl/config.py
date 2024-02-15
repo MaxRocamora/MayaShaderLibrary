@@ -22,8 +22,9 @@ else:
 
 
 # * Stylesheet / icons / Url
-APP_QICON = QIcon(os.path.join(ROOT_PATH, 'ui', 'icons', 'app.png'))
-QSS_FILE = os.path.join(ROOT_PATH, 'ui', 'css', 'stylesheet.qss')
+UI = os.path.join(ROOT_PATH, 'resources', 'ui', 'main.ui')
+APP_QICON = QIcon(os.path.join(ROOT_PATH, 'resources', 'icons', 'app.png'))
+QSS_FILE = os.path.join(ROOT_PATH, 'resources', 'css', 'stylesheet.qss')
 URL_DOC = 'https://mayashaderlibrary.readthedocs.io'
 
 # * Shader repository location, from env variable or default path

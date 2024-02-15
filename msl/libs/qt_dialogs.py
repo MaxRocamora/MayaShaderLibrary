@@ -9,7 +9,7 @@ from PySide2 import QtWidgets
 import maya.cmds as cmds
 
 from msl.libs.logger import log
-from msl.ui.icons import get_icon
+from msl.resources.icons import get_icon
 
 
 def warning_message(message: str):

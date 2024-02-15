@@ -19,9 +19,9 @@ from PySide2.QtWidgets import QMainWindow, QToolButton, QMenu, QAction
 from msl.libs.shader import Shader
 from msl.libs.logger import log
 from msl.libs.qt_dialogs import warning_message
-from msl.libs.resources.shader_css import button_css
+from msl.resources.css.shader_css import button_css
 from msl.libs.signals import SIGNALS
-from msl.ui.icons import get_icon
+from msl.resources.icons import get_icon
 from msl.config import thumbnail_default_scene
 
 RND_SCRIPT = os.path.join(os.path.dirname(__file__), 'utils', 'generate_thumbnail.py')
