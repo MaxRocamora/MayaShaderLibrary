@@ -173,9 +173,17 @@ class ShaderWidget(QWidget):
 
     def edit_notes(self):
         """Edit notes on selected shader."""
-        # ! open qt dialog box for edit notes
-        self.shader.edit_notes('test')
-        SIGNALS.show_message.emit('Notes saved!')
+        text = self._notes_dialog()
+        if text:
+            self.shader.edit_notes(text)
+            SIGNALS.show_message.emit('Notes saved!')
+
+    def _notes_dialog(self):
+        """Open qt dialog box for edit shader notes."""
+        title = 'Edit Shader Notes'
+        lineEdit = QLineEdit.Normal
+        text, result = QInputDialog.getText(None, title, '', lineEdit, 'default')
+        return text if result else None
 
     def delete_shader(self):
         """Open qt dialog box for rename shader."""

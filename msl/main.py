@@ -163,16 +163,12 @@ class ShaderLibraryAPP(QMainWindow):
         """Writes a message into the statusbar."""
         self.ui.statusBar().showMessage(message)
 
-    def resizeEvent(self, event):
+    def resizeEvent(self, _):
         """Resize event callback."""
-        size = event.size()
-        print(f'New size: Width={size.width()}, Height={size.height()}')
         self.resize_timer.start(100)  # 100 ms
 
     def resize_finished(self):
         """Resize finished callback."""
-        size = self.size()
-        print(f'Resize finished: Width={size.width()}, Height={size.height()}')
         index = self.ui.categories.currentRow()
         item = self.categories_widget.get_categories()[index]
         item.focus()

@@ -77,10 +77,9 @@ class Category:
     def _fill_shader_layout(self):
         """Fills given layout with buttons shaders."""
 
-        # get the width of the main ui, and calculate how many shaders can fit in a row.
+        # how many widgets can fit in a row.
         width = self.ui.width()
         wide = int(width / 140)
-        print(f'width: {width}, wide: {wide}')
 
         shader_widgets = [ShaderWidget(shader, self.ui) for shader in self.shaders()]
         index = 0
