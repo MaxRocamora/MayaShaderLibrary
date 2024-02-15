@@ -7,7 +7,7 @@
 import os
 
 from PySide2.QtCore import QModelIndex
-from PySide2.QtWidgets import QListWidget, QMainWindow
+from PySide2.QtWidgets import QListWidget, QMainWindow, QMessageBox
 
 from msl.config import LIBRARY_PATH
 from msl.libs.category import Category
@@ -108,3 +108,15 @@ class CategoryList:
             return
 
         category.reload()
+
+    def _overwrite_shader_dialog(self, name: str) -> bool:
+        """Open qt dialog box when shader already exists."""
+        msgBox = QMessageBox(None)
+        msgBox.setStyleSheet('background: rgba(40, 40, 40, 255);')
+        msgBox.setIcon(QMessageBox.Question)
+        msgBox.setText('Shader name already exists, add a new copy?')
+        msgBox.setWindowTitle(name)
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        choice = msgBox.exec_()
+
+        return choice == QMessageBox.Ok

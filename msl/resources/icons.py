@@ -1,5 +1,12 @@
 # ----------------------------------------------------------------------------------------
 # Icon Qt Dict for the ui
+#
+# Icons Credits:
+# - https://www.flaticon.com/authors/freepik
+# - https://www.flaticon.com/authors/Andrean-Prabowo
+# - https://www.flaticon.com/authors/juicy-fish
+# - https://www.flaticon.com/authors/Fathema-Khanom
+# - Small Menu Icons: https://p.yusukekamiyamane.com/
 # ----------------------------------------------------------------------------------------
 import os
 
@@ -16,6 +23,6 @@ for icon_filename in os.listdir(path):
     ICONS[filename.lower()] = QtGui.QIcon(os.path.join(path, icon_filename))
 
 
-def get_icon(name: str):
+def get_icon(name: str) -> QtGui.QIcon:
     """Returns icon from ICONS."""
     return ICONS[name.lower()]

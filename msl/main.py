@@ -17,7 +17,6 @@ from msl.libs.add_category import AddCategoryDialog
 from msl.libs.categories import CategoryList
 from msl.libs.qt_dialogs import dirty_file_dialog
 from msl.libs.signals import SIGNALS
-from msl.libs.shader_controller import ShaderController
 from msl.libs.utils.get_maya_window import get_maya_main_window
 from msl.libs.utils.folder import browse
 from msl.config import APP_QICON, QT_WIN_NAME, UI
@@ -42,9 +41,8 @@ class ShaderLibraryAPP(QMainWindow):
             self.setStyleSheet(fh.read())
 
         self.setup_ui()
-        self.shader_ctrl = ShaderController(self.ui)
         self.categories_widget = CategoryList(self.ui.categories, self.ui)
-        self._build_ui()
+        self._build_shader_ui()
         self._restore_session()
         self.show()
         self.activateWindow()
@@ -52,7 +50,12 @@ class ShaderLibraryAPP(QMainWindow):
 
     def setup_ui(self):
         """Ui widgets signals & attributes."""
+        self.resize_timer = QtCore.QTimer(self)
+        self.resize_timer.setSingleShot(True)
+        self.resize_timer.timeout.connect(self.resize_finished)
+
         SIGNALS.show_message.connect(self.status_message)
+        SIGNALS.display_shader_notes.connect(self.status_message)
 
         # create category button
         self.ui.btn_create = QToolButton()
@@ -79,7 +82,7 @@ class ShaderLibraryAPP(QMainWindow):
         self.ui.btn_open_thumb_file = QToolButton()
         self.ui.toolbar.addWidget(self.ui.btn_open_thumb_file)
         self.ui.btn_open_thumb_file.clicked.connect(self.open_default_light_rig)
-        self.ui.btn_open_thumb_file.setToolTip('Open Thumbnail render scene.')
+        self.ui.btn_open_thumb_file.setToolTip('Open Thumbnail Render scene.')
         self.ui.btn_open_thumb_file.setIcon(get_icon('light'))
         self.ui.btn_open_thumb_file.setPopupMode(QToolButton.InstantPopup)
         self.ui.btn_open_thumb_file.setArrowType(QtCore.Qt.NoArrow)
@@ -88,7 +91,7 @@ class ShaderLibraryAPP(QMainWindow):
 
         self.ui.btn_add_shader = QToolButton()
         self.ui.toolbar.addWidget(self.ui.btn_add_shader)
-        self.ui.btn_add_shader.setToolTip('Add Selected Shader.')
+        self.ui.btn_add_shader.setToolTip('Add Selected Shader to category.')
         self.ui.btn_add_shader.setIcon(get_icon('add'))
         self.ui.btn_add_shader.setPopupMode(QToolButton.InstantPopup)
         self.ui.btn_add_shader.setArrowType(QtCore.Qt.NoArrow)
@@ -97,17 +100,17 @@ class ShaderLibraryAPP(QMainWindow):
 
         # help button
         self.ui.btn_help = QToolButton()
+        self.ui.toolbar.addWidget(self.ui.btn_help)
         self.ui.btn_help.setToolTip('Open Documentation')
         self.ui.btn_help.setIcon(get_icon('help'))
         self.ui.btn_help.setPopupMode(QToolButton.InstantPopup)
         self.ui.btn_help.setArrowType(QtCore.Qt.NoArrow)
-
-        # connections
-
-        self.ui.toolbar.addWidget(self.ui.btn_help)
         self.ui.btn_help.clicked.connect(lambda: webbrowser.open(URL_DOC))
 
-    def _build_ui(self):
+        # connections
+        self.ui.toolbar.topLevelChanged.connect(self.toolbar_moved)
+
+    def _build_shader_ui(self):
         """Builds the UI."""
 
         # create shaders scroll area and grid layout
@@ -133,6 +136,22 @@ class ShaderLibraryAPP(QMainWindow):
         last = self.settings.value('last_selected', None)
         self.categories_widget.update(last)
 
+        orientation = self.settings.value('toolbar_orientation', 1)
+        if orientation:
+            self.ui.toolbar.setOrientation(QtCore.Qt.Orientation(orientation))
+
+        area = self.settings.value('toolbar_area', 4)
+        if area:
+            self.ui.addToolBar(QtCore.Qt.ToolBarArea(area), self.ui.toolbar)
+
+    def toolbar_moved(self, is_moving: bool):
+        """Stores toolbar position when is docked to an area."""
+        if is_moving:
+            return
+
+        self.settings.setValue('toolbar_orientation', int(self.ui.toolbar.orientation()))
+        self.settings.setValue('toolbar_area', int(self.ui.toolBarArea(self.ui.toolbar)))
+
     def open_default_light_rig(self):
         """Opens the maya file used for render thumbnails."""
         self.status_message(thumbnail_default_scene)
@@ -143,6 +162,20 @@ class ShaderLibraryAPP(QMainWindow):
     def status_message(self, message: str):
         """Writes a message into the statusbar."""
         self.ui.statusBar().showMessage(message)
+
+    def resizeEvent(self, event):
+        """Resize event callback."""
+        size = event.size()
+        print(f'New size: Width={size.width()}, Height={size.height()}')
+        self.resize_timer.start(100)  # 100 ms
+
+    def resize_finished(self):
+        """Resize finished callback."""
+        size = self.size()
+        print(f'Resize finished: Width={size.width()}, Height={size.height()}')
+        index = self.ui.categories.currentRow()
+        item = self.categories_widget.get_categories()[index]
+        item.focus()
 
     def closeEvent(self, event: QtCore.QEvent):
         """Save user settings and close."""

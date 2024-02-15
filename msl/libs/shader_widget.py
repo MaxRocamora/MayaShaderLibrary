@@ -14,12 +14,13 @@ from contextlib import contextmanager
 
 from PySide2 import QtCore, QtGui
 from PySide2.QtWidgets import QInputDialog, QMessageBox, QApplication, QLineEdit
-from PySide2.QtWidgets import QMainWindow, QToolButton, QMenu, QAction
+from PySide2.QtWidgets import QMainWindow, QMenu, QAction, QWidget, QFrame
+from PySide2.QtWidgets import QVBoxLayout, QLabel, QToolButton
 
 from msl.libs.shader import Shader
 from msl.libs.logger import log
 from msl.libs.qt_dialogs import warning_message
-from msl.resources.css.shader_css import button_css
+from msl.resources.css.shader_css import shader_css, button_css, label_css
 from msl.libs.signals import SIGNALS
 from msl.resources.icons import get_icon
 from msl.config import thumbnail_default_scene
@@ -28,27 +29,51 @@ RND_SCRIPT = os.path.join(os.path.dirname(__file__), 'utils', 'generate_thumbnai
 MAYAPY = os.path.join(os.getenv('MAYA_LOCATION'), 'bin', 'mayapy.exe')
 
 
-class ShaderWidget(QToolButton):
+class ShaderWidget(QWidget):
     def __init__(self, shader: Shader, ui: QMainWindow, *args, **kwargs):
         """Shader Widget."""
         super().__init__(*args, **kwargs)
         self._shader = shader
         self.ui = ui
-        self.name = shader.name
 
-        # set widget properties
-        self.setText(self.name)
-        self.setIcon(QtGui.QIcon(shader.get_thumbnail()))
-        self.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
-        self.setFixedSize(110, 110)
-        self.iconSize()
-        self.setIconSize(QtCore.QSize(80, 80))
-        self.setStyleSheet(button_css)
+        # setup this widget
+        self.setStyleSheet(shader_css)
+        self.setMaximumSize(120, 180)
 
-        # connect signals
-        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect(self.context_menu)
-        self.clicked.connect(self.selected)
+        # add a vertical layout
+        self.layout = QVBoxLayout(self)
+        self.layout.setContentsMargins(2, 2, 2, 2)
+        self.layout.setSpacing(0)
+
+        # q frame
+        self.frame = QFrame(self)
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.layout.addWidget(self.frame)
+
+        self.in_layout = QVBoxLayout(self)
+        self.in_layout.setContentsMargins(2, 2, 2, 2)
+        self.in_layout.setSpacing(0)
+        self.frame.setLayout(self.in_layout)
+
+        # add top label
+        self.label = QLabel(self.shader.name, self)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setStyleSheet(label_css)
+        self.in_layout.addWidget(self.label)
+
+        # main button
+        self.button = QToolButton(self)
+        self.button.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
+        self.button.setStyleSheet(button_css)
+        self.button.setFixedSize(110, 110)
+        self.button.setIconSize(QtCore.QSize(80, 80))
+        self.button.setIcon(QtGui.QIcon(shader.get_thumbnail()))
+        self.button.setText(self.shader.shader_type)
+        self.button.clicked.connect(self.selected)
+        self.button.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.button.customContextMenuRequested.connect(self.context_menu)
+        self.in_layout.addWidget(self.button)
 
     @property
     def shader(self):
@@ -57,53 +82,59 @@ class ShaderWidget(QToolButton):
 
     def selected(self):
         """Widget clicked callback."""
-        SIGNALS.active_shader.emit(self.shader)
-        SIGNALS.update_shader_ui.emit(
-            f'{self.shader.name}_{self.shader.category.name()}',
-            self.shader.shader_type,
-            self.shader.notes,
-            self.shader.id_name,
-        )
+        SIGNALS.display_shader_notes.emit(self.shader.notes)
 
     def context_menu(self, _):
         """Widget right click context menu callback."""
 
         self.menu = QMenu()
 
-        text = f"Import '{self.name}'' into scene"
-        action_import = QAction(get_icon('import'), text, self.menu)
+        text = self.shader.id_name
+        action_label = QAction(get_icon('mnu_id'), text, self.menu)
+        self.menu.addAction(action_label)
+
+        self.menu.addSeparator()
+
+        text = f"Import '{self.shader.name}'' into scene"
+        action_import = QAction(get_icon('mnu_import'), text, self.menu)
         self.menu.addAction(action_import)
         action_import.triggered.connect(lambda: self.shader.import_shader())
         self.menu.addSeparator()
 
-        text = f"Import '{self.name}'' and assign into selection"
-        action_import_sel = QAction(get_icon('import'), text, self.menu)
+        text = f'Import {self.shader.name} and assign into selection'
+        action_import_sel = QAction(get_icon('mnu_import_add'), text, self.menu)
         self.menu.addAction(action_import_sel)
         action_import_sel.triggered.connect(
             lambda: self.shader.import_shader(assign=True)
         )
         self.menu.addSeparator()
 
-        text = f"Rename '{self.name}'"
-        action_rename = QAction(get_icon('rename'), text, self.menu)
+        text = f'Rename: {self.shader.name}'
+        action_rename = QAction(get_icon('mnu_rename'), text, self.menu)
         self.menu.addAction(action_rename)
         action_rename.triggered.connect(self.rename_shader)
         self.menu.addSeparator()
 
-        text = f"Browse '{self.name}' folder on disk"
-        action_browse = QAction(get_icon('browse'), text, self.menu)
+        text = f'Edit Notes on {self.shader.name}.'
+        action_notes = QAction(get_icon('mnu_notes'), text, self.menu)
+        self.menu.addAction(action_notes)
+        action_notes.triggered.connect(self.edit_notes)
+        self.menu.addSeparator()
+
+        text = f"Browse '{self.shader.name}' folder on disk"
+        action_browse = QAction(get_icon('mnu_browse'), text, self.menu)
         self.menu.addAction(action_browse)
         action_browse.triggered.connect(self.shader.explore)
         self.menu.addSeparator()
 
-        text = f'Generate {self.name} Thumbnail'
-        action_thumbnail = QAction(get_icon('thumbnail'), text, self.menu)
+        text = f'Generate {self.shader.name} Thumbnail'
+        action_thumbnail = QAction(get_icon('mnu_thumbnail'), text, self.menu)
         self.menu.addAction(action_thumbnail)
         action_thumbnail.triggered.connect(self.launch_thumbnail)
         self.menu.addSeparator()
 
-        text = f"Delete '{self.name}' from lib"
-        action_delete = QAction(get_icon('delete'), text, self.menu)
+        text = f"Delete '{self.shader.name}' from lib"
+        action_delete = QAction(get_icon('mnu_delete'), text, self.menu)
         self.menu.addAction(action_delete)
         action_delete.triggered.connect(self.delete_shader)
         self.menu.addSeparator()
@@ -139,6 +170,12 @@ class ShaderWidget(QToolButton):
 
         if self.shader.rename(new_name):
             self.shader.category.reload()
+
+    def edit_notes(self):
+        """Edit notes on selected shader."""
+        # ! open qt dialog box for edit notes
+        self.shader.edit_notes('test')
+        SIGNALS.show_message.emit('Notes saved!')
 
     def delete_shader(self):
         """Open qt dialog box for rename shader."""

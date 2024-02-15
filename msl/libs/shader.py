@@ -303,6 +303,11 @@ class Shader:
 
         return True
 
+    def edit_notes(self, text: str):
+        """Save notes for this shader."""
+        self.properties['notes'] = text
+        self.save_shader_properties()
+
     def delete(self):
         """Deletes this shader from disk."""
         if os.path.exists(self.folder):

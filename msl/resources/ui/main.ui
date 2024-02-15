@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
+    <width>814</width>
     <height>600</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>840</width>
+    <width>812</width>
     <height>600</height>
    </size>
   </property>
@@ -72,7 +72,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>10</width>
+          <width>4</width>
           <height>10</height>
          </size>
         </property>
@@ -84,139 +84,6 @@
          <number>2</number>
         </property>
        </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>10</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="groupBox">
-        <property name="minimumSize">
-         <size>
-          <width>200</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>Shader Info</string>
-        </property>
-        <widget class="QLabel" name="lbl_shader_name">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>231</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>ShaderName</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="lbl_shader_type">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>40</y>
-           <width>231</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>ShaderType</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="lbl_shader_code">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>140</y>
-           <width>181</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>CODE</string>
-         </property>
-        </widget>
-        <widget class="QTextEdit" name="te_notes">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>230</y>
-           <width>181</width>
-           <height>201</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QToolButton" name="btn_save_changes">
-         <property name="geometry">
-          <rect>
-           <x>130</x>
-           <y>440</y>
-           <width>64</width>
-           <height>64</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>ArrowCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string/>
-         </property>
-         <property name="statusTip">
-          <string>Save Shader Notes</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>SAVE</string>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="popupMode">
-          <enum>QToolButton::InstantPopup</enum>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonIconOnly</enum>
-         </property>
-         <property name="autoRaise">
-          <bool>false</bool>
-         </property>
-         <property name="arrowType">
-          <enum>Qt::NoArrow</enum>
-         </property>
-        </widget>
-       </widget>
       </item>
      </layout>
     </item>
@@ -237,6 +104,9 @@ margin-top: 4px;</string>
    </property>
    <property name="movable">
     <bool>true</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllToolBarAreas</set>
    </property>
    <property name="iconSize">
     <size>

@@ -1,22 +1,42 @@
+shader_css = """QWidget
+{
+    color: #e2e2e2;
+    border-radius: 4px;
+    border: 1px solid black;
+    padding: 2px 2px 2px 2px;
+    font-size: 12px;
+    background-color : rgb(20,20,20);
+}
+
+QFrame:hover
+{
+    border: 1px solid #c79100;
+}
+"""
+
 button_css = """QToolButton
 {
     color: #e2e2e2;
-    border-radius: 2px;
-    border-color: #1e1e1e;
-    border: 1px solid black;
-    padding: 0px 0 5px 0;
-    font-size: 11px;
+    font-size: 12px;
     background-color : rgb(20,20,20);
-    text-align: bottom;
 }
 
 QToolButton:pressed
 {
     background-color: #c79100;
 }
+"""
 
-QToolButton:hover
+label_css = """QLabel
 {
-    border: 1px solid #ffb300;
+    color: #e2e2e2;
+    font-size: 12px;
+    background-color : rgb(20,20,20);
+    border: 0px solid black;
+}
+
+QLabel:hover
+{
+    border: 0px solid black;
 }
 """

@@ -74,28 +74,26 @@ class Category:
             if widget:
                 widget.deleteLater()
 
-    def _fill_shader_layout(self, wide: int = 4):
-        """Fills given layout with buttons shaders.
+    def _fill_shader_layout(self):
+        """Fills given layout with buttons shaders."""
 
-        Args:
-            wide (int): maximum columns to split buttons
-        """
+        # get the width of the main ui, and calculate how many shaders can fit in a row.
+        width = self.ui.width()
+        wide = int(width / 140)
+        print(f'width: {width}, wide: {wide}')
+
         shader_widgets = [ShaderWidget(shader, self.ui) for shader in self.shaders()]
-        b = 0
+        index = 0
         row = 0
 
-        while b < len(shader_widgets):
-            for col in range(wide):
-                if b >= len(shader_widgets):
+        while index < len(shader_widgets):
+            for column in range(wide):
+                if index >= len(shader_widgets):
                     break
 
-                self.ui.scroll_layout.addWidget(
-                    shader_widgets[b],
-                    row,
-                    col,
-                )
+                self.ui.scroll_layout.addWidget(shader_widgets[index], row, column)
 
-                b += 1
+                index += 1
             row += 1
 
     def reload(self):
