@@ -7,158 +7,95 @@
 #
 # ----------------------------------------------------------------------------------------
 import os
-from PySide2 import QtCore, QtWidgets
 
-from msl.config import LIBRARY_SHADERS_PATH
-from msl.libs.observer import Observer
-from msl.libs.qt_dialogs import warning_message
-from msl.libs.shader import Shader as Shader
+from PySide2.QtWidgets import QMainWindow
+
+from msl.libs.shader import Shader
 from msl.libs.shader_widget import ShaderWidget
 from msl.libs.logger import log
 
 
-class Category():
-    def __init__(self, name: str, base_path: str):
-        ''' When a category is created, stores all its shaders '''
+class Category:
+    def __init__(self, name: str, base_path: str, ui: QMainWindow):
+        """When a category is created, stores all its shaders."""
         self._name = name
         self._base_path = base_path
+        self.ui = ui
         self._shaders = self._collect_shaders()
-        self._pinned = False
-        self._index = -1
-        self.observer = Observer()
 
-    def __str__(self):
-        return f"Category: {self.name()}"
+    def __str__(self) -> str:
+        """Returns name of the category."""
+        return self.name()
 
-    def name(self):
+    def __len__(self) -> int:
+        """Number of shaders in this category."""
+        return len(self.shaders())
+
+    def __bool__(self) -> bool:
+        """Returns if category has shaders."""
+        return bool(self.name())
+
+    def name(self) -> str:
+        """Category name."""
         return self._name
 
-    def path(self):
-        ''' physical path of ths shader '''
+    def path(self) -> str:
+        """Physical path of ths shader."""
         return os.path.abspath(os.path.join(self._base_path, self.name()))
 
-    def shaders(self, _reload: bool = False):
-        ''' Returns list of shaders of this category
+    def shaders(self, reload: bool = False) -> list[Shader]:
+        """Returns list of shaders of this category.
+
         Args:
-            _reload (boolean): If true, reload shaders from disk before return
+            reload (bool): If true, reload shaders from disk before return
         Returns:
             list: shaders objects
-        '''
-        if _reload:
+        """
+        if reload:
             self._shaders = self._collect_shaders()
+
         return self._shaders
 
-    def pinned(self):
-        ''' ui pin state '''
-        return self._pinned
-
-    def index(self):
-        ''' tab index'''
-        return self._index
-
-    def _collect_shaders(self):
-        ''' Returns a list of shader objects from chosen category '''
+    def _collect_shaders(self) -> list[Shader]:
+        """Returns a list of shader objects from chosen category."""
         folders = [x.upper() for x in os.listdir(self.path())]
         return [Shader.load_shader(name=f, category=self) for f in folders]
 
-    # ------------------------------------------------------------------------------------
-    # Static Methods
-    # ------------------------------------------------------------------------------------
+    def focus(self):
+        """Fills category tab with shaders buttons."""
+        self._clear_grid()
+        self._fill_shader_layout()
+        log.info(f'Focus {self.name()}')
 
-    @staticmethod
-    def create(name):
-        ''' create category folder '''
-        if os.path.exists(LIBRARY_SHADERS_PATH):
-            os.mkdir(os.path.abspath(os.path.join(LIBRARY_SHADERS_PATH, name)))
+    def _clear_grid(self):
+        """Clears shaders UI layout."""
+        for i in reversed(range(self.ui.scroll_layout.count())):
+            widget = self.ui.scroll_layout.itemAt(i).widget()
+            if widget:
+                widget.deleteLater()
 
-    @staticmethod
-    def generate_categories():
-        ''' Load Categories from disk and set up main storing list '''
-        if not os.path.exists(LIBRARY_SHADERS_PATH):
-            warning_message("Warning: Categories Folder not found.")
-            log.warning('Path:', LIBRARY_SHADERS_PATH)
-            return []
+    def _fill_shader_layout(self):
+        """Fills given layout with buttons shaders."""
 
-        folders = [x.upper() for x in os.listdir(LIBRARY_SHADERS_PATH)]
-        if not folders:
-            return []
+        # how many widgets can fit in a row.
+        width = self.ui.width()
+        wide = int(width / 140)
 
-        return [Category(name, LIBRARY_SHADERS_PATH) for name in folders]
-
-    # ------------------------------------------------------------------------------------
-    # Qt UI Methods
-    # ------------------------------------------------------------------------------------
-
-    def fill_tab(self):
-        ''' Fills category tab with shaders buttons '''
-        widget = QtWidgets.QWidget()
-        layout = QtWidgets.QGridLayout(widget)
-        layout.setSpacing(5)
-        layout.setHorizontalSpacing(5)
-        layout.setVerticalSpacing(5)
-        layout.setContentsMargins(2, 2, 2, 2)
-        layout.setAlignment(QtCore.Qt.AlignTop)
-        scroll = QtWidgets.QScrollArea()
-        scroll.setWidgetResizable(True)
-        scroll.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        scroll.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        scroll.setWidget(widget)
-        self._fill_shader_layout(layout, 4)
-        grid = QtWidgets.QGridLayout()
-        grid.addWidget(scroll, 3, 0)
-        self.tab.setLayout(grid)
-
-    def _fill_shader_layout(self, layout, wide):
-        ''' Fills given layout with buttons shaders
-        Args:
-            layout (widget) layout widget to fill
-            wide (int) maximum columns to split buttons
-        '''
-        shader_widgets = [ShaderWidget(shader) for shader in self.shaders()]
-        b = 0
+        shader_widgets = [ShaderWidget(shader, self.ui) for shader in self.shaders()]
+        index = 0
         row = 0
-        while b < len(shader_widgets):
-            for col in range(wide):
-                if b >= len(shader_widgets):
+
+        while index < len(shader_widgets):
+            for column in range(wide):
+                if index >= len(shader_widgets):
                     break
-                layout.addWidget(shader_widgets[b], row, col)
-                b += 1
+
+                self.ui.scroll_layout.addWidget(shader_widgets[index], row, column)
+
+                index += 1
             row += 1
 
-    def pin(self):
-        ''' Add selected category to main tab panel (pin tab)
-        Args:
-            use_category (class)
-                if true uses given category data
-                if false uses current cbox category
-        '''
-
-        if self.pinned():
-            return
-
-        # tab stores widget
-        log.info(f'Pin {self.name()}')
-        self.tab = QtWidgets.QWidget(self.observer.ui.tab_materials)
-
-        # Creating, focus & Fill Tab
-        self.observer.ui.tab_materials.addTab(self.tab, self.name())
-        self._index = self.observer.ui.tab_materials.count() - 1
-        last_tab = self.observer.ui.tab_materials.widget(self.index())
-        self.observer.ui.tab_materials.setCurrentWidget(last_tab)
-        self._pinned = True
-        self.fill_tab()
-
-    def unpin(self):
-        log.info(f'UnPin {self.name()}')
-        self.observer.ui.tab_materials.removeTab(self.index())
-        self._pinned = False
-
-    def focus(self):
-        ''' forces a focus on tab '''
-        self.observer.ui.tab_materials.setCurrentIndex(self.index())
-
     def reload(self):
-        ''' rebuilds tab and reload shaders '''
-        self.unpin()
-        self.shaders(1)
-        self.pin()
+        """Rebuilds tab and reload shaders."""
+        self.shaders(reload=True)
+        self.focus()

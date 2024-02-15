@@ -7,15 +7,17 @@ See :ref:`installation` for details on how to install and run this tool.
 
 - Once you load the tool you should see the interface.
 
-.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/ui/screenshot/tool.png?raw=true
+.. image:: https://github.com/MaxRocamora/MayaShaderLibrary/blob/master/msl/resources/screenshot/tool.png?raw=true
 
 Categories
 ----------
 
 The MayaShaderLibrary works by creating Categories, inside each category you will save/load your shaders.
 
-- Categories will be created and listed, but not displayed until you 'pin' them to the interface.
-- To remove a category from the ui, double click on the category name.
+- Categories will be created and listed, once you select one, the shaders inside that category will be displayed.
+
+.. note::
+	To remove a category from the ui, click on open category folder and delete the folder from disk.
 
 Shaders
 -------
@@ -29,7 +31,8 @@ once saved the shader should appear in the category.
 Shader Notes
 ------------
 
-For adding or editing comments on a shader, use the text box on the lower left area, and press 'save' button.
+For adding or editing comments on a shader, use context menu, and select 'edit notes'.  
+Notes are shown on the information bar when a shader is selected.
 
 .. note::
 	The shaders are stored on this location: 
@@ -37,6 +40,9 @@ For adding or editing comments on a shader, use the text box on the lower left a
 
 Shader Context Menu
 -------------------
+
+* Info  
+	Shows shader internal ID
 
 * Import into Scene
 	Adds selected shader to the maya hypershade
@@ -47,13 +53,16 @@ Shader Context Menu
 * Rename
 	Renames the shader
 
+* Edit Notes  
+	Edit the notes for this shader
+
 * Browse
 	Open explorer into shader folder
 
 * Generate Thumbnail
-	Generates thumbnail image for this shader
+	Generates thumbnail image for this shader, uses a default light rig scene.
 
-* Delete from lib
+* Delete
 	Deletes this shader from disk
 
 
@@ -65,4 +74,5 @@ Thumbnails
 
 .. note::
 	The maya file used for render the thumbnail image is located on this location: 
-	*installDirectory\\MayaShaderLibrary\\library\\scene\\thumbnail_scene.ma*
+	*installDirectory\\MayaShaderLibrary\\library\\scene\\thumbnail_scene.ma*  
+	You can edit this file to change the light rig or the render settings.

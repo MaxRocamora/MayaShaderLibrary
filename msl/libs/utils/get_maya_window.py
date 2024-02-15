@@ -12,5 +12,6 @@ from maya import OpenMayaUI as omui
 
 
 def get_maya_main_window():
+    """Get the main Maya window as a QMainWindow instance."""
     main_window_ptr = omui.MQtUtil.mainWindow()
     return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
