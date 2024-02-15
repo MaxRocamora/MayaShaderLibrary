@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+sphinx = "*"
+sphinx-rtd-theme = "*"
 
 [dev-packages]
 sphinx = "*"
