@@ -223,7 +223,9 @@ class ShaderWidget(QWidget):
             log.info(output)
             log.info(error)
 
-        self.setIcon(QtGui.QIcon(self.shader.get_thumbnail()))  # reload thumbnail image
+        self.button.setIcon(
+            QtGui.QIcon(self.shader.get_thumbnail())
+        )  # reload thumbnail image
 
     @contextmanager
     def wait_cursor(self):

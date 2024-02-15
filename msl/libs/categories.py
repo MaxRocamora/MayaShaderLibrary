@@ -102,7 +102,7 @@ class CategoryList:
                     return
                 break
 
-        new_shader = Shader.create_shader(shader)
+        new_shader = Shader.create_shader(shader, category)
         if not new_shader.save():
             warning_message(msg_failed_export)
             return
