@@ -43,7 +43,7 @@ class Category:
         """Physical path of ths shader."""
         return os.path.abspath(os.path.join(self._base_path, self.name()))
 
-    def shaders(self, reload: bool = False) -> list[Shader]:
+    def shaders(self, reload: bool = False) -> list:
         """Returns list of shaders of this category.
 
         Args:
@@ -56,7 +56,7 @@ class Category:
 
         return self._shaders
 
-    def _collect_shaders(self) -> list[Shader]:
+    def _collect_shaders(self) -> list:
         """Returns a list of shader objects from chosen category."""
         folders = [x.upper() for x in os.listdir(self.path())]
         return [Shader.load_shader(name=f, category=self) for f in folders]
