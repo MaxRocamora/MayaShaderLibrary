@@ -14,3 +14,4 @@ Documentation
 
    install
    guide
+   misc
