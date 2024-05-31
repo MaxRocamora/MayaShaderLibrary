@@ -98,6 +98,15 @@ class ShaderLibraryAPP(QMainWindow):
 
         self.ui.toolbar.addSeparator()
 
+        # change modality button
+        self.ui.btn_modal = QToolButton()
+        self.ui.toolbar.addWidget(self.ui.btn_modal)
+        self.ui.btn_modal.setToolTip('Toggle List/Icon View')
+        self.ui.btn_modal.setIcon(get_icon('view_mode'))
+        self.ui.btn_modal.setPopupMode(QToolButton.InstantPopup)
+        self.ui.btn_modal.setArrowType(QtCore.Qt.NoArrow)
+        self.ui.toolbar.addSeparator()
+
         # help button
         self.ui.btn_help = QToolButton()
         self.ui.toolbar.addWidget(self.ui.btn_help)
@@ -130,6 +139,13 @@ class ShaderLibraryAPP(QMainWindow):
         # add scroll area to main layout
         self.ui.scroll_area.setWidget(self.ui.scroll_widget)
         self.ui.vbox.addWidget(self.ui.scroll_area)
+
+        self.ui.btn_modal.clicked.connect(self.change_category_modality)
+
+    def change_category_view_mode(self):
+        """Changes the modality of the shader widget buttons."""
+        category = self.categories_widget.current_category()
+        category.switch_widget_view()
 
     def _restore_session(self):
         """Load user preferences from the last session."""
