@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------------------
 import os
 import pkgutil
+from enum import Enum
 
 from PySide2.QtGui import QIcon
 
@@ -39,3 +40,10 @@ thumbnail_default_scene = os.path.join(library_path, 'scene', 'thumbnail_scene.m
 for filepath in [thumbnail_default_scene, LIBRARY_PATH, QSS_FILE]:
     if not os.path.exists(filepath):
         cmds.warning('Maya Shader Library: Missing Critical Path or File', filepath)
+
+
+class WidgetViewMode(Enum):
+    """Defines the widget type for shader widget display."""
+
+    ICON = 0
+    LIST = 1
