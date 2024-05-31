@@ -12,7 +12,9 @@ from PySide2.QtWidgets import QMainWindow
 
 from msl.libs.shader import Shader
 from msl.libs.shader_widget import ShaderWidget
+from msl.libs.shader_list_widget import ShaderListWidget
 from msl.libs.logger import log
+from msl.config import WidgetViewMode
 
 
 class Category:
@@ -22,6 +24,7 @@ class Category:
         self._base_path = base_path
         self.ui = ui
         self._shaders = self._collect_shaders()
+        self.widget_view = WidgetViewMode.LIST
 
     def __str__(self) -> str:
         """Returns name of the category."""
@@ -42,6 +45,15 @@ class Category:
     def path(self) -> str:
         """Physical path of ths shader."""
         return os.path.abspath(os.path.join(self._base_path, self.name()))
+
+    def switch_widget_view(self):
+        """Switches between list and icon widget modality."""
+        if self.widget_view == WidgetViewMode.LIST:
+            self.widget_view = WidgetViewMode.ICON
+        else:
+            self.widget_view = WidgetViewMode.LIST
+
+        self.focus()
 
     def shaders(self, reload: bool = False) -> list:
         """Returns list of shaders of this category.
@@ -77,11 +89,17 @@ class Category:
     def _fill_shader_layout(self):
         """Fills given layout with buttons shaders."""
 
-        # how many widgets can fit in a row.
-        width = self.ui.width()
-        wide = int(width / 140)
+        # how many widgets can fit in a row, based on widget modality
+        if self.widget_view == WidgetViewMode.ICON:
+            wide = int(self.ui.width() / 140)
+            shader_widgets = [ShaderWidget(shader, self.ui) for shader in self.shaders()]
 
-        shader_widgets = [ShaderWidget(shader, self.ui) for shader in self.shaders()]
+        if self.widget_view == WidgetViewMode.LIST:
+            wide = int(self.ui.width() / 300)
+            shader_widgets = [
+                ShaderListWidget(shader, self.ui) for shader in self.shaders()
+            ]
+
         index = 0
         row = 0
 
