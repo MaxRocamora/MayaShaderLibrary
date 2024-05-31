@@ -140,7 +140,7 @@ class ShaderLibraryAPP(QMainWindow):
         self.ui.scroll_area.setWidget(self.ui.scroll_widget)
         self.ui.vbox.addWidget(self.ui.scroll_area)
 
-        self.ui.btn_modal.clicked.connect(self.change_category_modality)
+        self.ui.btn_modal.clicked.connect(self.change_category_view_mode)
 
     def change_category_view_mode(self):
         """Changes the modality of the shader widget buttons."""
