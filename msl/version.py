@@ -18,12 +18,13 @@
 # 06/2022 - 1.2.2 / more fixes, shader buttons to widgets
 # 02/2023 - 1.3.0 / Ruff code format, fix some bugs, update messages, fixed default path
 # 02/2023 - 2.0.0 / Complete Refactor, added types, flexible ui, added signals, docstrings
-# 05/2024 - 2.0.1 / Added shader Icon View Mode, for Icon View and List View
+# 05/2024 - 2.1.0 / Added shader Icon View Mode, for Icon View and List View
+# 05/2024 - 2.1.1 / Added shader base class for ShaderWidget, stores windows geometry
 # ----------------------------------------------------------------------------------------
 
 VERSION_MAJOR = 2
 VERSION_MINOR = 1
-VERSION_PATCH = 0
+VERSION_PATCH = 1
 
 version = f'{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}'
 
