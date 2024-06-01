@@ -47,3 +47,10 @@ class WidgetViewMode(Enum):
 
     ICON = 0
     LIST = 1
+
+
+class WidgetViewModeWidth(Enum):
+    """Defines the widget type for shader widget display."""
+
+    ICON = 140
+    LIST = 300
