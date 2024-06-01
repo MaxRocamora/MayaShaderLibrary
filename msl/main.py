@@ -32,8 +32,9 @@ class ShaderLibraryAPP(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
         self.setObjectName(QT_WIN_NAME)
         self.ui = QtUiTools.QUiLoader().load(UI)
+        self.maya_window = parent
         self.setCentralWidget(self.ui)
-        self.move(parent.geometry().center() - self.ui.geometry().center())
+        self.move(self.maya_window.geometry().center() - self.ui.geometry().center())
         self.setWindowIcon(APP_QICON)
         self.setWindowTitle(f'{app_name} {version}')
         self.settings = QtCore.QSettings('MayaTools', 'MayaShaderLibrary')
@@ -160,6 +161,14 @@ class ShaderLibraryAPP(QMainWindow):
         if area:
             self.ui.addToolBar(QtCore.Qt.ToolBarArea(area), self.ui.toolbar)
 
+        geometry = self.settings.value('geometry', None)
+        if geometry:
+            self.restoreGeometry(self.settings.value('geometry'))
+
+        # prevent out of window position
+        if self.pos().x() < 0 or self.pos().y() < 0:
+            self.move(self.maya_window.geometry().center() - self.ui.geometry().center())
+
     def toolbar_moved(self, is_moving: bool):
         """Stores toolbar position when is docked to an area."""
         if is_moving:
@@ -195,5 +204,7 @@ class ShaderLibraryAPP(QMainWindow):
         last_selected = self.categories_widget.current_category()
         if last_selected:
             self.settings.setValue('last_selected', last_selected.name())
+
+        self.settings.setValue('geometry', self.saveGeometry())
 
         super().closeEvent(event)
