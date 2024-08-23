@@ -5,10 +5,11 @@
 #
 # Opens a maya standalone instance and do a thumbnail render for given shader.
 # ----------------------------------------------------------------------------------------
+import os
+import sys
+
 import maya.cmds as cmds
 import maya.standalone as std
-import sys
-import os
 
 print('Loading Maya StandAlone...')
 
