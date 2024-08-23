@@ -71,7 +71,8 @@ class Category:
     def _collect_shaders(self) -> list:
         """Returns a list of shader objects from chosen category."""
         folders = [x.upper() for x in os.listdir(self.path())]
-        return [Shader.load_shader(name=f, category=self) for f in folders]
+        shaders = [Shader.load_shader(name=f, category=self) for f in folders]
+        return sorted(shaders, key=lambda x: x.name)
 
     def focus(self):
         """Fills category tab with shaders buttons."""
