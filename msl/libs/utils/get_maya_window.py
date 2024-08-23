@@ -6,12 +6,12 @@
 # QtDesigner UI File loader for Maya PySide2 / Python 3
 # ----------------------------------------------------------------------------------------
 
+from maya import OpenMayaUI
 from PySide2 import QtWidgets
 from shiboken2 import wrapInstance
-from maya import OpenMayaUI as omui
 
 
 def get_maya_main_window():
     """Get the main Maya window as a QMainWindow instance."""
-    main_window_ptr = omui.MQtUtil.mainWindow()
+    main_window_ptr = OpenMayaUI.MQtUtil.mainWindow()
     return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
