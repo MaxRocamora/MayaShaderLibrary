@@ -9,8 +9,7 @@
 # ----------------------------------------------------------------------------------------
 
 from PySide2 import QtCore
-from PySide2.QtWidgets import QMainWindow
-from PySide2.QtWidgets import QVBoxLayout, QToolButton
+from PySide2.QtWidgets import QMainWindow, QToolButton, QVBoxLayout
 
 from msl.libs.shader import Shader
 from msl.libs.shader_widget_base import ShaderWidgetBase
