@@ -10,11 +10,11 @@ import os
 
 from PySide2.QtWidgets import QMainWindow
 
+from msl.config import WidgetViewMode, WidgetViewModeWidth
+from msl.libs.logger import log
 from msl.libs.shader import Shader
 from msl.libs.shader_icon_widget import ShaderIconWidget
 from msl.libs.shader_list_widget import ShaderListWidget
-from msl.libs.logger import log
-from msl.config import WidgetViewMode, WidgetViewModeWidth
 
 
 class Category:
