@@ -5,8 +5,8 @@
 #
 # Dialog Windows
 # ----------------------------------------------------------------------------------------
-from PySide2 import QtWidgets
 import maya.cmds as cmds
+from PySide2 import QtWidgets
 
 from msl.libs.logger import log
 from msl.resources.icons import get_icon
