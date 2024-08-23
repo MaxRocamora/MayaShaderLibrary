@@ -9,17 +9,17 @@
 # To create this class use 'create_shader()' classmethod.
 #
 # ----------------------------------------------------------------------------------------
-import os
-import json
-import shutil
 import datetime
+import json
+import os
+import shutil
 from typing import TYPE_CHECKING
 
 import maya.cmds as cmds
 
-from msl.libs.utils.json_util import load_json
-from msl.libs.utils.folder import browse
 from msl.libs.logger import log
+from msl.libs.utils.folder import browse
+from msl.libs.utils.json_util import load_json
 
 if TYPE_CHECKING:
     from msl.libs.category import Category
