@@ -9,12 +9,11 @@
 # ----------------------------------------------------------------------------------------
 
 from PySide2 import QtCore, QtGui
-from PySide2.QtWidgets import QMainWindow, QFrame
-from PySide2.QtWidgets import QVBoxLayout, QLabel, QToolButton
+from PySide2.QtWidgets import QFrame, QLabel, QMainWindow, QToolButton, QVBoxLayout
 
 from msl.libs.shader import Shader
 from msl.libs.shader_widget_base import ShaderWidgetBase
-from msl.resources.css.shader_css import shader_css, button_css, label_css
+from msl.resources.css.shader_css import button_css, label_css, shader_css
 
 
 class ShaderIconWidget(ShaderWidgetBase):
