@@ -7,20 +7,25 @@
 import os
 import webbrowser
 
-from PySide2 import QtCore
-from PySide2 import QtUiTools
-from PySide2.QtWidgets import QMainWindow, QWidget, QGridLayout, QScrollArea, QToolButton
-
 import maya.cmds as cmds
+from PySide2 import QtCore, QtUiTools
+from PySide2.QtWidgets import QGridLayout, QMainWindow, QScrollArea, QToolButton, QWidget
 
+from msl.config import (
+    APP_QICON,
+    LIBRARY_PATH,
+    QSS_FILE,
+    QT_WIN_NAME,
+    UI,
+    URL_DOC,
+    thumbnail_default_scene,
+)
 from msl.libs.add_category import AddCategoryDialog
 from msl.libs.categories import CategoryList
 from msl.libs.qt_dialogs import dirty_file_dialog
 from msl.libs.signals import SIGNALS
-from msl.libs.utils.get_maya_window import get_maya_main_window
 from msl.libs.utils.folder import browse
-from msl.config import APP_QICON, QT_WIN_NAME, UI
-from msl.config import LIBRARY_PATH, thumbnail_default_scene, QSS_FILE, URL_DOC
+from msl.libs.utils.get_maya_window import get_maya_main_window
 from msl.resources.icons import get_icon
 from msl.version import app_name, version
 
