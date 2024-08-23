@@ -7,12 +7,12 @@
 
 import maya.cmds as cmds
 
-from msl.main import ShaderLibraryAPP
 from msl.config import QT_WIN_NAME
+from msl.main import ShaderLibraryAPP
 
 
 def run():
-    # load qt window
+    """Run the ShaderLibraryAPP."""
     if cmds.window(QT_WIN_NAME, q=1, ex=1):
         cmds.deleteUI(QT_WIN_NAME)
     ShaderLibraryAPP()
