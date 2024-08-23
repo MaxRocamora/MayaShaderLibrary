@@ -11,15 +11,23 @@ import subprocess
 from contextlib import contextmanager
 
 from PySide2 import QtCore, QtGui
-from PySide2.QtWidgets import QInputDialog, QMessageBox, QApplication, QLineEdit
-from PySide2.QtWidgets import QMainWindow, QMenu, QAction, QWidget
+from PySide2.QtWidgets import (
+    QAction,
+    QApplication,
+    QInputDialog,
+    QLineEdit,
+    QMainWindow,
+    QMenu,
+    QMessageBox,
+    QWidget,
+)
 
-from msl.libs.shader import Shader
+from msl.config import thumbnail_default_scene
 from msl.libs.logger import log
 from msl.libs.qt_dialogs import warning_message
+from msl.libs.shader import Shader
 from msl.libs.signals import SIGNALS
 from msl.resources.icons import get_icon
-from msl.config import thumbnail_default_scene
 
 RND_SCRIPT = os.path.join(os.path.dirname(__file__), 'utils', 'generate_thumbnail.py')
 MAYAPY = os.path.join(os.getenv('MAYA_LOCATION'), 'bin', 'mayapy.exe')
