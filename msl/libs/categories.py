@@ -11,9 +11,9 @@ from PySide2.QtWidgets import QListWidget, QMainWindow, QMessageBox
 
 from msl.config import LIBRARY_PATH
 from msl.libs.category import Category
-from msl.libs.shader import Shader
 from msl.libs.logger import log
 from msl.libs.qt_dialogs import warning_message
+from msl.libs.shader import Shader
 from msl.libs.signals import SIGNALS
 
 
