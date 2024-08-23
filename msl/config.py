@@ -9,9 +9,8 @@ import os
 import pkgutil
 from enum import Enum
 
-from PySide2.QtGui import QIcon
-
 import maya.cmds as cmds
+from PySide2.QtGui import QIcon
 
 QT_WIN_NAME = 'Arcane2:Qt_ShaderLibrary_ui'
 
