@@ -4,7 +4,10 @@
 # https://github.com/MaxRocamora/MayaShaderLibrary
 #
 # ----------------------------------------------------------------------------------------
-from PySide2.QtCore import QObject, Signal
+try:
+    from PySide2.QtCore import QObject, Signal
+except ImportError:
+    from PySide6.QtCore import QObject, Signal
 
 
 class GlobalSignals(QObject):
