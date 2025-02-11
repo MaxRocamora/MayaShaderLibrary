@@ -21,11 +21,12 @@
 # 05/2024 - 2.1.0 / Added shader Icon View Mode, for Icon View and List View
 # 05/2024 - 2.1.1 / Added shader base class for ShaderWidget, stores windows geometry
 # 05/2024 - 2.1.2 / Shaders are sorted by name.
+# 02/2025 - 2.2.0 / PySide6
 # ----------------------------------------------------------------------------------------
 
 VERSION_MAJOR = 2
-VERSION_MINOR = 1
-VERSION_PATCH = 2
+VERSION_MINOR = 2
+VERSION_PATCH = 0
 
 version = f'{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}'
 
