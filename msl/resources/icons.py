@@ -10,7 +10,10 @@
 # ----------------------------------------------------------------------------------------
 import os
 
-from PySide2 import QtGui
+try:
+    from PySide2 import QtGui
+except ImportError:
+    from PySide6 import QtGui
 
 # Main Icon store
 ICONS = {}
