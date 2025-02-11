@@ -8,7 +8,10 @@
 # ----------------------------------------------------------------------------------------
 import os
 
-from PySide2.QtWidgets import QMainWindow
+try:
+    from PySide2.QtWidgets import QMainWindow
+except ImportError:
+    from PySide6.QtWidgets import QMainWindow
 
 from msl.config import WidgetViewMode, WidgetViewModeWidth
 from msl.libs.logger import log
@@ -93,15 +96,11 @@ class Category:
         # how many widgets can fit in a row, based on widget modality
         if self.widget_view == WidgetViewMode.ICON:
             wide = int(self.ui.width() / WidgetViewModeWidth.ICON.value)
-            shader_widgets = [
-                ShaderIconWidget(shader, self.ui) for shader in self.shaders()
-            ]
+            shader_widgets = [ShaderIconWidget(shader, self.ui) for shader in self.shaders()]
 
         if self.widget_view == WidgetViewMode.LIST:
             wide = int(self.ui.width() / WidgetViewModeWidth.LIST.value)
-            shader_widgets = [
-                ShaderListWidget(shader, self.ui) for shader in self.shaders()
-            ]
+            shader_widgets = [ShaderListWidget(shader, self.ui) for shader in self.shaders()]
 
         index = 0
         row = 0
