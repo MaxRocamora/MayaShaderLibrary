@@ -10,7 +10,11 @@ import pkgutil
 from enum import Enum
 
 import maya.cmds as cmds
-from PySide2.QtGui import QIcon
+
+try:
+    from PySide2.QtGui import QIcon
+except ImportError:
+    from PySide6.QtGui import QIcon
 
 QT_WIN_NAME = 'Arcane2:Qt_ShaderLibrary_ui'
 
