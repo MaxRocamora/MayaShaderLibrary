@@ -6,8 +6,12 @@
 # ----------------------------------------------------------------------------------------
 import os
 
-from PySide2.QtCore import QModelIndex
-from PySide2.QtWidgets import QListWidget, QMainWindow, QMessageBox
+try:
+    from PySide2.QtCore import QModelIndex
+    from PySide2.QtWidgets import QListWidget, QMainWindow, QMessageBox
+except ImportError:
+    from PySide6.QtCore import QModelIndex
+    from PySide6.QtWidgets import QListWidget, QMainWindow, QMessageBox
 
 from msl.config import LIBRARY_PATH
 from msl.libs.category import Category
