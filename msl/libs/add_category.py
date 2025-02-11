@@ -8,7 +8,10 @@
 # ----------------------------------------------------------------------------------------
 import os
 
-from PySide2 import QtWidgets
+try:
+    from PySide2 import QtWidgets
+except ImportError:
+    from PySide6 import QtWidgets
 
 from msl.config import LIBRARY_PATH
 from msl.libs.qt_dialogs import warning_message
