@@ -8,8 +8,12 @@
 # Holds callback classes for button actions and menus
 # ----------------------------------------------------------------------------------------
 
-from PySide2 import QtCore
-from PySide2.QtWidgets import QMainWindow, QToolButton, QVBoxLayout
+try:
+    from PySide2 import QtCore
+    from PySide2.QtWidgets import QMainWindow, QToolButton, QVBoxLayout
+except ImportError:
+    from PySide6 import QtCore
+    from PySide6.QtWidgets import QMainWindow, QToolButton, QVBoxLayout
 
 from msl.libs.shader import Shader
 from msl.libs.shader_widget_base import ShaderWidgetBase
