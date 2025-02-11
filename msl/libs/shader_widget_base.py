@@ -10,17 +10,31 @@ import os
 import subprocess
 from contextlib import contextmanager
 
-from PySide2 import QtCore, QtGui
-from PySide2.QtWidgets import (
-    QAction,
-    QApplication,
-    QInputDialog,
-    QLineEdit,
-    QMainWindow,
-    QMenu,
-    QMessageBox,
-    QWidget,
-)
+try:
+    from PySide2 import QtCore
+    from PySide2.QtGui import QIcon, QCursor
+    from PySide2.QtWidgets import (
+        QAction,
+        QApplication,
+        QInputDialog,
+        QLineEdit,
+        QMainWindow,
+        QMenu,
+        QMessageBox,
+        QWidget,
+    )
+except ImportError:
+    from PySide6 import QtCore
+    from PySide6.QtGui import QAction, QCursor, QIcon
+    from PySide6.QtWidgets import (
+        QApplication,
+        QInputDialog,
+        QLineEdit,
+        QMainWindow,
+        QMenu,
+        QMessageBox,
+        QWidget,
+    )
 
 from msl.config import thumbnail_default_scene
 from msl.libs.logger import log
@@ -69,9 +83,7 @@ class ShaderWidgetBase(QWidget):
         text = f'Import {self.shader.name} and assign into selection'
         action_import_sel = QAction(get_icon('mnu_import_add'), text, self.menu)
         self.menu.addAction(action_import_sel)
-        action_import_sel.triggered.connect(
-            lambda: self.shader.import_shader(assign=True)
-        )
+        action_import_sel.triggered.connect(lambda: self.shader.import_shader(assign=True))
         self.menu.addSeparator()
 
         text = f'Rename: {self.shader.name}'
@@ -103,7 +115,7 @@ class ShaderWidgetBase(QWidget):
         self.menu.addAction(action_delete)
         action_delete.triggered.connect(self.delete_shader)
         self.menu.addSeparator()
-        self.menu.popup(QtGui.QCursor.pos())
+        self.menu.popup(QCursor.pos())
 
     def rename_shader(self):
         """Open qt dialog box for rename shader."""
@@ -176,27 +188,21 @@ class ShaderWidgetBase(QWidget):
             log.error('mayapy.exe not found.', MAYAPY)
             return
 
-        cmd = ' '.join(
-            [MAYAPY, RND_SCRIPT, maya_file, self.shader.cg_file, self.shader.thumbnail]
-        )
+        cmd = ' '.join([MAYAPY, RND_SCRIPT, maya_file, self.shader.cg_file, self.shader.thumbnail])
 
         with self.wait_cursor():
-            process = subprocess.Popen(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-            )
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             output, error = process.communicate()
             log.info(output)
             log.info(error)
 
-        self.button.setIcon(
-            QtGui.QIcon(self.shader.get_thumbnail())
-        )  # reload thumbnail image
+        self.button.setIcon(QIcon(self.shader.get_thumbnail()))  # reload thumbnail image
 
     @contextmanager
     def wait_cursor(self):
         """Context manager for wait cursor."""
         try:
-            QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+            QApplication.setOverrideCursor(QCursor(QtCore.Qt.WaitCursor))
             yield
         finally:
             QApplication.restoreOverrideCursor()
