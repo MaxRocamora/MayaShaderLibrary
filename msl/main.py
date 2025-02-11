@@ -8,8 +8,13 @@ import os
 import webbrowser
 
 import maya.cmds as cmds
-from PySide2 import QtCore, QtUiTools
-from PySide2.QtWidgets import QGridLayout, QMainWindow, QScrollArea, QToolButton, QWidget
+
+try:
+    from PySide2 import QtCore, QtUiTools
+    from PySide2.QtWidgets import QGridLayout, QMainWindow, QScrollArea, QToolButton, QWidget
+except ImportError:
+    from PySide6 import QtCore, QtUiTools
+    from PySide6.QtWidgets import QGridLayout, QMainWindow, QScrollArea, QToolButton, QWidget
 
 from msl.config import (
     APP_QICON,
