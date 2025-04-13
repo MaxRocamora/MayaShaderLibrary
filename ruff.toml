@@ -1,0 +1,21 @@
+line-length = 90
+indent-width = 4
+
+# Assume Python 3.7
+target-version = "py37"
+
+[lint]
+select = ["D", "F", "N", "I", "W"]
+ignore = ["E402", "D100", "D101", "D104", "D202", "N806"]
+
+[lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"main.py" = ["N802"]
+
+[lint.pydocstyle]
+convention = "google"
+
+[format]
+docstring-code-format = true
+docstring-code-line-length = 109
+quote-style = "single"
