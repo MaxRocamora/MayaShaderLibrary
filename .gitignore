@@ -2,4 +2,3 @@
 *.pyc
 library/shaders/
 docs/_build/*
-ruff.toml
