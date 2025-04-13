@@ -15,3 +15,8 @@ Documentation
    install
    guide
    misc
+
+---
+
+Latest Version 2.2
+
