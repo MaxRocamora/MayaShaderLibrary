@@ -23,10 +23,9 @@ Maya Install
 Define Library Folder
 ---------------------
 
-- Add the following environment variable to your Maya.env
-- This will be the folder where your shaders and preview files are stored.
+- Add the following environment variable to your Maya.env, this will be the folder where your shaders and preview files are stored.
 
-*MAYA_SHADER_LIBRARY = your_install_directory\\library*
+**MAYA_SHADER_LIBRARY = your_install_directory\\library**
 
 .. note:: Maya.env is usually located under "User/My Documents/Maya/2022"
 
