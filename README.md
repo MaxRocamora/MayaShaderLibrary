@@ -46,14 +46,3 @@ See the [Documentation](https://mayashaderlibrary.readthedocs.io/en/latest/#) fo
 
 - Python Package root  
 */msl*
-
-
-### Roadmap 2024...
-
-- export arnold ai shader file (now is a .ma file only)
-- update shader from scene (look for the shader in the scene and update the library.)
-- show texture maps used for given shader
-- copy maps to library repository / deploy maps into target folder
-- import into selected mesh, ask for replace shader if exists
-- fill library from selection: takes all shaders from selection and fills current category
-- import custom image for shader thumbnail (maybe drag and drop?)
