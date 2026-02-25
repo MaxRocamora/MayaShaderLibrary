@@ -11,10 +11,22 @@ import maya.cmds as cmds
 
 try:
     from PySide2 import QtCore, QtUiTools
-    from PySide2.QtWidgets import QGridLayout, QMainWindow, QScrollArea, QToolButton, QWidget
+    from PySide2.QtWidgets import (
+        QGridLayout,
+        QMainWindow,
+        QScrollArea,
+        QToolButton,
+        QWidget,
+    )
 except ImportError:
     from PySide6 import QtCore, QtUiTools
-    from PySide6.QtWidgets import QGridLayout, QMainWindow, QScrollArea, QToolButton, QWidget
+    from PySide6.QtWidgets import (
+        QGridLayout,
+        QMainWindow,
+        QScrollArea,
+        QToolButton,
+        QWidget,
+    )
 
 from msl.config import (
     APP_QICON,
